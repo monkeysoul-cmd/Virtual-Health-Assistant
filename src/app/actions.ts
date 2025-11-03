@@ -1,6 +1,9 @@
 'use server';
 
-import { symptomCheckerAssessment } from '@/ai/flows/symptom-checker-assessment';
+import {
+  symptomCheckerAssessment,
+  type SymptomCheckerAssessmentOutput,
+} from '@/ai/flows/symptom-checker-assessment';
 import { z } from 'zod';
 
 const symptomSchema = z
@@ -8,7 +11,7 @@ const symptomSchema = z
   .min(3, { message: 'Please describe your symptoms in more detail.' });
 
 export interface AssessmentState {
-  potentialConditions?: string[];
+  potentialConditions?: SymptomCheckerAssessmentOutput['conditions'];
   error?: string | null;
 }
 
@@ -30,7 +33,11 @@ export async function getHealthAssessment(
     const result = await symptomCheckerAssessment({
       symptoms: validatedSymptoms.data,
     });
-    const conditions = result.conditions.map(c => c.trim().toLowerCase());
+    // The AI flow already returns conditions with lowercase names if instructed, but this ensures consistency.
+    const conditions = result.conditions.map(c => ({
+      ...c,
+      condition: c.condition.trim().toLowerCase(),
+    }));
     return { potentialConditions: conditions };
   } catch (e) {
     console.error(e);

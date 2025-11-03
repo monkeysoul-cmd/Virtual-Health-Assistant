@@ -24,10 +24,12 @@ import {
   User,
   PlusCircle,
   X,
+  Award,
 } from 'lucide-react';
 import { PrecautionaryAdvice } from './precautionary-advice';
 import { TestSuggestions } from './test-suggestions';
 import { Badge } from './ui/badge';
+import { Separator } from './ui/separator';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -86,13 +88,18 @@ export function SymptomCheckerForm() {
 
   const addSymptom = (symptom: string) => {
     setSymptoms(prev => {
-      const symptomList = prev ? prev.split(', ') : [];
-      if (!symptomList.includes(symptom)) {
+      const symptomList = prev ? prev.split(', ').filter(s => s) : [];
+      if (!symptomList.map(s => s.toLowerCase()).includes(symptom.toLowerCase())) {
         symptomList.push(symptom);
       }
       return symptomList.join(', ');
     });
   };
+
+  const mostProbableCondition =
+    state.potentialConditions && state.potentialConditions[0];
+  const otherConditions =
+    state.potentialConditions && state.potentialConditions.slice(1);
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -169,34 +176,62 @@ export function SymptomCheckerForm() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
-            <div className="space-y-8">
-              {state.potentialConditions.map((condition, index) => {
-                const normalizedCondition = condition.trim().toLowerCase();
-                return (
+            {/* Most Probable Condition */}
+            {mostProbableCondition && (
+              <div className="space-y-6 rounded-lg border-2 border-primary bg-background/50 p-4 md:p-6 shadow-lg">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                   <h3 className="text-xl font-semibold">
+                      Most Probable Condition
+                    </h3>
+                  <Badge
+                    variant="default"
+                    className="flex items-center gap-2 text-base px-3 py-1"
+                  >
+                    <Award className="w-5 h-5" />
+                    <span>{mostProbableCondition.likelihood}% Match</span>
+                  </Badge>
+                </div>
+                <div>
+                  <Badge
+                    variant="secondary"
+                    className="text-base font-medium px-4 py-2 capitalize"
+                  >
+                    {mostProbableCondition.condition}
+                  </Badge>
+                </div>
+                <PrecautionaryAdvice
+                  conditions={[mostProbableCondition.condition]}
+                />
+                <TestSuggestions conditions={[mostProbableCondition.condition]} />
+              </div>
+            )}
+
+            {/* Other Potential Conditions */}
+            {otherConditions && otherConditions.length > 0 && (
+              <div className="space-y-4">
+                <Separator />
+                <h3 className="text-xl font-semibold pt-4">Other Possibilities</h3>
+                {otherConditions.map((item, index) => (
                   <div
                     key={index}
-                    className="space-y-6 rounded-lg border bg-background/50 p-4 md:p-6"
+                    className="space-y-4 rounded-lg border bg-background/50 p-4"
                   >
-                    <div>
-                      <h3 className="text-xl font-semibold mb-3">
-                        Potential Condition:
-                      </h3>
-                      <div className="flex flex-wrap gap-3">
-                        <Badge
-                          variant="secondary"
-                          className="text-base font-medium px-4 py-2 capitalize"
-                        >
-                          {condition}
-                        </Badge>
-                      </div>
+                    <div className="flex items-center justify-between">
+                      <Badge
+                        variant="secondary"
+                        className="text-base font-medium px-4 py-2 capitalize"
+                      >
+                        {item.condition}
+                      </Badge>
+                      <span className='text-sm font-medium text-muted-foreground'>{item.likelihood}% Match</span>
                     </div>
-
-                    <PrecautionaryAdvice conditions={[normalizedCondition]} />
-                    <TestSuggestions conditions={[normalizedCondition]} />
+                    <PrecautionaryAdvice conditions={[item.condition]} />
+                    <TestSuggestions conditions={[item.condition]} />
                   </div>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            )}
+            
             <Card className="bg-primary/10 border-primary/50">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 font-headline">
