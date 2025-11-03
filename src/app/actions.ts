@@ -33,7 +33,8 @@ export async function getHealthAssessment(
     const result = await symptomCheckerAssessment({
       symptoms: validatedSymptoms.data,
     });
-    // The AI flow already returns conditions with lowercase names if instructed, but this ensures consistency.
+    // The AI flow can sometimes return condition names with extra whitespace or inconsistent casing.
+    // Standardizing them to lowercase and trimmed ensures they match the keys in our data files.
     const conditions = result.conditions.map(c => ({
       ...c,
       condition: c.condition.trim().toLowerCase(),
