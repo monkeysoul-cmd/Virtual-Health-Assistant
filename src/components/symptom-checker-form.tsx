@@ -113,7 +113,7 @@ export function SymptomCheckerForm() {
     : null;
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-8">
+    <div className="w-full mx-auto space-y-8">
       <Card className="bg-card/80 backdrop-blur-sm shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-headline text-2xl">
