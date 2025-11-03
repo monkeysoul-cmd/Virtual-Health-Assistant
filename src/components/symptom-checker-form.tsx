@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getHealthAssessment, AssessmentState } from '@/app/actions';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,7 @@ import {
   Stethoscope,
   FileText,
   User,
+  PlusCircle,
 } from 'lucide-react';
 import { PrecautionaryAdvice } from './precautionary-advice';
 import { TestSuggestions } from './test-suggestions';
@@ -46,8 +47,24 @@ const initialState: AssessmentState = {
   error: null,
 };
 
+const commonSymptoms = [
+  'Fever',
+  'Cough',
+  'Headache',
+  'Sore Throat',
+  'Congestion',
+  'Stomach Pain',
+  'Nausea',
+  'Sneezing',
+  'Itching',
+  'Swelling',
+  'Fatigue',
+  'Body Aches',
+];
+
 export function SymptomCheckerForm() {
   const [state, formAction] = useFormState(getHealthAssessment, initialState);
+  const [symptoms, setSymptoms] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -66,6 +83,16 @@ export function SymptomCheckerForm() {
       ?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const addSymptom = (symptom: string) => {
+    setSymptoms(prev => {
+      const symptomList = prev ? prev.split(', ') : [];
+      if (!symptomList.includes(symptom)) {
+        symptomList.push(symptom);
+      }
+      return symptomList.join(', ');
+    });
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
       <Card className="bg-card/80 backdrop-blur-sm shadow-lg">
@@ -75,17 +102,38 @@ export function SymptomCheckerForm() {
             Symptom Checker
           </CardTitle>
           <CardDescription>
-            Describe your symptoms below, and our AI assistant will provide
-            potential insights. For example: "headache, fever, and cough".
+            Describe your symptoms below, or select from the common symptoms.
+            For example: "headache, fever, and cough".
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-4">
+            <h4 className="font-semibold mb-2 text-sm text-muted-foreground">
+              Common Symptoms
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {commonSymptoms.map(symptom => (
+                <Button
+                  key={symptom}
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full"
+                  onClick={() => addSymptom(symptom)}
+                >
+                  <PlusCircle className="mr-2" />
+                  {symptom}
+                </Button>
+              ))}
+            </div>
+          </div>
           <form action={formAction} className="space-y-4">
             <Textarea
               name="symptoms"
               placeholder="I'm experiencing..."
               className="min-h-[120px] text-base"
               required
+              value={symptoms}
+              onChange={e => setSymptoms(e.target.value)}
             />
             <div className="flex justify-end">
               <SubmitButton />
