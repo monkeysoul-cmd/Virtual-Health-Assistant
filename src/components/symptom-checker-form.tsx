@@ -63,6 +63,11 @@ const commonSymptoms = [
   'Swelling',
   'Fatigue',
   'Body Aches',
+  'Joint Pain',
+  'Headache and Dizziness',
+  'Chest Pain',
+  'Breathing Difficulty',
+  'Excessive Thirst',
 ];
 
 const commonConditions: { [key: string]: string[] } = {

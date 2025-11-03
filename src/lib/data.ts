@@ -340,6 +340,61 @@ export const precautions: Precaution[] = [
     ],
     icon: Bone,
   },
+  {
+    condition: 'joint pain',
+    title: 'Managing Joint Pain',
+    advice: [
+      'Apply hot or cold packs to the affected area to reduce pain and inflammation.',
+      'Engage in gentle, low-impact exercises like swimming or walking to maintain mobility.',
+      'Maintain a healthy weight to reduce stress on your joints.',
+      'Consider over-the-counter pain relievers after consulting a doctor.',
+    ],
+    icon: Bone,
+  },
+  {
+    condition: 'headache and dizziness',
+    title: 'Headache & Dizziness Care',
+    advice: [
+      'Sit or lie down immediately when you feel dizzy.',
+      'Avoid sudden changes in position.',
+      'Drink plenty of fluids to stay hydrated, as dehydration can be a cause.',
+      'If headache is severe or dizziness persists, consult a doctor to rule out serious conditions.',
+    ],
+    icon: Brain,
+  },
+  {
+    condition: 'chest pain',
+    title: 'Action for Chest Pain',
+    advice: [
+      'Seek immediate medical attention. Call for emergency services.',
+      'While waiting for help, sit down and try to remain calm.',
+      'If prescribed, take nitroglycerin as directed by your doctor.',
+      'Do not attempt to diagnose the cause yourself; it could be a sign of a heart attack.',
+    ],
+    icon: HeartPulse,
+  },
+  {
+    condition: 'breathing difficulty',
+    title: 'Managing Breathing Difficulty',
+    advice: [
+      'Try to remain calm and sit upright to make breathing easier.',
+      'Use any prescribed rescue inhaler if you have one.',
+      'Avoid triggers like smoke, dust, or strong fumes.',
+      'Seek immediate medical help if your breathing does not improve or gets worse.',
+    ],
+    icon: AirVent,
+  },
+  {
+    condition: 'excessive thirst',
+    title: 'Addressing Excessive Thirst',
+    advice: [
+      'Drink water regularly throughout the day to stay hydrated.',
+      'Avoid sugary drinks, which can worsen thirst.',
+      'Monitor your urine color; pale yellow is a good indicator of hydration.',
+      'Consult a doctor to get your blood sugar levels checked, as this can be a sign of diabetes.',
+    ],
+    icon: Droplets,
+  },
 ];
 
 export interface TestSuggestion {
@@ -440,7 +495,6 @@ export const testSuggestions: TestSuggestion[] = [
           'A common test to identify allergens by applying them to the skin.',
         icon: TestTube,
         recommended: true,
-
       },
       {
         name: 'Blood Test (IgE)',
@@ -784,5 +838,95 @@ export const testSuggestions: TestSuggestion[] = [
       },
     ],
     icon: Bone,
+  },
+  {
+    condition: 'joint pain',
+    title: 'Diagnosing Joint Pain',
+    tests: [
+      {
+        name: 'X-ray',
+        description: 'To check for signs of arthritis, fractures, or other bone issues.',
+        icon: Bone,
+        recommended: true,
+      },
+      {
+        name: 'Blood Tests',
+        description: 'To screen for inflammatory markers, such as rheumatoid factor.',
+        icon: TestTube,
+      },
+    ],
+    icon: Bone,
+  },
+  {
+    condition: 'headache and dizziness',
+    title: 'Diagnosing Headache & Dizziness',
+    tests: [
+      {
+        name: 'Neurological Exam',
+        description: 'A physical exam to check your balance, vision, and reflexes.',
+        icon: Activity,
+        recommended: true,
+      },
+      {
+        name: 'MRI or CT Scan of the Head',
+        description: 'To rule out underlying structural problems in the brain.',
+        icon: Brain,
+      },
+    ],
+    icon: Brain,
+  },
+  {
+    condition: 'chest pain',
+    title: 'Diagnosing Chest Pain',
+    tests: [
+      {
+        name: 'Electrocardiogram (ECG or EKG)',
+        description: 'Records the electrical activity of the heart to detect problems.',
+        icon: HeartPulse,
+        recommended: true,
+      },
+      {
+        name: 'Cardiac Enzyme Blood Test',
+        description: 'Measures levels of proteins that are released when the heart muscle is damaged.',
+        icon: TestTube,
+      },
+    ],
+    icon: HeartPulse,
+  },
+  {
+    condition: 'breathing difficulty',
+    title: 'Diagnosing Breathing Difficulty',
+    tests: [
+      {
+        name: 'Pulse Oximetry',
+        description: 'A non-invasive test to measure the oxygen saturation level of your blood.',
+        icon: HeartPulse,
+        recommended: true,
+      },
+      {
+        name: 'Chest X-Ray',
+        description: 'To check for lung infections, fluid, or other abnormalities.',
+        icon: AirVent,
+      },
+    ],
+    icon: AirVent,
+  },
+  {
+    condition: 'excessive thirst',
+    title: 'Diagnosing Excessive Thirst',
+    tests: [
+      {
+        name: 'Fasting Blood Sugar Test',
+        description: 'To check for diabetes, a common cause of excessive thirst.',
+        icon: TestTube,
+        recommended: true,
+      },
+      {
+        name: 'Urinalysis',
+        description: 'To check for glucose in the urine and assess kidney function.',
+        icon: FlaskConical,
+      },
+    ],
+    icon: Droplets,
   },
 ];
