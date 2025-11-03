@@ -27,12 +27,14 @@ import {
   Award,
   MapPin,
   Phone,
+  Calendar,
 } from 'lucide-react';
 import { PrecautionaryAdvice } from './precautionary-advice';
 import { TestSuggestions } from './test-suggestions';
 import { Badge } from './ui/badge';
 import { Separator } from './ui/separator';
 import { doctors, type Doctor } from '@/lib/data';
+import { DoctorDetailsDialog } from './doctor-details-dialog';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -119,6 +121,7 @@ const conditionToSpecialty: { [key: string]: string } = {
 export function SymptomCheckerForm() {
   const [state, formAction] = useFormState(getHealthAssessment, initialState);
   const [symptoms, setSymptoms] = useState('');
+  const [selectedDoctorForBooking, setSelectedDoctorForBooking] = useState<Doctor | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -341,7 +344,8 @@ export function SymptomCheckerForm() {
                 {recommendedDoctor && (
                   <Card
                     key={recommendedDoctor.id}
-                    className="bg-card/80 backdrop-blur-sm shadow-lg mb-4"
+                    className="bg-card/80 backdrop-blur-sm shadow-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform duration-300"
+                    onClick={() => setSelectedDoctorForBooking(recommendedDoctor)}
                   >
                     <CardHeader className="flex flex-row items-center gap-4">
                       <div className="bg-primary/20 p-3 rounded-full">
@@ -363,6 +367,10 @@ export function SymptomCheckerForm() {
                       <div className="flex items-center gap-2 text-sm">
                         <Phone className="w-4 h-4 text-primary" />
                         <span>{recommendedDoctor.contact}</span>
+                      </div>
+                       <div className="flex items-center justify-end text-sm font-medium text-primary pt-2 gap-2">
+                        <Calendar className="w-4 h-4" />
+                        <span>Book an Appointment</span>
                       </div>
                     </CardContent>
                   </Card>
@@ -391,6 +399,13 @@ export function SymptomCheckerForm() {
             </Alert>
           </CardContent>
         </Card>
+      )}
+
+      {selectedDoctorForBooking && (
+        <DoctorDetailsDialog
+          doctor={selectedDoctorForBooking}
+          onClose={() => setSelectedDoctorForBooking(null)}
+        />
       )}
     </div>
   );
