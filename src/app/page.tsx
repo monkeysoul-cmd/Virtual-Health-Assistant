@@ -9,7 +9,7 @@ export default function Home() {
         <div className="flex items-center justify-center gap-3 mb-2">
           <HeartPulse className="w-10 h-10 text-primary" />
           <h1 className="text-4xl md:text-5xl font-bold tracking-tighter font-headline">
-            HealthWise Chat
+            Virtual Health Assistant
           </h1>
         </div>
         <p className="text-muted-foreground md:text-xl/relaxed">
@@ -26,7 +26,7 @@ export default function Home() {
       </div>
 
       <footer className="w-full max-w-4xl mx-auto text-center mt-12 md:my-16 text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} HealthWise Chat. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Virtual Health Assistant. All Rights Reserved.</p>
         <p className="mt-1">
           This is a demo application and not for real medical use.
         </p>
