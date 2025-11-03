@@ -9,9 +9,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { MapPin, Phone, Search, Stethoscope } from 'lucide-react';
+import { MapPin, Phone, Search, Stethoscope, X } from 'lucide-react';
 import { DoctorDetailsDialog } from './doctor-details-dialog';
 import type { Doctor } from '@/lib/data';
+import { Button } from './ui/button';
 
 export function DoctorDirectory() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,9 +40,20 @@ export function DoctorDirectory() {
             placeholder="Search by area (e.g., Downtown, Uptown)"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="pl-10"
+            className="pl-10 pr-10"
             aria-label="Search doctors by area"
           />
+          {searchQuery && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full"
+              onClick={() => setSearchQuery('')}
+              aria-label="Clear search"
+            >
+              <X className="h-5 w-5 text-muted-foreground" />
+            </Button>
+          )}
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
