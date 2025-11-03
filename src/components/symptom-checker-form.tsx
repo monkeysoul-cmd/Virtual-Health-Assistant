@@ -33,7 +33,13 @@ import { PrecautionaryAdvice } from './precautionary-advice';
 import { TestSuggestions } from './test-suggestions';
 import { Badge } from './ui/badge';
 import { Separator } from './ui/separator';
-import { doctors, type Doctor } from '@/lib/data';
+import {
+  doctors,
+  type Doctor,
+  commonSymptoms,
+  commonConditions,
+  conditionToSpecialty,
+} from '@/lib/data';
 import { DoctorDetailsDialog } from './doctor-details-dialog';
 
 function SubmitButton() {
@@ -54,69 +60,6 @@ const initialState: AssessmentState = {
   potentialConditions: [],
   error: null,
 };
-
-const commonSymptoms = [
-  'Fever',
-  'Cough',
-  'Headache',
-  'Sore Throat',
-  'Congestion',
-  'Stomach Pain',
-  'Nausea',
-  'Sneezing',
-  'Itching',
-  'Swelling',
-  'Fatigue',
-  'Body Aches',
-  'Joint Pain',
-  'Headache and Dizziness',
-  'Chest Pain',
-  'Breathing Difficulty',
-  'Excessive Thirst',
-];
-
-const commonConditions: { [key: string]: string[] } = {
-  'Common Cold': ['runny nose', 'sneezing', 'sore throat', 'cough'],
-  'Influenza (Flu)': ['high fever', 'chills', 'muscle aches', 'fatigue'],
-  Migraine: ['one-sided headache', 'throbbing pain', 'photophobia'],
-  'Allergic Rhinitis': ['sneezing', 'runny nose', 'itchy eyes'],
-  Gastritis: ['stomach pain', 'nausea', 'bloating'],
-  'Tension Headache': ['dull head pain', 'pressure around forehead'],
-  Sprain: ['swelling', 'bruising', 'limited mobility'],
-  Gastroenteritis: ['diarrhea', 'vomiting', 'stomach cramps'],
-};
-
-const conditionToSpecialty: { [key: string]: string } = {
-  'common cold': 'General Practitioner',
-  influenza: 'General Practitioner',
-  'influenza (flu)': 'General Practitioner',
-  migraine: 'Neurologist',
-  'allergic rhinitis': 'General Practitioner',
-  hypertension: 'Cardiologist',
-  'type 2 diabetes': 'General Practitioner',
-  asthma: 'General Practitioner',
-  gastritis: 'General Practitioner',
-  'anxiety disorder': 'Neurologist',
-  osteoarthritis: 'Orthopedist',
-  'acute bronchitis': 'General Practitioner',
-  'typhoid fever': 'General Practitioner',
-  pneumonia: 'General Practitioner',
-  'acid reflux (gerd)': 'General Practitioner',
-  malaria: 'General Practitioner',
-  'dengue fever': 'General Practitioner',
-  gastroenteritis: 'General Practitioner',
-  allergy: 'General Practitioner',
-  bronchitis: 'General Practitioner',
-  'tension headache': 'Neurologist',
-  sprain: 'Orthopedist',
-  fracture: 'Orthopedist',
-  'joint pain': 'Orthopedist',
-  'headache and dizziness': 'Neurologist',
-  'chest pain': 'Cardiologist',
-  'breathing difficulty': 'General Practitioner',
-  'excessive thirst': 'General Practitioner',
-};
-
 
 export function SymptomCheckerForm() {
   const [state, formAction] = useFormState(getHealthAssessment, initialState);
