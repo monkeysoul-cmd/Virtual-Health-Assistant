@@ -13,7 +13,7 @@ export default function Home() {
           </h1>
         </div>
         <p className="text-muted-foreground md:text-xl/relaxed">
-          Your AI-powered guide to understanding your health symptoms.
+          Your online guide to understanding your health symptoms.
         </p>
       </header>
 

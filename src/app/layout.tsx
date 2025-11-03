@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Virtual Health Assistant',
-  description: 'An AI-powered symptom checker and health guide.',
+  description: 'An online symptom checker and health guide.',
 };
 
 export default function RootLayout({
