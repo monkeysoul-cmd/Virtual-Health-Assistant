@@ -70,6 +70,10 @@ const commonConditions: { [key: string]: string[] } = {
   'Influenza (Flu)': ['high fever', 'chills', 'muscle aches', 'fatigue'],
   Migraine: ['one-sided headache', 'throbbing pain', 'photophobia'],
   'Allergic Rhinitis': ['sneezing', 'runny nose', 'itchy eyes'],
+  Gastritis: ['stomach pain', 'nausea', 'bloating'],
+  'Tension Headache': ['dull head pain', 'pressure around forehead'],
+  Sprain: ['swelling', 'bruising', 'limited mobility'],
+  Gastroenteritis: ['diarrhea', 'vomiting', 'stomach cramps'],
 };
 
 export function SymptomCheckerForm() {
