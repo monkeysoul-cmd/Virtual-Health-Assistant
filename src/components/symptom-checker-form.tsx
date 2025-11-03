@@ -23,6 +23,7 @@ import {
   FileText,
   User,
   PlusCircle,
+  X,
 } from 'lucide-react';
 import { PrecautionaryAdvice } from './precautionary-advice';
 import { TestSuggestions } from './test-suggestions';
@@ -127,14 +128,27 @@ export function SymptomCheckerForm() {
             </div>
           </div>
           <form action={formAction} className="space-y-4">
-            <Textarea
-              name="symptoms"
-              placeholder="I'm experiencing..."
-              className="min-h-[120px] text-base"
-              required
-              value={symptoms}
-              onChange={e => setSymptoms(e.target.value)}
-            />
+            <div className="relative">
+              <Textarea
+                name="symptoms"
+                placeholder="I'm experiencing..."
+                className="min-h-[120px] text-base pr-12"
+                required
+                value={symptoms}
+                onChange={e => setSymptoms(e.target.value)}
+              />
+              {symptoms && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-2 top-2 h-8 w-8 rounded-full"
+                  onClick={() => setSymptoms('')}
+                  aria-label="Clear symptoms"
+                >
+                  <X className="h-5 w-5 text-muted-foreground" />
+                </Button>
+              )}
+            </div>
             <div className="flex justify-end">
               <SubmitButton />
             </div>
