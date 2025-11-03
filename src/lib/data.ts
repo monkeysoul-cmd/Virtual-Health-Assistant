@@ -42,7 +42,7 @@ export const doctors: Doctor[] = [
     name: 'Dr. Rohan Mehra',
     specialty: 'Neurologist',
     area: 'Vaishali',
-    contact: '+91 98765 43211',
+    contact: '+91 98765-43211',
     icon: Brain,
   },
   {
@@ -50,7 +50,7 @@ export const doctors: Doctor[] = [
     name: 'Dr. Anjali Gupta',
     specialty: 'Orthopedist',
     area: 'Vasundhara',
-    contact: '+91 98765 43212',
+    contact: '+91 98765-43212',
     icon: Bone,
   },
   {
@@ -58,7 +58,7 @@ export const doctors: Doctor[] = [
     name: 'Dr. Vikram Singh',
     specialty: 'General Practitioner',
     area: 'Indirapuram',
-    contact: '+91 98765 43213',
+    contact: '+91 98765-43213',
     icon: Stethoscope,
   },
   {
@@ -66,7 +66,7 @@ export const doctors: Doctor[] = [
     name: 'Dr. Sunita Patel',
     specialty: 'Dermatologist',
     area: 'Kaushambi',
-    contact: '+91 98765 43214',
+    contact: '+91 98765-43214',
     icon: Stethoscope,
   },
   {
@@ -74,7 +74,7 @@ export const doctors: Doctor[] = [
     name: 'Dr. Arjun Reddy',
     specialty: 'Pediatrician',
     area: 'Vaishali',
-    contact: '+91 98765 43215',
+    contact: '+91 98765-43215',
     icon: Stethoscope,
   },
 ];
@@ -559,6 +559,17 @@ export const precautions: Precaution[] = [
       'Establish a regular bowel routine.',
     ],
     icon: Shield,
+  },
+  {
+    condition: 'anxiety attack',
+    title: 'Managing an Anxiety Attack',
+    advice: [
+      'Focus on your breathing: Inhale slowly for four counts, hold for four, and exhale for four.',
+      'Ground yourself by identifying 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste.',
+      'Remove yourself from the stressful situation if possible.',
+      'Remember that the attack will pass. It is a temporary experience.',
+    ],
+    icon: Smile,
   },
 ];
 
@@ -1379,6 +1390,24 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Shield,
   },
+  {
+    condition: 'anxiety attack',
+    title: 'Diagnosing an Anxiety Attack',
+    tests: [
+      {
+        name: 'Psychological Evaluation',
+        description: 'A mental health professional will discuss your symptoms, triggers, and experiences.',
+        icon: Smile,
+        recommended: true,
+      },
+      {
+        name: 'Physical Exam',
+        description: 'To rule out physical conditions that can mimic anxiety symptoms, like heart or thyroid problems.',
+        icon: Activity,
+      },
+    ],
+    icon: Smile,
+  },
 ];
 
 export const commonSymptoms = [
@@ -1431,13 +1460,14 @@ export const commonConditions: { [key: string]: string[] } = {
   'diabetes insipidus': ['extreme thirst', 'frequent urination of large volumes'],
   angina: ['chest pain or discomfort', 'pain in arms, neck, jaw, shoulder or back'],
   gout: ['severe joint pain', 'redness', 'swelling', 'usually in the big toe'],
-  'heart attack': ['chest pain', 'shortness of breath', 'pain in left arm', 'nausea'],
+  'heart attack': ['chest pain', 'shortness of breath', 'pain in left arm', 'nausea', 'sweating'],
   bursitis: ['joint pain', 'swelling', 'stiffness', 'pain with movement'],
   'musculoskeletal pain': ['aching', 'stiffness', 'burning sensation in muscles'],
   'allergic reaction': ['hives', 'itching', 'swelling', 'sneezing', 'difficulty breathing'],
   tendonitis: ['dull ache', 'tenderness', 'mild swelling'],
   indigestion: ['upper abdominal pain', 'bloating', 'belching', 'nausea'],
   constipation: ['difficulty passing stools', 'straining', 'hard or small stools'],
+  'anxiety attack': ['pounding heart', 'sweating', 'trembling', 'shortness of breath', 'fear of losing control'],
 };
 
 export const conditionToSpecialty: { [key: string]: string } = {
@@ -1484,4 +1514,5 @@ export const conditionToSpecialty: { [key: string]: string } = {
   tendonitis: 'Orthopedist',
   indigestion: 'General Practitioner',
   constipation: 'General Practitioner',
+  'anxiety attack': 'Neurologist',
 };
