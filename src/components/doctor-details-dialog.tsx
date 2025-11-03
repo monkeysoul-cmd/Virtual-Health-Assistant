@@ -67,7 +67,7 @@ export function DoctorDetailsDialog({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="font-headline text-2xl">
-            {doctor.name}
+            Book Appointment with {doctor.name}
           </DialogTitle>
           <DialogDescription>{doctor.specialty}</DialogDescription>
         </DialogHeader>
