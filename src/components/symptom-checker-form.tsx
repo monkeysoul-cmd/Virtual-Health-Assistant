@@ -94,14 +94,14 @@ export function SymptomCheckerForm() {
               Assessment Results
             </CardTitle>
             <CardDescription>
-              Based on your symptoms, here are some potential conditions. This is
+              Based on your symptoms, here is the most likely condition. This is
               not a medical diagnosis.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
             <div>
               <h3 className="text-lg font-semibold mb-3">
-                Probable Conditions:
+                Probable Condition:
               </h3>
               <div className="flex flex-wrap gap-3">
                 {state.potentialConditions.map((condition, index) => (

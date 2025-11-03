@@ -30,10 +30,8 @@ export async function getHealthAssessment(
     const result = await symptomCheckerAssessment({
       symptoms: validatedSymptoms.data,
     });
-    const conditions = result.potentialConditions
-      .split(',')
-      .map(c => c.trim().toLowerCase());
-    return { potentialConditions: conditions };
+    const condition = result.condition.trim().toLowerCase();
+    return { potentialConditions: [condition] };
   } catch (e) {
     console.error(e);
     return {

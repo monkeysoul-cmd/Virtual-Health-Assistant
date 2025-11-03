@@ -16,9 +16,9 @@ const SymptomCheckerAssessmentInputSchema = z.object({
 export type SymptomCheckerAssessmentInput = z.infer<typeof SymptomCheckerAssessmentInputSchema>;
 
 const SymptomCheckerAssessmentOutputSchema = z.object({
-  potentialConditions: z
+  condition: z
     .string()
-    .describe('A comma-separated list of potential health conditions based on the symptoms provided.'),
+    .describe('The best matched health condition based on the symptoms provided.'),
 });
 export type SymptomCheckerAssessmentOutput = z.infer<typeof SymptomCheckerAssessmentOutputSchema>;
 
@@ -30,8 +30,8 @@ const symptomCheckerPrompt = ai.definePrompt({
   name: 'symptomCheckerPrompt',
   input: {schema: SymptomCheckerAssessmentInputSchema},
   output: {schema: SymptomCheckerAssessmentOutputSchema},
-  prompt: `You are a medical assistant that will provide a list of potential health conditions based on the symptoms provided by the user.
-  The output should be a comma-separated list of potential health conditions.
+  prompt: `You are a medical assistant that will provide the best matched health condition based on the symptoms provided by the user.
+  The output should be a single health condition.
 
   Symptoms: {{{symptoms}}}
   `,
