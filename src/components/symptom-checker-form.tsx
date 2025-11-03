@@ -65,6 +65,13 @@ const commonSymptoms = [
   'Body Aches',
 ];
 
+const commonConditions: { [key: string]: string[] } = {
+  'Common Cold': ['runny nose', 'sneezing', 'sore throat', 'cough'],
+  'Influenza (Flu)': ['high fever', 'chills', 'muscle aches', 'fatigue'],
+  Migraine: ['one-sided headache', 'throbbing pain', 'photophobia'],
+  'Allergic Rhinitis': ['sneezing', 'runny nose', 'itchy eyes'],
+};
+
 export function SymptomCheckerForm() {
   const [state, formAction] = useFormState(getHealthAssessment, initialState);
   const [symptoms, setSymptoms] = useState('');
@@ -96,6 +103,13 @@ export function SymptomCheckerForm() {
     });
   };
 
+  const addConditionSymptoms = (condition: string) => {
+    const conditionSymptoms = commonConditions[condition];
+    if (conditionSymptoms) {
+      setSymptoms(conditionSymptoms.join(', '));
+    }
+  };
+
   const mostProbableCondition =
     state.potentialConditions && state.potentialConditions[0];
   const otherConditions =
@@ -110,7 +124,7 @@ export function SymptomCheckerForm() {
             Symptom Checker
           </CardTitle>
           <CardDescription>
-            Describe your symptoms below, or select from the common symptoms.
+            Describe your symptoms below, or select from the common symptoms and conditions.
             For example: "headache, fever, and cough".
           </CardDescription>
         </CardHeader>
@@ -134,6 +148,27 @@ export function SymptomCheckerForm() {
               ))}
             </div>
           </div>
+
+          <div className="mb-4">
+            <h4 className="font-semibold mb-2 text-sm text-muted-foreground">
+              Common Conditions
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {Object.keys(commonConditions).map(condition => (
+                <Button
+                  key={condition}
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full"
+                  onClick={() => addConditionSymptoms(condition)}
+                >
+                  <PlusCircle className="mr-2" />
+                  {condition}
+                </Button>
+              ))}
+            </div>
+          </div>
+
           <form action={formAction} className="space-y-4">
             <div className="relative">
               <Textarea
