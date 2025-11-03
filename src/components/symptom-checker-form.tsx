@@ -57,8 +57,6 @@ export function SymptomCheckerForm() {
       });
     }
   }, [state.error, toast]);
-  
-  const mostProbableCondition = state.potentialConditions && state.potentialConditions.length > 0 ? [state.potentialConditions[0]] : [];
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -96,27 +94,33 @@ export function SymptomCheckerForm() {
               Assessment Results
             </CardTitle>
             <CardDescription>
-              Based on your symptoms, here is the most likely condition. This is
+              Based on your symptoms, here are some potential conditions. This is
               not a medical diagnosis.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-3">
-                Most Probable Condition:
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                <Badge
-                  variant="secondary"
-                  className="text-base font-medium px-4 py-2 capitalize"
-                >
-                  {mostProbableCondition[0]}
-                </Badge>
-              </div>
-            </div>
+            <div className="space-y-8">
+              {state.potentialConditions.map((condition, index) => (
+                <div key={index} className="space-y-6 rounded-lg border bg-background/50 p-4 md:p-6">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-3">
+                      Potential Condition:
+                    </h3>
+                    <div className="flex flex-wrap gap-3">
+                      <Badge
+                        variant="secondary"
+                        className="text-base font-medium px-4 py-2 capitalize"
+                      >
+                        {condition}
+                      </Badge>
+                    </div>
+                  </div>
 
-            <PrecautionaryAdvice conditions={mostProbableCondition} />
-            <TestSuggestions conditions={mostProbableCondition} />
+                  <PrecautionaryAdvice conditions={[condition]} />
+                  <TestSuggestions conditions={[condition]} />
+                </div>
+              ))}
+            </div>
 
             <Alert
               variant="destructive"
