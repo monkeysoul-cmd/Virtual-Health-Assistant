@@ -505,6 +505,61 @@ export const precautions: Precaution[] = [
     ],
     icon: Bandage,
   },
+  {
+    condition: 'musculoskeletal pain',
+    title: 'Managing Musculoskeletal Pain',
+    advice: [
+      'Apply ice packs for the first 48-72 hours to reduce inflammation, then switch to heat to relax muscles.',
+      'Engage in gentle stretching and low-impact activities like walking or swimming.',
+      'Maintain good posture, especially when sitting for long periods.',
+      'Consider over-the-counter pain relievers like ibuprofen or acetaminophen.',
+    ],
+    icon: Bone,
+  },
+  {
+    condition: 'allergic reaction',
+    title: 'Managing an Allergic Reaction',
+    advice: [
+      'For mild reactions, take an over-the-counter antihistamine.',
+      'Avoid the identified allergen.',
+      'For skin reactions, apply a cold compress or hydrocortisone cream.',
+      'For severe reactions (anaphylaxis), use an epinephrine auto-injector if you have one and call emergency services immediately.',
+    ],
+    icon: Wind,
+  },
+  {
+    condition: 'tendonitis',
+    title: 'Treating Tendonitis',
+    advice: [
+      'Rest the affected area and avoid activities that cause pain.',
+      'Apply ice to the affected area to reduce pain and swelling.',
+      'Use over-the-counter pain relievers to manage pain.',
+      'Perform gentle stretching and strengthening exercises as advised by a doctor or physical therapist.',
+    ],
+    icon: Bandage,
+  },
+  {
+    condition: 'indigestion',
+    title: 'Relieving Indigestion',
+    advice: [
+      'Avoid trigger foods like spicy, fatty, or acidic foods.',
+      'Eat smaller, more frequent meals and avoid eating too quickly.',
+      'Do not lie down immediately after eating.',
+      'Manage stress and avoid smoking and excessive alcohol.',
+    ],
+    icon: Shield,
+  },
+  {
+    condition: 'constipation',
+    title: 'Relieving Constipation',
+    advice: [
+      'Gradually increase your fiber intake with fruits, vegetables, and whole grains.',
+      'Drink plenty of water and other fluids throughout the day.',
+      'Engage in regular physical activity to help stimulate bowel function.',
+      'Establish a regular bowel routine.',
+    ],
+    icon: Shield,
+  },
 ];
 
 export interface TestSuggestion {
@@ -1223,5 +1278,105 @@ export const testSuggestions: TestSuggestion[] = [
       },
     ],
     icon: Bandage,
+  },
+  {
+    condition: 'musculoskeletal pain',
+    title: 'Diagnosing Musculoskeletal Pain',
+    tests: [
+      {
+        name: 'Physical Exam',
+        description:
+          'A doctor will assess your range of motion, strength, and locate the source of the pain.',
+        icon: Activity,
+        recommended: true,
+      },
+      {
+        name: 'X-ray or MRI',
+        description:
+          'To rule out fractures, arthritis, or soft tissue injuries.',
+        icon: Bone,
+      },
+    ],
+    icon: Bone,
+  },
+  {
+    condition: 'allergic reaction',
+    title: 'Diagnosing an Allergic Reaction',
+    tests: [
+      {
+        name: 'Skin Prick Test',
+        description:
+          'To identify specific allergens that cause a reaction on your skin.',
+        icon: TestTube,
+        recommended: true,
+      },
+      {
+        name: 'Blood Test (IgE)',
+        description:
+          'Measures the level of specific allergy-causing antibodies in your blood.',
+        icon: Microscope,
+      },
+    ],
+    icon: Wind,
+  },
+  {
+    condition: 'tendonitis',
+    title: 'Diagnosing Tendonitis',
+    tests: [
+      {
+        name: 'Physical Exam',
+        description:
+          'A doctor can usually diagnose tendonitis based on a physical exam and your symptoms.',
+        icon: Activity,
+        recommended: true,
+      },
+      {
+        name: 'Ultrasound or MRI',
+        description:
+          'To see inflammation or damage to the tendon.',
+        icon: Bone,
+      },
+    ],
+    icon: Bandage,
+  },
+  {
+    condition: 'indigestion',
+    title: 'Diagnosing Indigestion',
+    tests: [
+      {
+        name: 'Physical Exam & History',
+        description:
+          'A doctor will review your symptoms and habits. This is often enough for diagnosis.',
+        icon: Activity,
+        recommended: true,
+      },
+      {
+        name: 'Upper Endoscopy',
+        description:
+          'May be recommended if symptoms are severe or persistent, to check for ulcers or GERD.',
+        icon: Stethoscope,
+      },
+    ],
+    icon: Shield,
+  },
+  {
+    condition: 'constipation',
+    title: 'Diagnosing Constipation',
+    tests: [
+      {
+        name: 'Physical Exam & History',
+        description:
+          'Review of your symptoms, diet, and bowel habits is the first step.',
+        icon: Activity,
+        recommended: true,
+      },
+      {
+        name: 'Blood Test',
+        description:
+          'To check for underlying conditions like an underactive thyroid.',
+        icon: TestTube,
+      },
+    ],
+    icon: Shield,
   },
 ];
