@@ -164,7 +164,7 @@ export const precautions: Precaution[] = [
     ],
     icon: Droplets,
   },
-    {
+  {
     condition: 'diabetes mellitus',
     title: 'Diabetes Mellitus Care',
     advice: [
@@ -707,7 +707,7 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Droplets,
   },
-    {
+  {
     condition: 'diabetes mellitus',
     title: 'Diagnosing Diabetes Mellitus',
     tests: [
@@ -722,7 +722,7 @@ export const testSuggestions: TestSuggestion[] = [
         description: 'Measures your blood sugar after an overnight fast.',
         icon: TestTube,
       },
-        {
+      {
         name: 'Glucose Tolerance Test',
         description: 'Measures your blood sugar before and after you drink a liquid that contains glucose.',
         icon: FlaskConical,
@@ -784,7 +784,7 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Smile,
   },
-    {
+  {
     condition: 'anxiety',
     title: 'Diagnosing Anxiety',
     tests: [
@@ -820,7 +820,7 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Bone,
   },
-   {
+  {
     condition: 'arthritis',
     title: 'Diagnosing Arthritis',
     tests: [
