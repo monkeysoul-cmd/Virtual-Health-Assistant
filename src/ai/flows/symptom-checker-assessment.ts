@@ -31,6 +31,8 @@ const symptomCheckerPrompt = ai.definePrompt({
   input: {schema: SymptomCheckerAssessmentInputSchema},
   output: {schema: SymptomCheckerAssessmentOutputSchema},
   prompt: `You are a medical assistant. Based on the symptoms provided, return a list of the top 3 most likely health conditions.
+  If the symptoms strongly suggest a single condition, return only that condition.
+  For bone-related injuries, use the term "fracture".
   The output should be a list of health conditions.
 
   Symptoms: {{{symptoms}}}

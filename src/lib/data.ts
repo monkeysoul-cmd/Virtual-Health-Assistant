@@ -169,6 +169,17 @@ export const precautions: Precaution[] = [
     ],
     icon: Bandage,
   },
+  {
+    condition: 'fracture',
+    title: 'Fracture Care',
+    advice: [
+      'Immobilize the injured area and avoid moving it.',
+      'Apply a cold pack to reduce swelling and pain.',
+      'Elevate the limb if possible.',
+      'Seek immediate medical attention.',
+    ],
+    icon: Bone,
+  },
 ];
 
 export interface TestSuggestion {
@@ -318,5 +329,22 @@ export const testSuggestions: TestSuggestion[] = [
       },
     ],
     icon: Bandage,
+  },
+  {
+    condition: 'fracture',
+    title: 'Tests for Fractures',
+    tests: [
+      {
+        name: 'X-ray',
+        description: 'The most common way to diagnose a fracture.',
+        icon: Bone,
+      },
+      {
+        name: 'MRI or CT Scan',
+        description: 'May be used for more detailed images of the bone and surrounding tissue.',
+        icon: Brain,
+      },
+    ],
+    icon: Bone,
   },
 ];
