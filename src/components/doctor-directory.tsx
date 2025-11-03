@@ -10,9 +10,12 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { MapPin, Phone, Search, Stethoscope } from 'lucide-react';
+import { DoctorDetailsDialog } from './doctor-details-dialog';
+import type { Doctor } from '@/lib/data';
 
 export function DoctorDirectory() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
 
   const filteredDoctors = doctors.filter(doctor =>
     doctor.area.toLowerCase().includes(searchQuery.toLowerCase())
@@ -45,7 +48,8 @@ export function DoctorDirectory() {
         {filteredDoctors.map(doctor => (
           <Card
             key={doctor.id}
-            className="bg-card/80 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300 shadow-lg"
+            className="bg-card/80 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300 shadow-lg cursor-pointer"
+            onClick={() => setSelectedDoctor(doctor)}
           >
             <CardHeader className="flex flex-row items-center gap-4">
               <div className="bg-primary/20 p-3 rounded-full">
@@ -77,6 +81,12 @@ export function DoctorDirectory() {
           </p>
         )}
       </div>
+      {selectedDoctor && (
+        <DoctorDetailsDialog
+          doctor={selectedDoctor}
+          onClose={() => setSelectedDoctor(null)}
+        />
+      )}
     </section>
   );
 }
