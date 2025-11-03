@@ -6,7 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { FlaskConical } from 'lucide-react';
+import { FlaskConical, Star } from 'lucide-react';
+import { Badge } from './ui/badge';
 
 interface TestSuggestionsProps {
   conditions: string[];
@@ -36,9 +37,20 @@ export function TestSuggestions({ conditions }: TestSuggestionsProps) {
                 <div className="bg-primary/20 p-3 rounded-lg">
                   <test.icon className="w-6 h-6 text-primary" />
                 </div>
-                <CardTitle className="text-lg font-semibold">
-                  {test.name}
-                </CardTitle>
+                <div className="flex-1">
+                  <CardTitle className="text-lg font-semibold flex items-center justify-between">
+                    <span>{test.name}</span>
+                    {test.recommended && (
+                      <Badge
+                        variant="default"
+                        className="flex items-center gap-1 text-xs"
+                      >
+                        <Star className="w-3 h-3" />
+                        Recommended
+                      </Badge>
+                    )}
+                  </CardTitle>
+                </div>
               </CardHeader>
               <CardContent>
                 <CardDescription>{test.description}</CardDescription>

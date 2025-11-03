@@ -185,7 +185,12 @@ export const precautions: Precaution[] = [
 export interface TestSuggestion {
   condition: string;
   title: string;
-  tests: { name: string; description: string; icon: React.ElementType }[];
+  tests: {
+    name: string;
+    description: string;
+    icon: React.ElementType;
+    recommended?: boolean;
+  }[];
   icon: React.ElementType;
 }
 
@@ -199,6 +204,7 @@ export const testSuggestions: TestSuggestion[] = [
         description:
           'A doctor can often diagnose a cold based on signs and symptoms.',
         icon: Activity,
+        recommended: true,
       },
       {
         name: 'Rapid Strep Test',
@@ -222,6 +228,7 @@ export const testSuggestions: TestSuggestion[] = [
         name: 'RT-PCR Test',
         description: 'A more accurate molecular test to confirm the flu virus.',
         icon: Microscope,
+        recommended: true,
       },
     ],
     icon: Thermometer,
@@ -234,6 +241,7 @@ export const testSuggestions: TestSuggestion[] = [
         name: 'Neurological Examination',
         description: 'To assess motor skills, reflexes, and sensory function.',
         icon: Activity,
+        recommended: true,
       },
       {
         name: 'MRI or CT Scan',
@@ -253,6 +261,7 @@ export const testSuggestions: TestSuggestion[] = [
         description:
           'To identify bacteria, viruses, or parasites causing the infection.',
         icon: FlaskConical,
+        recommended: true,
       },
       {
         name: 'Blood Test',
@@ -268,12 +277,15 @@ export const testSuggestions: TestSuggestion[] = [
     tests: [
       {
         name: 'Skin Prick Test',
-        description: 'A common test to identify allergens by applying them to the skin.',
+        description:
+          'A common test to identify allergens by applying them to the skin.',
         icon: TestTube,
+        recommended: true,
       },
       {
         name: 'Blood Test (IgE)',
-        description: 'Measures the amount of allergy-causing antibodies in your bloodstream.',
+        description:
+          'Measures the amount of allergy-causing antibodies in your bloodstream.',
         icon: Microscope,
       },
     ],
@@ -287,10 +299,12 @@ export const testSuggestions: TestSuggestion[] = [
         name: 'Chest X-Ray',
         description: 'To rule out pneumonia or other lung conditions.',
         icon: Wind,
+        recommended: true,
       },
       {
         name: 'Sputum Test',
-        description: 'Analysis of mucus to check for bacteria or other organisms.',
+        description:
+          'Analysis of mucus to check for bacteria or other organisms.',
         icon: Microscope,
       },
     ],
@@ -302,12 +316,15 @@ export const testSuggestions: TestSuggestion[] = [
     tests: [
       {
         name: 'Physical Exam',
-        description: 'A doctor can typically diagnose a tension headache by discussing your symptoms.',
+        description:
+          'A doctor can typically diagnose a tension headache by discussing your symptoms.',
         icon: Activity,
+        recommended: true,
       },
       {
         name: 'Trigger Point Check',
-        description: 'The doctor may check for muscle soreness in your neck, shoulders, and head.',
+        description:
+          'The doctor may check for muscle soreness in your neck, shoulders, and head.',
         icon: Stethoscope,
       },
     ],
@@ -319,13 +336,16 @@ export const testSuggestions: TestSuggestion[] = [
     tests: [
       {
         name: 'Physical Examination',
-        description: 'A doctor will check for swelling, pain, and range of motion.',
+        description:
+          'A doctor will check for swelling, pain, and range of motion.',
         icon: Activity,
       },
       {
         name: 'X-ray or MRI',
-        description: 'To rule out a fracture and assess the severity of ligament damage.',
+        description:
+          'To rule out a fracture and assess the severity of ligament damage.',
         icon: Bone,
+        recommended: true,
       },
     ],
     icon: Bandage,
@@ -338,10 +358,12 @@ export const testSuggestions: TestSuggestion[] = [
         name: 'X-ray',
         description: 'The most common way to diagnose a fracture.',
         icon: Bone,
+        recommended: true,
       },
       {
         name: 'MRI or CT Scan',
-        description: 'May be used for more detailed images of the bone and surrounding tissue.',
+        description:
+          'May be used for more detailed images of the bone and surrounding tissue.',
         icon: Brain,
       },
     ],
