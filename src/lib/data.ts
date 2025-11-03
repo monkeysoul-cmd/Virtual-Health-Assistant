@@ -104,6 +104,17 @@ export const precautions: Precaution[] = [
     icon: Pill,
   },
   {
+    condition: 'influenza (flu)',
+    title: 'Influenza (Flu) Management',
+    advice: [
+      'Stay home and rest. Avoid contact with others.',
+      'Drink plenty of fluids to prevent dehydration.',
+      'Consider over-the-counter antiviral medications if recommended by a doctor.',
+      'Get a flu shot annually for prevention.',
+    ],
+    icon: Pill,
+  },
+  {
     condition: 'migraine',
     title: 'Migraine Relief',
     advice: [
@@ -217,6 +228,24 @@ export const testSuggestions: TestSuggestion[] = [
   },
   {
     condition: 'influenza',
+    title: 'Tests for Influenza',
+    tests: [
+      {
+        name: 'Rapid Influenza Diagnostic Test (RIDT)',
+        description: 'Detects flu antigens in a nasal swab.',
+        icon: TestTube,
+      },
+      {
+        name: 'RT-PCR Test',
+        description: 'A more accurate molecular test to confirm the flu virus.',
+        icon: Microscope,
+        recommended: true,
+      },
+    ],
+    icon: Thermometer,
+  },
+  {
+    condition: 'influenza (flu)',
     title: 'Tests for Influenza',
     tests: [
       {

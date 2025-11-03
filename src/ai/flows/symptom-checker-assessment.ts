@@ -44,6 +44,7 @@ const symptomCheckerPrompt = ai.definePrompt({
   If the symptoms strongly suggest a single condition, return only that condition with a high likelihood (e.g., 95%).
   For bone-related injuries, use the term "fracture".
   The output should be a list of health conditions with their likelihood.
+  The condition name should be a short, one or two-word identifier (e.g., "common cold", "migraine", "influenza").
 
   Symptoms: {{{symptoms}}}
   `,
