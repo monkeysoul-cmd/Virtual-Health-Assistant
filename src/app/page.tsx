@@ -21,7 +21,9 @@ export default function Home() {
 
       <div className="w-full border-t border-border my-12 md:my-16"></div>
 
-      <DoctorDirectory />
+      <div id="doctor-directory">
+        <DoctorDirectory />
+      </div>
 
       <footer className="w-full max-w-4xl mx-auto text-center mt-12 md:my-16 text-sm text-muted-foreground">
         <p>&copy; {new Date().getFullYear()} HealthWise Chat. All Rights Reserved.</p>

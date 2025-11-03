@@ -9,6 +9,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -20,6 +21,7 @@ import {
   Sparkles,
   Stethoscope,
   FileText,
+  User,
 } from 'lucide-react';
 import { PrecautionaryAdvice } from './precautionary-advice';
 import { TestSuggestions } from './test-suggestions';
@@ -57,6 +59,12 @@ export function SymptomCheckerForm() {
       });
     }
   }, [state.error, toast]);
+
+  const handleConsultClick = () => {
+    document
+      .getElementById('doctor-directory')
+      ?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -127,7 +135,23 @@ export function SymptomCheckerForm() {
                 );
               })}
             </div>
-
+            <Card className="bg-primary/10 border-primary/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 font-headline">
+                  <User className="text-primary" />
+                  Next Steps: Consult a Professional
+                </CardTitle>
+                <CardDescription>
+                  This AI assessment is a helpful first step, but it is not a
+                  substitute for professional medical advice. For an accurate
+                  diagnosis and treatment plan, please consult a qualified
+                  healthcare provider.
+                </CardDescription>
+              </CardHeader>
+              <CardFooter>
+                <Button onClick={handleConsultClick}>Find a Doctor</Button>
+              </CardFooter>
+            </Card>
             <Alert
               variant="destructive"
               className="bg-destructive/10 border-destructive/50 text-destructive-foreground"
