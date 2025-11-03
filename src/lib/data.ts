@@ -164,6 +164,17 @@ export const precautions: Precaution[] = [
     ],
     icon: Droplets,
   },
+    {
+    condition: 'diabetes mellitus',
+    title: 'Diabetes Mellitus Care',
+    advice: [
+      'Monitor your blood sugar levels regularly as advised by your doctor.',
+      'Follow a balanced meal plan and control carbohydrate intake.',
+      'Engage in regular physical activity to help control blood glucose.',
+      'Take all prescribed medications, including insulin, exactly as directed.',
+    ],
+    icon: Droplets,
+  },
   {
     condition: 'asthma',
     title: 'Asthma Control',
@@ -198,8 +209,30 @@ export const precautions: Precaution[] = [
     icon: Smile,
   },
   {
+    condition: 'anxiety',
+    title: 'Managing Anxiety',
+    advice: [
+      'Practice mindfulness, meditation, and deep-breathing exercises.',
+      'Engage in regular physical activity to reduce stress.',
+      'Maintain a regular sleep schedule.',
+      'Consider therapy or counseling to develop coping strategies.',
+    ],
+    icon: Smile,
+  },
+  {
     condition: 'osteoarthritis',
     title: 'Osteoarthritis Joint Care',
+    advice: [
+      'Engage in low-impact exercises like swimming or cycling to maintain joint flexibility.',
+      'Maintain a healthy weight to reduce stress on your joints.',
+      'Use hot or cold packs to soothe joint pain.',
+      'Consider physical therapy for targeted exercises and support.',
+    ],
+    icon: Bone,
+  },
+  {
+    condition: 'arthritis',
+    title: 'Arthritis Joint Care',
     advice: [
       'Engage in low-impact exercises like swimming or cycling to maintain joint flexibility.',
       'Maintain a healthy weight to reduce stress on your joints.',
@@ -244,6 +277,17 @@ export const precautions: Precaution[] = [
   {
     condition: 'acid reflux (gerd)',
     title: 'Managing Acid Reflux (GERD)',
+    advice: [
+      'Avoid trigger foods like spicy, fatty, or acidic items.',
+      'Do not lie down for at least 2-3 hours after eating.',
+      'Elevate the head of your bed when sleeping.',
+      'Eat smaller meals and maintain a healthy weight.',
+    ],
+    icon: Shield,
+  },
+  {
+    condition: 'gerd',
+    title: 'Managing GERD (Acid Reflux)',
     advice: [
       'Avoid trigger foods like spicy, fatty, or acidic items.',
       'Do not lie down for at least 2-3 hours after eating.',
@@ -395,6 +439,72 @@ export const precautions: Precaution[] = [
     ],
     icon: Droplets,
   },
+  {
+    condition: 'dehydration',
+    title: 'Managing Dehydration',
+    advice: [
+      'Drink plenty of fluids, such as water, oral rehydration solutions, or broth.',
+      'Avoid caffeine and alcohol as they can worsen dehydration.',
+      'Eat foods with high water content like fruits and vegetables.',
+      'Rest in a cool place if dehydration is due to heat or exertion.',
+    ],
+    icon: Droplets,
+  },
+  {
+    condition: 'diabetes insipidus',
+    title: 'Managing Diabetes Insipidus',
+    advice: [
+      'Drink enough fluids to prevent dehydration, as guided by your doctor.',
+      'Follow the treatment plan prescribed by your healthcare provider, which may include medication.',
+      'Monitor for signs of dehydration, such as dry mouth, fatigue, and dark urine.',
+      'Wear a medical alert bracelet to inform others of your condition.',
+    ],
+    icon: Droplets,
+  },
+  {
+    condition: 'angina',
+    title: 'Managing Angina',
+    advice: [
+      'Rest immediately when you feel chest pain.',
+      'Take prescribed medication, like nitroglycerin, as directed.',
+      'Make lifestyle changes: quit smoking, eat a heart-healthy diet, and manage stress.',
+      'Call for emergency medical help if the pain is severe, new, or doesn\'t go away with rest.',
+    ],
+    icon: HeartPulse,
+  },
+  {
+    condition: 'gout',
+    title: 'Managing Gout',
+    advice: [
+      'Avoid purine-rich foods like red meat, organ meats, and certain seafood.',
+      'Limit alcohol, especially beer, and sugary drinks.',
+      'Drink plenty of fluids, especially water, to help flush out uric acid.',
+      'During an attack, rest and elevate the affected joint, and use cold compresses.',
+    ],
+    icon: Bone,
+  },
+  {
+    condition: 'heart attack',
+    title: 'Immediate Action for Heart Attack',
+    advice: [
+      'Call emergency services immediately. Do not delay.',
+      'Chew and swallow an aspirin if not allergic, as it can help thin the blood.',
+      'Sit down and rest in a comfortable position.',
+      'If you use nitroglycerin, take it as prescribed.',
+    ],
+    icon: HeartPulse,
+  },
+  {
+    condition: 'bursitis',
+    title: 'Managing Bursitis',
+    advice: [
+      'Rest the affected joint and avoid activities that worsen the pain.',
+      'Apply ice packs to the area for 15-20 minutes at a time to reduce inflammation.',
+      'Use over-the-counter pain relievers if needed.',
+      'Consider using pads or cushions to protect the affected area from pressure.',
+    ],
+    icon: Bandage,
+  },
 ];
 
 export interface TestSuggestion {
@@ -542,6 +652,29 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Droplets,
   },
+    {
+    condition: 'diabetes mellitus',
+    title: 'Diagnosing Diabetes Mellitus',
+    tests: [
+      {
+        name: 'A1C Test',
+        description: 'Measures your average blood sugar level for the past 2-3 months.',
+        icon: Droplets,
+        recommended: true,
+      },
+      {
+        name: 'Fasting Blood Sugar Test',
+        description: 'Measures your blood sugar after an overnight fast.',
+        icon: TestTube,
+      },
+        {
+        name: 'Glucose Tolerance Test',
+        description: 'Measures your blood sugar before and after you drink a liquid that contains glucose.',
+        icon: FlaskConical,
+      },
+    ],
+    icon: Droplets,
+  },
   {
     condition: 'asthma',
     title: 'Diagnosing Asthma',
@@ -596,6 +729,24 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Smile,
   },
+    {
+    condition: 'anxiety',
+    title: 'Diagnosing Anxiety',
+    tests: [
+      {
+        name: 'Psychological Evaluation',
+        description: 'A doctor or mental health professional discusses thoughts, feelings, and behavior.',
+        icon: Smile,
+        recommended: true,
+      },
+      {
+        name: 'Physical Exam',
+        description: 'To rule out other health problems that could be causing symptoms.',
+        icon: Activity,
+      },
+    ],
+    icon: Smile,
+  },
   {
     condition: 'osteoarthritis',
     title: 'Diagnosing Osteoarthritis',
@@ -610,6 +761,24 @@ export const testSuggestions: TestSuggestion[] = [
         name: 'MRI Scan',
         description: 'Provides detailed images of bone and soft tissues, like cartilage.',
         icon: Brain,
+      },
+    ],
+    icon: Bone,
+  },
+   {
+    condition: 'arthritis',
+    title: 'Diagnosing Arthritis',
+    tests: [
+      {
+        name: 'X-ray',
+        description: 'Can show joint changes and bone damage.',
+        icon: Bone,
+        recommended: true,
+      },
+      {
+        name: 'Blood Tests',
+        description: 'To check for inflammation markers (like C-reactive protein) and specific antibodies (like rheumatoid factor).',
+        icon: TestTube,
       },
     ],
     icon: Bone,
@@ -670,6 +839,24 @@ export const testSuggestions: TestSuggestion[] = [
   },
   {
     condition: 'acid reflux (gerd)',
+    title: 'Diagnosing GERD',
+    tests: [
+      {
+        name: 'Upper Endoscopy',
+        description: 'To visually inspect the esophagus and stomach for inflammation.',
+        icon: Stethoscope,
+        recommended: true,
+      },
+      {
+        name: 'Ambulatory Acid (pH) Probe Test',
+        description: 'Monitors the amount of acid in your esophagus over 24 hours.',
+        icon: Activity,
+      },
+    ],
+    icon: Shield,
+  },
+  {
+    condition: 'gerd',
     title: 'Diagnosing GERD',
     tests: [
       {
@@ -768,7 +955,7 @@ export const testSuggestions: TestSuggestion[] = [
       {
         name: 'Chest X-Ray',
         description: 'To rule out pneumonia or other lung conditions.',
-        icon: Wind,
+        icon: AirVent,
         recommended: true,
       },
       {
@@ -928,5 +1115,113 @@ export const testSuggestions: TestSuggestion[] = [
       },
     ],
     icon: Droplets,
+  },
+  {
+    condition: 'dehydration',
+    title: 'Diagnosing Dehydration',
+    tests: [
+      {
+        name: 'Physical Exam',
+        description: 'A doctor will check for signs like low blood pressure, rapid heartbeat, and skin elasticity.',
+        icon: Activity,
+        recommended: true,
+      },
+      {
+        name: 'Blood Tests',
+        description: 'To check your electrolyte levels and kidney function.',
+        icon: TestTube,
+      },
+    ],
+    icon: Droplets,
+  },
+  {
+    condition: 'diabetes insipidus',
+    title: 'Diagnosing Diabetes Insipidus',
+    tests: [
+      {
+        name: 'Water Deprivation Test',
+        description: 'Monitors changes in body weight, urine output, and urine composition when you stop drinking water.',
+        icon: FlaskConical,
+        recommended: true,
+      },
+      {
+        name: 'Urinalysis',
+        description: 'To check if your urine is too diluted.',
+        icon: TestTube,
+      },
+    ],
+    icon: Droplets,
+  },
+  {
+    condition: 'angina',
+    title: 'Diagnosing Angina',
+    tests: [
+      {
+        name: 'Electrocardiogram (ECG)',
+        description: 'Records electrical signals from your heart. Can show evidence of a previous heart attack or one in progress.',
+        icon: HeartPulse,
+        recommended: true,
+      },
+      {
+        name: 'Stress Test',
+        description: 'Measures how your heart performs during physical activity.',
+        icon: Activity,
+      },
+    ],
+    icon: HeartPulse,
+  },
+  {
+    condition: 'gout',
+    title: 'Diagnosing Gout',
+    tests: [
+      {
+        name: 'Joint Fluid Test',
+        description: 'A needle is used to draw fluid from your affected joint to look for urate crystals.',
+        icon: TestTube,
+        recommended: true,
+      },
+      {
+        name: 'Blood Test',
+        description: 'To measure the levels of uric acid in your blood.',
+        icon: Droplets,
+      },
+    ],
+    icon: Bone,
+  },
+  {
+    condition: 'heart attack',
+    title: 'Diagnosing a Heart Attack',
+    tests: [
+      {
+        name: 'Electrocardiogram (ECG)',
+        description: 'The primary tool to diagnose a heart attack by recording the heart\'s electrical activity.',
+        icon: HeartPulse,
+        recommended: true,
+      },
+      {
+        name: 'Cardiac Enzyme Blood Test',
+        description: 'Measures levels of proteins (like troponin) that are released when heart muscle is damaged.',
+        icon: TestTube,
+      },
+    ],
+    icon: HeartPulse,
+  },
+  {
+    condition: 'bursitis',
+    title: 'Diagnosing Bursitis',
+    tests: [
+      {
+        name: 'Physical Exam',
+        description: 'A doctor can often diagnose bursitis based on a physical exam and your symptoms.',
+        icon: Activity,
+        recommended: true,
+      },
+      {
+        name: 'Imaging Tests (X-ray, MRI)',
+        description: 'To rule out other causes of your symptoms and look for signs of inflammation.',
+        icon: Bone,
+      },
+    ],
+    icon: Bandage,
   },
 ];
