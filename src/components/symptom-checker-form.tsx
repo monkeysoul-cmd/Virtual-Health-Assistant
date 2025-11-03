@@ -57,6 +57,8 @@ export function SymptomCheckerForm() {
       });
     }
   }, [state.error, toast]);
+  
+  const mostProbableCondition = state.potentialConditions && state.potentialConditions.length > 0 ? [state.potentialConditions[0]] : [];
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -101,23 +103,20 @@ export function SymptomCheckerForm() {
           <CardContent className="space-y-8">
             <div>
               <h3 className="text-lg font-semibold mb-3">
-                Probable Condition:
+                Most Probable Condition:
               </h3>
               <div className="flex flex-wrap gap-3">
-                {state.potentialConditions.map((condition, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="text-base font-medium px-4 py-2 capitalize"
-                  >
-                    {condition}
-                  </Badge>
-                ))}
+                <Badge
+                  variant="secondary"
+                  className="text-base font-medium px-4 py-2 capitalize"
+                >
+                  {mostProbableCondition[0]}
+                </Badge>
               </div>
             </div>
 
-            <PrecautionaryAdvice conditions={state.potentialConditions} />
-            <TestSuggestions conditions={state.potentialConditions} />
+            <PrecautionaryAdvice conditions={mostProbableCondition} />
+            <TestSuggestions conditions={mostProbableCondition} />
 
             <Alert
               variant="destructive"
