@@ -23,7 +23,7 @@ export function DoctorDirectory() {
   );
 
   return (
-    <section className="w-full max-w-4xl mx-auto py-8 md:py-12">
+    <section className="w-full mx-auto py-8 md:py-12">
       <div className="space-y-4 text-center">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl font-headline">
           Find a Doctor

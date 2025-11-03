@@ -17,13 +17,15 @@ export default function Home() {
         </p>
       </header>
 
-      <SymptomCheckerForm />
+      <section className="w-full max-w-4xl mx-auto">
+        <SymptomCheckerForm />
 
-      <div className="w-full border-t border-border my-12 md:my-16"></div>
+        <div className="w-full border-t border-border my-12 md:my-16"></div>
 
-      <div id="doctor-directory">
-        <DoctorDirectory />
-      </div>
+        <div id="doctor-directory">
+          <DoctorDirectory />
+        </div>
+      </section>
 
       <footer className="w-full max-w-4xl mx-auto text-center mt-12 md:my-16 text-sm text-muted-foreground">
         <p>&copy; {new Date().getFullYear()} Virtual Health Assistant. All Rights Reserved.</p>
