@@ -25,11 +25,14 @@ import {
   PlusCircle,
   X,
   Award,
+  MapPin,
+  Phone,
 } from 'lucide-react';
 import { PrecautionaryAdvice } from './precautionary-advice';
 import { TestSuggestions } from './test-suggestions';
 import { Badge } from './ui/badge';
 import { Separator } from './ui/separator';
+import { doctors, type Doctor } from '@/lib/data';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -81,6 +84,38 @@ const commonConditions: { [key: string]: string[] } = {
   Gastroenteritis: ['diarrhea', 'vomiting', 'stomach cramps'],
 };
 
+const conditionToSpecialty: { [key: string]: string } = {
+  'common cold': 'General Practitioner',
+  influenza: 'General Practitioner',
+  'influenza (flu)': 'General Practitioner',
+  migraine: 'Neurologist',
+  'allergic rhinitis': 'General Practitioner',
+  hypertension: 'Cardiologist',
+  'type 2 diabetes': 'General Practitioner',
+  asthma: 'General Practitioner',
+  gastritis: 'General Practitioner',
+  'anxiety disorder': 'Neurologist',
+  osteoarthritis: 'Orthopedist',
+  'acute bronchitis': 'General Practitioner',
+  'typhoid fever': 'General Practitioner',
+  pneumonia: 'General Practitioner',
+  'acid reflux (gerd)': 'General Practitioner',
+  malaria: 'General Practitioner',
+  'dengue fever': 'General Practitioner',
+  gastroenteritis: 'General Practitioner',
+  allergy: 'General Practitioner',
+  bronchitis: 'General Practitioner',
+  'tension headache': 'Neurologist',
+  sprain: 'Orthopedist',
+  fracture: 'Orthopedist',
+  'joint pain': 'Orthopedist',
+  'headache and dizziness': 'Neurologist',
+  'chest pain': 'Cardiologist',
+  'breathing difficulty': 'General Practitioner',
+  'excessive thirst': 'General Practitioner',
+};
+
+
 export function SymptomCheckerForm() {
   const [state, formAction] = useFormState(getHealthAssessment, initialState);
   const [symptoms, setSymptoms] = useState('');
@@ -123,6 +158,13 @@ export function SymptomCheckerForm() {
     state.potentialConditions && state.potentialConditions[0];
   const otherConditions =
     state.potentialConditions && state.potentialConditions.slice(1);
+
+  const recommendedDoctor = mostProbableCondition
+    ? doctors.find(
+        doctor =>
+          doctor.specialty === conditionToSpecialty[mostProbableCondition.condition]
+      )
+    : null;
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -282,15 +324,54 @@ export function SymptomCheckerForm() {
                   <User className="text-primary" />
                   Next Steps: Consult a Professional
                 </CardTitle>
-                <CardDescription>
-                  This AI assessment is a helpful first step, but it is not a
-                  substitute for professional medical advice. For an accurate
-                  diagnosis and treatment plan, please consult a qualified
-                  healthcare provider.
-                </CardDescription>
+                {recommendedDoctor ? (
+                  <CardDescription>
+                    For an accurate diagnosis, we recommend consulting a specialist. Based on your assessment, here is a recommended doctor:
+                  </CardDescription>
+                ) : (
+                  <CardDescription>
+                    This AI assessment is a helpful first step, but it is not a
+                    substitute for professional medical advice. For an accurate
+                    diagnosis and treatment plan, please consult a qualified
+                    healthcare provider.
+                  </CardDescription>
+                )}
               </CardHeader>
+              <CardContent>
+                {recommendedDoctor && (
+                  <Card
+                    key={recommendedDoctor.id}
+                    className="bg-card/80 backdrop-blur-sm shadow-lg mb-4"
+                  >
+                    <CardHeader className="flex flex-row items-center gap-4">
+                      <div className="bg-primary/20 p-3 rounded-full">
+                        <recommendedDoctor.icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <CardTitle className="font-headline">{recommendedDoctor.name}</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm">
+                        <Stethoscope className="w-4 h-4 text-primary" />
+                        <span>{recommendedDoctor.specialty}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <MapPin className="w-4 h-4 text-primary" />
+                        <span>{recommendedDoctor.area}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Phone className="w-4 h-4 text-primary" />
+                        <span>{recommendedDoctor.contact}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </CardContent>
               <CardFooter>
-                <Button onClick={handleConsultClick}>Find a Doctor</Button>
+                <Button onClick={handleConsultClick}>
+                  {recommendedDoctor ? 'Find Other Doctors' : 'Find a Doctor'}
+                </Button>
               </CardFooter>
             </Card>
             <Alert
