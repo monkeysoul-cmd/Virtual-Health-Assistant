@@ -80,7 +80,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='hsl(120,25%,45%)' fill-opacity='0.05'%3E%3Cpath d='M97.333 9.423L9.423 97.333c-3.12 3.12-3.12 8.18 0 11.3l11.334 11.334c3.12 3.12 8.18 3.12 11.3 0L120 32.057V0H87.943l9.39 9.423zM0 87.943l11.334 11.334c3.12 3.12 8.18 3.12 11.3 0l97.333-87.91V0H87.943L0 87.943z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3Cpath id='a' d='M50 100 H70 L75 90 L85 110 L90 100 H110 L115 95 L125 105 L130 100 H150' fill='none' stroke='hsl(120, 25%, 45%)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/defs%3E%3Cg opacity='0.05'%3E%3Cuse href='%23a'/%3E%3Cuse href='%23a' y='50'/%3E%3Cuse href='%23a' y='100'/%3E%3Cuse href='%23a' y='150'/%3E%3C/g%3E%3C/svg%3E");
     background-attachment: fixed;
+    background-size: 200px 200px;
   }
 }
