@@ -100,26 +100,32 @@ export function SymptomCheckerForm() {
           </CardHeader>
           <CardContent className="space-y-8">
             <div className="space-y-8">
-              {state.potentialConditions.map((condition, index) => (
-                <div key={index} className="space-y-6 rounded-lg border bg-background/50 p-4 md:p-6">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-3">
-                      Potential Condition:
-                    </h3>
-                    <div className="flex flex-wrap gap-3">
-                      <Badge
-                        variant="secondary"
-                        className="text-base font-medium px-4 py-2 capitalize"
-                      >
-                        {condition}
-                      </Badge>
+              {state.potentialConditions.map((condition, index) => {
+                const normalizedCondition = condition.trim().toLowerCase();
+                return (
+                  <div
+                    key={index}
+                    className="space-y-6 rounded-lg border bg-background/50 p-4 md:p-6"
+                  >
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3">
+                        Potential Condition:
+                      </h3>
+                      <div className="flex flex-wrap gap-3">
+                        <Badge
+                          variant="secondary"
+                          className="text-base font-medium px-4 py-2 capitalize"
+                        >
+                          {condition}
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
 
-                  <PrecautionaryAdvice conditions={[condition]} />
-                  <TestSuggestions conditions={[condition]} />
-                </div>
-              ))}
+                    <PrecautionaryAdvice conditions={[normalizedCondition]} />
+                    <TestSuggestions conditions={[normalizedCondition]} />
+                  </div>
+                );
+              })}
             </div>
 
             <Alert
