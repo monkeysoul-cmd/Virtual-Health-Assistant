@@ -77,6 +77,14 @@ export const doctors: Doctor[] = [
     contact: '+91 98765 43215',
     icon: Stethoscope,
   },
+  {
+    id: '7',
+    name: 'Dr. Anshika Ahuja',
+    specialty: 'General Practitioner',
+    area: 'Rajnagar',
+    contact: '+91 76781 34808',
+    icon: Stethoscope,
+  },
 ];
 
 export interface Precaution {
@@ -164,7 +172,7 @@ export const precautions: Precaution[] = [
     ],
     icon: Droplets,
   },
-    {
+  {
     condition: 'diabetes mellitus',
     title: 'Diabetes Mellitus Care',
     advice: [
@@ -560,6 +568,17 @@ export const precautions: Precaution[] = [
     ],
     icon: Shield,
   },
+  {
+    condition: 'anxiety attack',
+    title: 'Coping with an Anxiety Attack',
+    advice: [
+      'Focus on your breathing. Try slow, deep breaths.',
+      'Acknowledge that you are having an anxiety attack and that it will pass.',
+      'Use the 5-4-3-2-1 grounding technique: name 5 things you see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste.',
+      'If attacks are frequent, seek help from a mental health professional.',
+    ],
+    icon: Smile,
+  },
 ];
 
 export interface TestSuggestion {
@@ -707,7 +726,7 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Droplets,
   },
-    {
+  {
     condition: 'diabetes mellitus',
     title: 'Diagnosing Diabetes Mellitus',
     tests: [
@@ -722,7 +741,7 @@ export const testSuggestions: TestSuggestion[] = [
         description: 'Measures your blood sugar after an overnight fast.',
         icon: TestTube,
       },
-        {
+      {
         name: 'Glucose Tolerance Test',
         description: 'Measures your blood sugar before and after you drink a liquid that contains glucose.',
         icon: FlaskConical,
@@ -784,7 +803,7 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Smile,
   },
-    {
+  {
     condition: 'anxiety',
     title: 'Diagnosing Anxiety',
     tests: [
@@ -820,7 +839,7 @@ export const testSuggestions: TestSuggestion[] = [
     ],
     icon: Bone,
   },
-   {
+  {
     condition: 'arthritis',
     title: 'Diagnosing Arthritis',
     tests: [
@@ -1378,5 +1397,23 @@ export const testSuggestions: TestSuggestion[] = [
       },
     ],
     icon: Shield,
+  },
+  {
+    condition: 'anxiety attack',
+    title: 'Diagnosing an Anxiety Attack',
+    tests: [
+      {
+        name: 'Psychological Evaluation',
+        description: 'A mental health professional will discuss your symptoms, triggers, and history.',
+        icon: Smile,
+        recommended: true,
+      },
+      {
+        name: 'Physical Exam',
+        description: 'To rule out any physical conditions that might be causing the symptoms, such as heart or thyroid problems.',
+        icon: Activity,
+      },
+    ],
+    icon: Smile,
   },
 ];
