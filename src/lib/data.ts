@@ -1417,3 +1417,30 @@ export const testSuggestions: TestSuggestion[] = [
     icon: Smile,
   },
 ];
+
+export const symptomData = [
+  { condition: 'Common Cold', symptoms: ['runny nose', 'sneezing', 'sore throat', 'cough'], likelihood: 85 },
+  { condition: 'Influenza (Flu)', symptoms: ['fever', 'chills', 'muscle aches', 'fatigue', 'cough', 'headache'], likelihood: 90 },
+  { condition: 'Migraine', symptoms: ['one-sided headache', 'throbbing pain', 'nausea', 'sensitivity to light'], likelihood: 95 },
+  { condition: 'Allergic Rhinitis', symptoms: ['sneezing', 'runny nose', 'itchy eyes', 'congestion'], likelihood: 80 },
+  { condition: 'Gastritis', symptoms: ['stomach pain', 'nausea', 'vomiting', 'bloating'], likelihood: 75 },
+  { condition: 'Tension Headache', symptoms: ['dull head pain', 'pressure around forehead', 'tenderness on scalp'], likelihood: 88 },
+  { condition: 'Sprain', symptoms: ['pain', 'swelling', 'bruising', 'limited ability to move the joint'], likelihood: 92 },
+  { condition: 'Gastroenteritis', symptoms: ['diarrhea', 'vomiting', 'stomach cramps', 'fever'], likelihood: 85 },
+  { condition: 'Hypertension', symptoms: ['headache', 'shortness of breath', 'nosebleeds'], likelihood: 70 },
+  { condition: 'Type 2 Diabetes', symptoms: ['increased thirst', 'frequent urination', 'hunger', 'fatigue', 'blurred vision'], likelihood: 80 },
+  { condition: 'Asthma', symptoms: ['shortness of breath', 'chest tightness', 'wheezing', 'coughing'], likelihood: 90 },
+  { condition: 'Anxiety Disorder', symptoms: ['excessive worrying', 'feeling agitated', 'restlessness', 'fatigue', 'difficulty concentrating'], likelihood: 85 },
+  { condition: 'Osteoarthritis', symptoms: ['joint pain', 'stiffness', 'tenderness', 'loss of flexibility'], likelihood: 80 },
+  { condition: 'Pneumonia', symptoms: ['chest pain when you breathe or cough', 'confusion or changes in mental awareness', 'cough, which may produce phlegm', 'fatigue', 'fever, sweating and shaking chills'], likelihood: 90 },
+  { condition: 'Dengue Fever', symptoms: ['high fever', 'headache', 'vomiting', 'muscle and joint pains', 'skin rash'], likelihood: 95 },
+  { condition: 'Malaria', symptoms: ['fever', 'chills', 'headache', 'nausea and vomiting', 'muscle pain and fatigue'], likelihood: 88 },
+  { condition: 'Typhoid Fever', symptoms: ['prolonged high fever', 'weakness', 'stomach pain', 'headache', 'loss of appetite'], likelihood: 85 },
+  { condition: 'Acid Reflux (GERD)', symptoms: ['heartburn', 'regurgitation of food or sour liquid', 'chest pain', 'difficulty swallowing'], likelihood: 80 },
+  { condition: 'Fracture', symptoms: ['intense pain', 'deformity', 'swelling, bruising, or tenderness around the injury', 'trouble moving the limb'], likelihood: 98 },
+  { condition: 'Dehydration', symptoms: ['dry mouth', 'little or no urine', 'sleepiness', 'irritability', 'dizziness'], likelihood: 90 },
+  { condition: 'Diabetes Insipidus', symptoms: ['extreme thirst', 'excretion of an excessive amount of diluted urine'], likelihood: 95 },
+  { condition: 'Heart Attack', symptoms: ['chest pain', 'pain in other areas of the upper body', 'shortness of breath', 'cold sweat', 'nausea'], likelihood: 99 },
+  { condition: 'Angina', symptoms: ['chest pain or discomfort', 'pain in arms, neck, jaw, shoulder or back', 'nausea', 'fatigue', 'shortness of breath'], likelihood: 90 },
+  { condition: 'Anxiety Attack', symptoms: ['sudden feeling of intense fear', 'pounding heart', 'sweating', 'shortness of breath', 'trembling'], likelihood: 95 }
+];
