@@ -80,9 +80,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Rich Medical Equipment Pattern: Stethoscopes, Medical Charts (Scribes), Hearts, Plus Signs */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='hsl(120, 25%, 45%25)' stroke-width='1.5' opacity='0.08'%3E%3C!-- Stethoscope --%3E%3Cpath d='M20 20c0 5 4 9 9 9s9-4 9-9-4-9-9-9-9 4-9 9zm9 9v15m0 0a6 6 0 1 0 12 0m-12 0a6 6 0 1 1-12 0'/%3E%3C!-- Medical Chart / Scribe --%3E%3Cpath d='M80 30h30v40H80z'/%3E%3Cpath d='M85 35h20M85 42h20M85 49h15' stroke-width='1'/%3E%3C!-- Plus Sign --%3E%3Cpath d='M130 80h20M140 70v20'/%3E%3C!-- Heart --%3E%3Cpath d='M40 100c-3-3-8-3-11 0l-1 1-1-1c-3-3-8-3-11 0s-3 8 0 11l12 12 12-12c3-3 3-8 0-11z'/%3E%3C!-- Pills --%3E%3Crect x='100' y='110' width='20' height='10' rx='5'/%3E%3C/g%3E%3C/svg%3E");
+    /* Professional Medical Tech Pattern: Stethoscopes, Pulse Waves, and Charts */
+    background-image: 
+      radial-gradient(circle at 2px 2px, hsl(var(--primary) / 0.05) 1px, transparent 0),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='hsl(120, 25%, 45%25)' stroke-width='1' opacity='0.1'%3E%3C!-- Stethoscope --%3E%3Cpath d='M30 40c0 4 3 7 7 7s7-3 7-7-3-7-7-7-7 3-7 7zm7 7v10m0 0a5 5 0 0 0 10 0m-10 0a5 5 0 0 1-10 0'/%3E%3C!-- ECG Pulse --%3E%3Cpath d='M100 50h10l5-15 10 30 5-15h10'/%3E%3C!-- Clipboard (Stenographer/Scribe) --%3E%3Cpath d='M150 120h25v35h-25z'/%3E%3Cpath d='M155 125h15m-15 7h15m-15 7h10' stroke-width='0.5'/%3E%3Cpath d='M158 115h9a2 2 0 0 1 2 2v3h-13v-3a2 2 0 0 1 2-2z' fill='hsl(120, 25%, 45%25)' fill-opacity='0.2'/%3E%3C!-- Subtle Plus --%3E%3Cpath d='M50 160h10m-5-5v10'/%3E%3C/g%3E%3C/svg%3E");
     background-attachment: fixed;
-    background-size: 320px 320px;
+    background-size: 40px 40px, 400px 400px;
   }
 }
