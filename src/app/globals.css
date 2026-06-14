@@ -80,9 +80,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Medical Equipment Pattern: Stethoscope, Pills, Heart, Plus */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='hsl(120, 25%, 45%25)' stroke-width='1.5' opacity='0.08'%3E%3Cpath d='M20 20c0 5 4 9 9 9s9-4 9-9-4-9-9-9-9 4-9 9zm9 9v15m0 0a6 6 0 1 0 12 0m-12 0a6 6 0 1 1-12 0'/%3E%3Cpath d='M80 30h15v20H80z'/%3E%3Cpath d='M87.5 35v10M82.5 40h10'/%3E%3Ccircle cx='30' cy='80' r='8'/%3E%3Cpath d='M30 72v16M22 80h16'/%3E%3Cpath d='M90 85c-3-3-8-3-11 0l-1 1-1-1c-3-3-8-3-11 0s-3 8 0 11l12 12 12-12c3-3 3-8 0-11z'/%3E%3C/g%3E%3C/svg%3E");
+    /* Rich Medical Equipment Pattern: Stethoscopes, Medical Charts (Scribes), Hearts, Plus Signs */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='hsl(120, 25%, 45%25)' stroke-width='1.5' opacity='0.08'%3E%3C!-- Stethoscope --%3E%3Cpath d='M20 20c0 5 4 9 9 9s9-4 9-9-4-9-9-9-9 4-9 9zm9 9v15m0 0a6 6 0 1 0 12 0m-12 0a6 6 0 1 1-12 0'/%3E%3C!-- Medical Chart / Scribe --%3E%3Cpath d='M80 30h30v40H80z'/%3E%3Cpath d='M85 35h20M85 42h20M85 49h15' stroke-width='1'/%3E%3C!-- Plus Sign --%3E%3Cpath d='M130 80h20M140 70v20'/%3E%3C!-- Heart --%3E%3Cpath d='M40 100c-3-3-8-3-11 0l-1 1-1-1c-3-3-8-3-11 0s-3 8 0 11l12 12 12-12c3-3 3-8 0-11z'/%3E%3C!-- Pills --%3E%3Crect x='100' y='110' width='20' height='10' rx='5'/%3E%3C/g%3E%3C/svg%3E");
     background-attachment: fixed;
-    background-size: 240px 240px;
+    background-size: 320px 320px;
   }
 }

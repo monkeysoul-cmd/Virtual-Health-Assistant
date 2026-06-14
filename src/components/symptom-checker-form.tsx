@@ -83,7 +83,7 @@ const commonConditions: { [key: string]: string[] } = {
   Gastritis: ['stomach pain', 'nausea', 'bloating'],
   'Tension Headache': ['dull head pain', 'pressure around forehead'],
   Sprain: ['swelling', 'bruising', 'limited mobility'],
-  Gastroenteritis: ['diarrhea', 'vomiting', 'stomach cramps'],
+  'Gastroenteritis': ['diarrhea', 'vomiting', 'stomach cramps'],
 };
 
 const conditionToSpecialty: { [key: string]: string } = {
@@ -170,8 +170,8 @@ export function SymptomCheckerForm() {
     : null;
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-8">
-      <Card className="bg-card/80 backdrop-blur-sm shadow-lg">
+    <div className="w-full space-y-8 px-4">
+      <Card className="bg-card/80 backdrop-blur-sm shadow-lg w-full">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-headline text-2xl">
             <FileText className="text-primary" />
@@ -253,7 +253,7 @@ export function SymptomCheckerForm() {
       </Card>
 
       {state.potentialConditions && state.potentialConditions.length > 0 && (
-        <Card className="bg-card/80 backdrop-blur-sm shadow-lg animate-in fade-in-50 duration-500">
+        <Card className="bg-card/80 backdrop-blur-sm shadow-lg animate-in fade-in-50 duration-500 w-full">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 font-headline text-2xl">
               <Stethoscope className="text-primary" />
@@ -344,7 +344,7 @@ export function SymptomCheckerForm() {
                 {recommendedDoctor && (
                   <Card
                     key={recommendedDoctor.id}
-                    className="bg-card/80 backdrop-blur-sm shadow-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform duration-300"
+                    className="bg-card/80 backdrop-blur-sm shadow-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform duration-300 max-w-2xl"
                     onClick={() => setSelectedDoctorForBooking(recommendedDoctor)}
                   >
                     <CardHeader className="flex flex-row items-center gap-4">

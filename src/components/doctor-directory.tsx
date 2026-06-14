@@ -23,7 +23,7 @@ export function DoctorDirectory() {
   );
 
   return (
-    <section className="w-full max-w-4xl mx-auto py-8 md:py-12">
+    <section className="w-full py-8 md:py-12 px-4">
       <div className="space-y-4 text-center">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl font-headline">
           Find a Doctor
@@ -32,7 +32,7 @@ export function DoctorDirectory() {
           Search our directory of specialists in your area.
         </p>
       </div>
-      <div className="mt-8 max-w-md mx-auto">
+      <div className="mt-8 max-w-xl mx-auto">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
@@ -40,7 +40,7 @@ export function DoctorDirectory() {
             placeholder="Search by area (e.g., Ghaziabad)"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="pl-10 pr-10"
+            className="pl-10 pr-10 h-12 text-lg"
             aria-label="Search doctors by area"
           />
           {searchQuery && (
@@ -56,7 +56,7 @@ export function DoctorDirectory() {
           )}
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
         {filteredDoctors.map(doctor => (
           <Card
             key={doctor.id}
@@ -88,7 +88,7 @@ export function DoctorDirectory() {
           </Card>
         ))}
         {filteredDoctors.length === 0 && (
-          <p className="text-center text-muted-foreground md:col-span-3">
+          <p className="text-center text-muted-foreground col-span-full py-12">
             No doctors found for "{searchQuery}".
           </p>
         )}
