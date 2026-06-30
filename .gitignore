@@ -37,9 +37,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Custom rules added by monkeysoul-cmd (ayush)
+# Ignore Genkit CLI telemetry, local configurations, and tracing logs
 .genkit/*
+
+# Ignore local environment variables and API keys
 .env*
 
-# firebase
+# firebase debug logs
 firebase-debug.log
 firestore-debug.log
