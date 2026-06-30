@@ -10,8 +10,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        body: ['PT Sans', 'sans-serif'],
-        headline: ['PT Sans', 'sans-serif'],
+        body: ['var(--font-body)', 'Plus Jakarta Sans', ...defaultTheme.fontFamily.sans],
+        headline: ['var(--font-headline)', 'Outfit', ...defaultTheme.fontFamily.sans],
         code: ['monospace'],
       },
       colors: {
@@ -88,10 +88,44 @@ module.exports = {
             height: '0',
           },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        'float-slow': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '50%': { transform: 'translate(20px, -20px) scale(1.1)' },
+        },
+        'float-slow-reverse': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1.1)' },
+          '50%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+        },
+        'pulse-glow': {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(16, 185, 129, 0.4)' },
+          '50%': { boxShadow: '0 0 20px 4px rgba(16, 185, 129, 0.2)' },
+        },
+        'fade-in-up': {
+          from: {
+            opacity: '0',
+            transform: 'translateY(20px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        float: 'float 4s ease-in-out infinite',
+        'float-slow': 'float-slow 12s ease-in-out infinite',
+        'float-slow-reverse': 'float-slow-reverse 15s ease-in-out infinite',
+        'pulse-glow': 'pulse-glow 2s infinite',
+        'fade-in-up': 'fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
     },
   },

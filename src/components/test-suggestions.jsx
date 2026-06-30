@@ -12,7 +12,7 @@ export function TestSuggestions({ conditions }) {
         Health Test Suggestions
       </h3>
       <div className="grid gap-4 md:grid-cols-2">
-        {relevantTests.map((suggestion, index) => suggestion.tests.map((test, testIndex) => (<Card key={`${index}-${testIndex}`} className="bg-card/80 backdrop-blur-sm">
+        {relevantTests.map((suggestion, index) => suggestion.tests.map((test, testIndex) => (<Card key={`${index}-${testIndex}`} className="glass-card bg-white/5 border border-white/10 hover:border-emerald-500/20 shadow-md">
               <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2">
                 <div className="bg-primary/20 p-3 rounded-lg">
                   <test.icon className="w-6 h-6 text-primary"/>
