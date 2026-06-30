@@ -2,6 +2,7 @@
 
 import { z } from 'zod';
 import { symptomData } from '@/lib/data';
+import { symptomCheckerAssessment } from '@/ai/flows/symptom-checker-assessment';
 
 const symptomSchema = z
   .string()
@@ -14,6 +15,7 @@ interface Condition {
 export interface AssessmentState {
   potentialConditions?: Condition[];
   error?: string | null;
+  isAI?: boolean;
 }
 
 function findMatchingConditions(symptoms: string): Condition[] {
@@ -34,16 +36,13 @@ function findMatchingConditions(symptoms: string): Condition[] {
     let matchScore = 0;
 
     inputSymptoms.forEach(inputSymptom => {
-      // Check if any symptom in the record includes the input symptom
       if (recordSymptoms.some(rs => rs.includes(inputSymptom))) {
         matchScore++;
       }
     });
 
     if (matchScore > 0) {
-      // Prioritize records where more of the input symptoms are matched
       const relevance = matchScore / inputSymptoms.length;
-
       if (
         !matches[record.condition] ||
         relevance > (matches[record.condition].score / inputSymptoms.length)
@@ -64,7 +63,6 @@ function findMatchingConditions(symptoms: string): Condition[] {
     })
   );
 
-  // Sort by score (primary) and likelihood (secondary)
   matchedConditions.sort((a, b) => {
     if (b.score !== a.score) {
       return b.score - a.score;
@@ -84,6 +82,7 @@ export async function getHealthAssessment(
   formData: FormData
 ): Promise<AssessmentState> {
   const symptoms = formData.get('symptoms');
+  const useAI = formData.get('useAI') === 'true';
 
   const validatedSymptoms = symptomSchema.safeParse(symptoms);
 
@@ -94,22 +93,29 @@ export async function getHealthAssessment(
   }
 
   try {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    if (useAI) {
+      const result = await symptomCheckerAssessment({ symptoms: validatedSymptoms.data });
+      return { 
+        potentialConditions: result.conditions,
+        isAI: true 
+      };
+    }
 
+    // Standard matching
+    await new Promise(resolve => setTimeout(resolve, 800));
     const conditions = findMatchingConditions(validatedSymptoms.data);
 
     if (conditions.length === 0) {
       return {
-        error: 'No matching conditions found for the provided symptoms.',
+        error: 'No matching conditions found for the provided symptoms in our local records. Try enabling AI analysis for a deeper check.',
       };
     }
 
-    return { potentialConditions: conditions };
+    return { potentialConditions: conditions, isAI: false };
   } catch (e) {
-    console.error(e);
+    console.error('Assessment Error:', e);
     return {
-      error: 'An unexpected error occurred. Please try again later.',
+      error: 'The AI assessment service is currently unavailable. Please try standard search.',
     };
   }
 }

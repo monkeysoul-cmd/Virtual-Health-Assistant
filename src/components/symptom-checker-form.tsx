@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import {
   Loader2,
   AlertCircle,
@@ -28,6 +30,8 @@ import {
   MapPin,
   Phone,
   Calendar,
+  BrainCircuit,
+  Database,
 } from 'lucide-react';
 import { PrecautionaryAdvice } from './precautionary-advice';
 import { TestSuggestions } from './test-suggestions';
@@ -36,16 +40,18 @@ import { Separator } from './ui/separator';
 import { doctors, type Doctor } from '@/lib/data';
 import { DoctorDetailsDialog } from './doctor-details-dialog';
 
-function SubmitButton() {
+function SubmitButton({ isAI }: { isAI: boolean }) {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" disabled={pending} className="w-full md:w-auto">
       {pending ? (
         <Loader2 className="animate-spin" />
+      ) : isAI ? (
+        <BrainCircuit className="mr-2 h-4 w-4" />
       ) : (
-        <Sparkles className="mr-2" />
+        <Sparkles className="mr-2 h-4 w-4" />
       )}
-      Assess Symptoms
+      {pending ? 'Analyzing...' : isAI ? 'AI Analysis' : 'Standard Check'}
     </Button>
   );
 }
@@ -56,35 +62,11 @@ const initialState: AssessmentState = {
 };
 
 const commonSymptoms = [
-  'Fever',
-  'Cough',
-  'Headache',
-  'Sore Throat',
-  'Congestion',
-  'Stomach Pain',
-  'Nausea',
-  'Sneezing',
-  'Itching',
-  'Swelling',
-  'Fatigue',
-  'Body Aches',
-  'Joint Pain',
-  'Headache and Dizziness',
-  'Chest Pain',
-  'Breathing Difficulty',
-  'Excessive Thirst',
+  'Fever', 'Cough', 'Headache', 'Sore Throat', 'Congestion',
+  'Stomach Pain', 'Nausea', 'Sneezing', 'Itching', 'Swelling',
+  'Fatigue', 'Body Aches', 'Joint Pain', 'Chest Pain',
+  'Breathing Difficulty', 'Excessive Thirst'
 ];
-
-const commonConditions: { [key: string]: string[] } = {
-  'Common Cold': ['runny nose', 'sneezing', 'sore throat', 'cough'],
-  'Influenza (Flu)': ['high fever', 'chills', 'muscle aches', 'fatigue'],
-  Migraine: ['one-sided headache', 'throbbing pain', 'photophobia'],
-  'Allergic Rhinitis': ['sneezing', 'runny nose', 'itchy eyes'],
-  Gastritis: ['stomach pain', 'nausea', 'bloating'],
-  'Tension Headache': ['dull head pain', 'pressure around forehead'],
-  Sprain: ['swelling', 'bruising', 'limited mobility'],
-  'Gastroenteritis': ['diarrhea', 'vomiting', 'stomach cramps'],
-};
 
 const conditionToSpecialty: { [key: string]: string } = {
   'common cold': 'General Practitioner',
@@ -111,7 +93,6 @@ const conditionToSpecialty: { [key: string]: string } = {
   sprain: 'Orthopedist',
   fracture: 'Orthopedist',
   'joint pain': 'Orthopedist',
-  'headache and dizziness': 'Neurologist',
   'chest pain': 'Cardiologist',
   'breathing difficulty': 'General Practitioner',
   'excessive thirst': 'General Practitioner',
@@ -121,6 +102,7 @@ const conditionToSpecialty: { [key: string]: string } = {
 export function SymptomCheckerForm() {
   const [state, formAction] = useFormState(getHealthAssessment, initialState);
   const [symptoms, setSymptoms] = useState('');
+  const [useAI, setUseAI] = useState(true);
   const [selectedDoctorForBooking, setSelectedDoctorForBooking] = useState<Doctor | null>(null);
   const { toast } = useToast();
 
@@ -128,7 +110,7 @@ export function SymptomCheckerForm() {
     if (state.error) {
       toast({
         variant: 'destructive',
-        title: 'Submission Error',
+        title: 'Assessment Failed',
         description: state.error,
       });
     }
@@ -150,42 +132,45 @@ export function SymptomCheckerForm() {
     });
   };
 
-  const addConditionSymptoms = (condition: string) => {
-    const conditionSymptoms = commonConditions[condition];
-    if (conditionSymptoms) {
-      setSymptoms(conditionSymptoms.join(', '));
-    }
-  };
-
-  const mostProbableCondition =
-    state.potentialConditions && state.potentialConditions[0];
-  const otherConditions =
-    state.potentialConditions && state.potentialConditions.slice(1);
+  const mostProbableCondition = state.potentialConditions && state.potentialConditions[0];
+  const otherConditions = state.potentialConditions && state.potentialConditions.slice(1);
 
   const recommendedDoctor = mostProbableCondition
-    ? doctors.find(
-        doctor =>
-          doctor.specialty === conditionToSpecialty[mostProbableCondition.condition]
-      )
+    ? doctors.find(doctor => doctor.specialty === conditionToSpecialty[mostProbableCondition.condition.toLowerCase()])
     : null;
 
   return (
-    <div className="w-full space-y-8 px-4">
-      <Card className="bg-card/80 backdrop-blur-sm shadow-lg w-full">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-headline text-2xl">
-            <FileText className="text-primary" />
-            Symptom Checker
-          </CardTitle>
-          <CardDescription>
-            Describe your symptoms below, or select from the common symptoms and conditions.
-            For example: "headache, fever, and cough".
-          </CardDescription>
+    <div className="w-full space-y-8 px-4 max-w-7xl mx-auto">
+      <Card className="bg-card/80 backdrop-blur-sm shadow-xl border-primary/20">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+                <FileText className="text-primary" />
+                Symptom Checker
+              </CardTitle>
+              <CardDescription>
+                Describe your symptoms below or select common ones.
+              </CardDescription>
+            </div>
+            <div className="flex items-center space-x-3 bg-primary/5 p-3 rounded-xl border border-primary/10">
+              <Database className={`h-4 w-4 ${!useAI ? 'text-primary' : 'text-muted-foreground'}`} />
+              <Switch 
+                id="ai-mode" 
+                checked={useAI} 
+                onCheckedChange={setUseAI}
+              />
+              <Label htmlFor="ai-mode" className="flex items-center gap-2 cursor-pointer font-semibold">
+                <BrainCircuit className={`h-4 w-4 ${useAI ? 'text-primary' : 'text-muted-foreground'}`} />
+                AI Analysis
+              </Label>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="mb-4">
-            <h4 className="font-semibold mb-2 text-sm text-muted-foreground">
-              Common Symptoms
+          <div className="mb-6">
+            <h4 className="font-semibold mb-3 text-sm text-muted-foreground flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" /> Quick Select
             </h4>
             <div className="flex flex-wrap gap-2">
               {commonSymptoms.map(symptom => (
@@ -193,42 +178,22 @@ export function SymptomCheckerForm() {
                   key={symptom}
                   variant="outline"
                   size="sm"
-                  className="rounded-full"
+                  className="rounded-full hover:bg-primary/10 hover:border-primary/50 transition-colors"
                   onClick={() => addSymptom(symptom)}
                 >
-                  <PlusCircle className="mr-2" />
                   {symptom}
                 </Button>
               ))}
             </div>
           </div>
 
-          <div className="mb-4">
-            <h4 className="font-semibold mb-2 text-sm text-muted-foreground">
-              Common Conditions
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {Object.keys(commonConditions).map(condition => (
-                <Button
-                  key={condition}
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full"
-                  onClick={() => addConditionSymptoms(condition)}
-                >
-                  <PlusCircle className="mr-2" />
-                  {condition}
-                </Button>
-              ))}
-            </div>
-          </div>
-
           <form action={formAction} className="space-y-4">
+            <input type="hidden" name="useAI" value={useAI.toString()} />
             <div className="relative">
               <Textarea
                 name="symptoms"
-                placeholder="I'm experiencing..."
-                className="min-h-[120px] text-base pr-12"
+                placeholder="Example: I've had a sharp headache and sensitivity to light for the past two days..."
+                className="min-h-[140px] text-lg pr-12 focus-visible:ring-primary/50"
                 required
                 value={symptoms}
                 onChange={e => setSymptoms(e.target.value)}
@@ -237,164 +202,154 @@ export function SymptomCheckerForm() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute right-2 top-2 h-8 w-8 rounded-full"
+                  className="absolute right-2 top-2 h-8 w-8 rounded-full text-muted-foreground hover:text-destructive"
                   onClick={() => setSymptoms('')}
-                  aria-label="Clear symptoms"
+                  type="button"
                 >
-                  <X className="h-5 w-5 text-muted-foreground" />
+                  <X className="h-5 w-5" />
                 </Button>
               )}
             </div>
             <div className="flex justify-end">
-              <SubmitButton />
+              <SubmitButton isAI={useAI} />
             </div>
           </form>
         </CardContent>
       </Card>
 
       {state.potentialConditions && state.potentialConditions.length > 0 && (
-        <Card className="bg-card/80 backdrop-blur-sm shadow-lg animate-in fade-in-50 duration-500 w-full">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline text-2xl">
-              <Stethoscope className="text-primary" />
-              Assessment Results
-            </CardTitle>
-            <CardDescription>
-              Based on your symptoms, here are some potential conditions. This is
-              not a medical diagnosis.
+        <Card className="bg-card/80 backdrop-blur-sm shadow-2xl animate-in slide-in-from-bottom-4 duration-500 border-primary/30">
+          <CardHeader className="bg-primary/5 border-b border-primary/10">
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+                <Stethoscope className="text-primary" />
+                Assessment Results
+              </CardTitle>
+              {state.isAI && (
+                <Badge variant="default" className="bg-primary hover:bg-primary flex gap-1">
+                  <BrainCircuit className="h-3 w-3" /> AI Generated
+                </Badge>
+              )}
+            </div>
+            <CardDescription className="text-foreground/70">
+              Results based on {state.isAI ? 'Gemini AI intelligence' : 'local medical records'}.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-8">
-            {/* Most Probable Condition */}
+          <CardContent className="space-y-8 pt-6">
             {mostProbableCondition && (
-              <div className="space-y-6 rounded-lg border-2 border-primary bg-background/50 p-4 md:p-6 shadow-lg">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                   <h3 className="text-xl font-semibold">
-                      Most Probable Condition
+              <div className="space-y-6 rounded-xl border-2 border-primary/40 bg-background/40 p-6 shadow-inner">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                   <h3 className="text-2xl font-bold text-primary flex items-center gap-2">
+                      <Award className="h-6 w-6" />
+                      Primary Assessment
                     </h3>
                   <Badge
                     variant="default"
-                    className="flex items-center gap-2 text-base px-3 py-1"
+                    className="flex items-center gap-2 text-lg px-4 py-1.5"
                   >
-                    <Award className="w-5 h-5" />
-                    <span>{mostProbableCondition.likelihood}% Match</span>
+                    {mostProbableCondition.likelihood}% Confidence
                   </Badge>
                 </div>
-                <div>
-                  <Badge
-                    variant="secondary"
-                    className="text-base font-medium px-4 py-2 capitalize"
-                  >
+                <div className="py-2">
+                  <span className="text-3xl font-black tracking-tight capitalize text-foreground">
                     {mostProbableCondition.condition}
-                  </Badge>
+                  </span>
                 </div>
+                <Separator className="bg-primary/10" />
                 <PrecautionaryAdvice
-                  conditions={[mostProbableCondition.condition]}
+                  conditions={[mostProbableCondition.condition.toLowerCase()]}
                 />
-                <TestSuggestions conditions={[mostProbableCondition.condition]} />
+                <TestSuggestions conditions={[mostProbableCondition.condition.toLowerCase()]} />
               </div>
             )}
 
-            {/* Other Potential Conditions */}
             {otherConditions && otherConditions.length > 0 && (
               <div className="space-y-4">
-                <Separator />
-                <h3 className="text-xl font-semibold pt-4">Other Possibilities</h3>
-                {otherConditions.map((item, index) => (
-                  <div
-                    key={index}
-                    className="space-y-4 rounded-lg border bg-background/50 p-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <Badge
-                        variant="secondary"
-                        className="text-base font-medium px-4 py-2 capitalize"
-                      >
-                        {item.condition}
-                      </Badge>
-                      <span className='text-sm font-medium text-muted-foreground'>{item.likelihood}% Match</span>
+                <h3 className="text-xl font-bold flex items-center gap-2 px-2">
+                  Differential Considerations
+                </h3>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {otherConditions.map((item, index) => (
+                    <div
+                      key={index}
+                      className="space-y-4 rounded-xl border bg-background/50 p-5 hover:border-primary/50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl font-bold capitalize">
+                          {item.condition}
+                        </span>
+                        <Badge variant="secondary" className="font-bold">
+                          {item.likelihood}%
+                        </Badge>
+                      </div>
+                      <PrecautionaryAdvice conditions={[item.condition.toLowerCase()]} />
                     </div>
-                    <PrecautionaryAdvice conditions={[item.condition]} />
-                    <TestSuggestions conditions={[item.condition]} />
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             )}
             
-            <Card className="bg-primary/10 border-primary/50">
+            <Card className="bg-primary/5 border-dashed border-primary/40">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 font-headline">
-                  <User className="text-primary" />
-                  Next Steps: Consult a Professional
+                <CardTitle className="flex items-center gap-3 font-headline text-xl">
+                  <User className="text-primary h-6 w-6" />
+                  Recommended Specialist
                 </CardTitle>
-                {recommendedDoctor ? (
-                  <CardDescription>
-                    For an accurate diagnosis, we recommend consulting a specialist. Based on your assessment, here is a recommended doctor:
-                  </CardDescription>
-                ) : (
-                  <CardDescription>
-                    This AI assessment is a helpful first step, but it is not a
-                    substitute for professional medical advice. For an accurate
-                    diagnosis and treatment plan, please consult a qualified
-                    healthcare provider.
-                  </CardDescription>
-                )}
+                <CardDescription>
+                  For a definitive diagnosis, we suggest scheduling a consultation.
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                {recommendedDoctor && (
+                {recommendedDoctor ? (
                   <Card
-                    key={recommendedDoctor.id}
-                    className="bg-card/80 backdrop-blur-sm shadow-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform duration-300 max-w-2xl"
+                    className="bg-card shadow-md border-primary/20 hover:shadow-lg transition-all cursor-pointer group"
                     onClick={() => setSelectedDoctorForBooking(recommendedDoctor)}
                   >
                     <CardHeader className="flex flex-row items-center gap-4">
-                      <div className="bg-primary/20 p-3 rounded-full">
-                        <recommendedDoctor.icon className="w-6 h-6 text-primary" />
+                      <div className="bg-primary/10 p-4 rounded-2xl group-hover:bg-primary/20 transition-colors">
+                        <recommendedDoctor.icon className="w-8 h-8 text-primary" />
                       </div>
                       <div>
-                        <CardTitle className="font-headline">{recommendedDoctor.name}</CardTitle>
+                        <CardTitle className="font-headline text-xl">{recommendedDoctor.name}</CardTitle>
+                        <p className="text-primary font-bold text-sm">{recommendedDoctor.specialty}</p>
                       </div>
                     </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm">
-                        <Stethoscope className="w-4 h-4 text-primary" />
-                        <span>{recommendedDoctor.specialty}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <MapPin className="w-4 h-4 text-primary" />
+                    <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-4 pb-4">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <MapPin className="w-4 h-4" />
                         <span>{recommendedDoctor.area}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Phone className="w-4 h-4 text-primary" />
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Phone className="w-4 h-4" />
                         <span>{recommendedDoctor.contact}</span>
                       </div>
-                       <div className="flex items-center justify-end text-sm font-medium text-primary pt-2 gap-2">
+                       <div className="flex items-center justify-end text-sm font-bold text-primary gap-2 sm:col-start-3">
                         <Calendar className="w-4 h-4" />
-                        <span>Book an Appointment</span>
+                        <span>Book Visit</span>
                       </div>
                     </CardContent>
                   </Card>
+                ) : (
+                  <div className="p-8 text-center border rounded-xl border-dashed">
+                    <p className="text-muted-foreground mb-4">No specific specialist mapped for this rare result.</p>
+                    <Button onClick={handleConsultClick} variant="outline">
+                      Browse All Specialists
+                    </Button>
+                  </div>
                 )}
               </CardContent>
-              <CardFooter>
-                <Button onClick={handleConsultClick}>
-                  {recommendedDoctor ? 'Find Other Doctors' : 'Find a Doctor'}
-                </Button>
-              </CardFooter>
             </Card>
+
             <Alert
               variant="destructive"
-              className="bg-destructive/10 border-destructive/50 text-destructive-foreground"
+              className="bg-destructive/5 border-destructive/20 text-destructive-foreground"
             >
-              <AlertCircle className="h-4 w-4 !text-destructive" />
-              <AlertTitle className="font-bold">
-                Important Disclaimer
+              <AlertCircle className="h-5 w-5 !text-destructive" />
+              <AlertTitle className="font-bold text-lg mb-2">
+                Medical Disclaimer
               </AlertTitle>
-              <AlertDescription>
-                This tool is for informational purposes only and does not
-                constitute medical advice. Please consult with a qualified
-                healthcare professional for any health concerns or before making
-                any decisions related to your health.
+              <AlertDescription className="text-base">
+                This AI-powered tool is for educational and informational purposes only. It is not a medical device or a substitute for professional diagnosis. If you are experiencing a medical emergency, please contact emergency services immediately.
               </AlertDescription>
             </Alert>
           </CardContent>
