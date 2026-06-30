@@ -140,8 +140,8 @@ export function SymptomCheckerForm() {
     : null;
 
   return (
-    <div className="w-full space-y-8 px-4 max-w-7xl mx-auto">
-      <Card className="bg-card/80 backdrop-blur-sm shadow-xl border-primary/20">
+    <div className="w-full space-y-8 px-2 md:px-6">
+      <Card className="bg-card/80 backdrop-blur-sm shadow-xl border-primary/20 w-full rounded-none md:rounded-lg">
         <CardHeader className="pb-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -218,7 +218,7 @@ export function SymptomCheckerForm() {
       </Card>
 
       {state.potentialConditions && state.potentialConditions.length > 0 && (
-        <Card className="bg-card/80 backdrop-blur-sm shadow-2xl animate-in slide-in-from-bottom-4 duration-500 border-primary/30">
+        <Card className="bg-card/80 backdrop-blur-sm shadow-2xl animate-in slide-in-from-bottom-4 duration-500 border-primary/30 w-full rounded-none md:rounded-lg">
           <CardHeader className="bg-primary/5 border-b border-primary/10">
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2 font-headline text-2xl">
