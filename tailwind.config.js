@@ -125,7 +125,7 @@ module.exports = {
         'float-slow': 'float-slow 12s ease-in-out infinite',
         'float-slow-reverse': 'float-slow-reverse 15s ease-in-out infinite',
         'pulse-glow': 'pulse-glow 2s infinite',
-        'fade-in-up': 'fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'fade-in-up': 'fade-in-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
     },
   },

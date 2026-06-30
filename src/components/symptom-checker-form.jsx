@@ -261,14 +261,6 @@ export function SymptomCheckerForm() {
                       </Button>)}
                   </div>
                   <div className="flex flex-col sm:flex-row justify-end gap-3">
-                    <Button 
-                      type="button" 
-                      onClick={runFastAnalysis}
-                      className="bg-transparent border border-teal-500/40 text-teal-400 hover:bg-teal-500 hover:text-teal-950 font-semibold shadow-lg hover:shadow-teal-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 px-6 py-5 rounded-xl flex items-center justify-center gap-2 h-10"
-                    >
-                      <Zap className="w-4 h-4 animate-pulse" />
-                      Fast Analyze
-                    </Button>
                     <SubmitButton />
                   </div>
                 </form>
@@ -407,7 +399,7 @@ export function SymptomCheckerForm() {
                   </CardDescription>)}
               </CardHeader>
               <CardContent>
-                {recommendedDoctor && (<Card key={recommendedDoctor.id} className="glass-card bg-white/5 border border-white/10 hover:border-emerald-500/30 shadow-lg mb-4 cursor-pointer transform hover:scale-[1.02] transition-all duration-300" onClick={() => {
+                {recommendedDoctor && (<Card key={recommendedDoctor.id} className="glass-card bg-white/5 border border-white/10 hover:border-emerald-500/30 shadow-lg mb-4 cursor-pointer transform hover:scale-[1.02] transition-all duration-200 will-change-transform" onClick={() => {
                   setSelectedDoctorForBooking(recommendedDoctor);
                   setDoctorState('booking');
                 }}>

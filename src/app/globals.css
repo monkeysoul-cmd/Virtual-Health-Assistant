@@ -72,13 +72,28 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, border-color, box-shadow;
 }
 
 .glass-card:hover {
   border-color: rgba(16, 185, 129, 0.25);
   box-shadow: 0 12px 40px 0 rgba(16, 185, 129, 0.12);
   transform: translateY(-4px);
+}
+
+.glass-dialog {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-dialog:hover {
+  border-color: rgba(16, 185, 129, 0.25);
+  box-shadow: 0 12px 40px 0 rgba(16, 185, 129, 0.12);
 }
 
 /* Text Gradient Effect */
@@ -104,17 +119,16 @@
 /* Custom Doctor & Dashboard Animations */
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), inset 0 0 15px rgba(16, 185, 129, 0.05);
-    border-color: rgba(16, 185, 129, 0.35);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
   }
   50% {
-    box-shadow: 0 0 35px rgba(16, 185, 129, 0.35), inset 0 0 25px rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.7);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.45);
   }
 }
 
 .animate-pulse-glow {
   animation: pulseGlow 3s infinite ease-in-out;
+  will-change: box-shadow;
 }
 
 @keyframes doctorBounce {
