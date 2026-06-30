@@ -1,0 +1,27 @@
+'use server';
+import { symptomCheckerAssessment } from '@/ai/flows/symptom-checker-assessment';
+import { z } from 'zod';
+const symptomSchema = z
+    .string()
+    .min(3, { message: 'Please describe your symptoms in more detail.' });
+export async function getHealthAssessment(prevState, formData) {
+    const symptoms = formData.get('symptoms');
+    const validatedSymptoms = symptomSchema.safeParse(symptoms);
+    if (!validatedSymptoms.success) {
+        return {
+            error: validatedSymptoms.error.errors[0].message,
+        };
+    }
+    try {
+        const assessment = await symptomCheckerAssessment({
+            symptoms: validatedSymptoms.data,
+        });
+        return { potentialConditions: assessment.conditions };
+    }
+    catch (e) {
+        console.error(e);
+        return {
+            error: 'An unexpected error occurred. Please try again.',
+        };
+    }
+}
