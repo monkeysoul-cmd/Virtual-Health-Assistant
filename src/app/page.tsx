@@ -1,6 +1,14 @@
-import { HeartPulse } from 'lucide-react';
+import { HeartPulse, Lightbulb } from 'lucide-react';
 import { SymptomCheckerForm } from '@/components/symptom-checker-form';
 import { DoctorDirectory } from '@/components/doctor-directory';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+const healthTips = [
+  { title: "Stay Hydrated", description: "Drink at least 8 glasses of water daily to maintain energy and kidney health." },
+  { title: "Prioritize Sleep", description: "Aim for 7-9 hours of quality sleep to help your body repair and recharge." },
+  { title: "Move More", description: "Just 30 minutes of brisk walking can significantly improve cardiovascular health." },
+  { title: "Eat Mindfully", description: "Focus on whole foods, lean proteins, and plenty of colorful vegetables." }
+];
 
 export default function Home() {
   return (
@@ -12,7 +20,7 @@ export default function Home() {
             Virtual Health Assistant
           </h1>
         </div>
-        <p className="text-muted-foreground md:text-2xl/relaxed max-w-3xl mx-auto">
+        <p className="text-muted-foreground md:text-2xl/relaxed max-w-3xl mx-auto px-4">
           Your professional online guide to understanding health symptoms and finding expert care.
         </p>
       </header>
@@ -21,7 +29,26 @@ export default function Home() {
         <SymptomCheckerForm />
       </div>
 
-      <div className="w-full border-t border-border my-12 md:my-16"></div>
+      <section className="w-full px-4 md:px-12 py-12">
+        <div className="flex items-center gap-3 mb-8 justify-center">
+          <Lightbulb className="w-8 h-8 text-primary" />
+          <h2 className="text-3xl font-bold font-headline tracking-tight">Daily Health Tips</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {healthTips.map((tip, index) => (
+            <Card key={index} className="bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold">{tip.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-sm">{tip.description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <div className="w-full border-t border-border my-8"></div>
 
       <div id="doctor-directory" className="w-full px-0">
         <DoctorDirectory />
@@ -30,7 +57,7 @@ export default function Home() {
       <footer className="w-full mx-auto text-center py-12 text-sm text-muted-foreground bg-background/40 backdrop-blur-sm border-t border-border mt-16">
         <p className="text-base font-semibold text-foreground">&copy; {new Date().getFullYear()} Virtual Health Assistant</p>
         <p className="mt-1">
-          Professional health insights powered by local records. This is a demo application.
+          Professional health insights powered by AI and local records. This is a demo application.
         </p>
       </footer>
     </main>
