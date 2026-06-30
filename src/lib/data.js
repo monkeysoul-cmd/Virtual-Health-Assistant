@@ -1438,3 +1438,134 @@ export const conditionToSpecialty = {
     constipation: 'General Practitioner',
     'anxiety attack': 'Neurologist',
 };
+
+export const fallbackPrescribedPlans = {
+  'common cold': {
+    medicationAdvice: 'Supportive over-the-counter throat lozenges and saline sprays can ease symptoms. Consult a physician for specific prescriptions.',
+    dietaryGuidelines: ['Drink warm soups, broths, and non-caffeinated herbal tea.', 'Maintain high warm fluid intake.', 'Avoid cold foods and dairy if they aggravate congestion.'],
+    activityLevel: 'Obtain at least 8-9 hours of restful sleep daily. Avoid high-intensity physical workouts.',
+    warningSigns: ['Difficulty breathing, chest tightness, or wheezing.', 'Fever lasting longer than 72 hours.', 'Inability to swallow liquids.'],
+  },
+  'influenza (flu)': {
+    medicationAdvice: 'Take antipyretics like paracetamol for fever. Consult a physician for antiviral prescriptions if symptoms are severe.',
+    dietaryGuidelines: ['Focus on light, digestible meals such as rice porridge or light broths.', 'Rehydrate with warm electrolyte fluids.', 'Restrict processed fats and refined sugar.'],
+    activityLevel: 'Complete bed rest is advised. Isolate at home to prevent spreading the infection.',
+    warningSigns: ['Persistent chest pain or severe shortness of breath.', 'Severe muscle pain or extreme dizziness.', 'Confusion or failure to stay awake.'],
+  },
+  'migraine': {
+    medicationAdvice: 'Use over-the-counter analgesics such as ibuprofen. Consult a neurologist for triptan therapies if pain is persistent.',
+    dietaryGuidelines: ['Avoid trigger foods like processed meats, chocolate, and aged cheeses.', 'Drink plenty of water to prevent dehydration.', 'Maintain a regular meal schedule.'],
+    activityLevel: 'Rest in a quiet, dark, and well-ventilated room. Avoid screens, computers, and bright lights.',
+    warningSigns: ['Sudden, explosive headache that peaks within seconds.', 'Headache accompanied by stiff neck, fever, or confusion.', 'New onset of speech difficulties or numbness.'],
+  },
+  'allergic rhinitis': {
+    medicationAdvice: 'Over-the-counter antihistamines (like cetirizine or loratadine) and nasal steroid sprays can reduce allergic reactions.',
+    dietaryGuidelines: ['Increase intake of anti-inflammatory foods (berries, fatty fish).', 'Drink plenty of water to thin mucus.', 'Limit alcohol, which can worsen nasal congestion.'],
+    activityLevel: 'Perform indoor activities when pollen counts are high. Ensure clean indoor ventilation.',
+    warningSigns: ['Severe sinus pain or pressure.', 'Difficulty breathing or wheezing.', 'High fever or thick, discolored nasal discharge.'],
+  },
+  'gastritis': {
+    medicationAdvice: 'Antacids, H2 blockers, or proton pump inhibitors (PPIs) may reduce stomach acid. Avoid NSAIDs like aspirin/ibuprofen.',
+    dietaryGuidelines: ['Eat small, frequent, bland meals.', 'Avoid spicy, acidic, fried, or fatty foods.', 'Minimize caffeine and carbonated drinks.'],
+    activityLevel: 'Avoid lying down immediately after eating. Engage in gentle walks to aid digestion.',
+    warningSigns: ['Severe, persistent abdominal pain.', 'Vomiting blood or material that looks like coffee grounds.', 'Black, tarry stools.'],
+  },
+  'gastroenteritis': {
+    medicationAdvice: 'Oral rehydration salts (ORS) are essential. Avoid anti-diarrheal medications unless explicitly advised by a doctor.',
+    dietaryGuidelines: ['Follow the BRAT diet (Bananas, Rice, Applesauce, Toast).', 'Rehydrate with clear fluids in small, frequent sips.', 'Strictly avoid dairy, caffeine, and greasy foods.'],
+    activityLevel: 'Strict rest. Restrict heavy activity until vomiting and diarrhea have fully resolved.',
+    warningSigns: ['Inability to keep liquids down for 24 hours.', 'Signs of severe dehydration (extreme thirst, dry mouth, little to no urination).', 'High fever or blood in stool.'],
+  },
+  'tension headache': {
+    medicationAdvice: 'Over-the-counter pain relievers like acetaminophen or ibuprofen. Limit usage to avoid medication-overuse headaches.',
+    dietaryGuidelines: ['Eat regular meals to avoid blood sugar dips.', 'Stay well-hydrated throughout the day.', 'Limit caffeine intake.'],
+    activityLevel: 'Practice relaxation techniques. Keep screen time restricted and take regular eye breaks.',
+    warningSigns: ['Headache that is sudden and severe (thunderclap).', 'Headache accompanied by stiff neck, fever, or confusion.', 'Headache after a head injury.'],
+  },
+  'hypertension': {
+    medicationAdvice: 'Strictly adhere to any prescribed blood pressure medications. Avoid OTC decongestants, which can raise blood pressure.',
+    dietaryGuidelines: ['Follow a low-sodium, high-potassium diet (DASH diet).', 'Eat more fruits, vegetables, and whole grains.', 'Limit alcohol and caffeine.'],
+    activityLevel: 'Engage in moderate aerobic exercise (brisk walking) for 30 minutes daily. Avoid sudden strenuous lifting.',
+    warningSigns: ['Severe headache, chest pain, or shortness of breath.', 'Blurry vision or sudden numbness/weakness.', 'Extreme dizziness or difficulty speaking.'],
+  },
+  'type 2 diabetes': {
+    medicationAdvice: 'Take insulin or oral hypoglycemics as prescribed. Routinely monitor blood sugar.',
+    dietaryGuidelines: ['Focus on low-glycemic, fiber-rich foods.', 'Manage portion sizes and limit refined carbohydrates/sugars.', 'Include lean proteins and healthy fats.'],
+    activityLevel: 'Regular physical exercise helps lower blood glucose. Exercise at least 150 minutes per week.',
+    warningSigns: ['Symptoms of severe hypoglycemia (shaking, sweating, confusion).', 'Extremely high blood sugar with persistent vomiting or confusion.', 'Non-healing cuts or sores on feet.'],
+  },
+  'diabetes mellitus': {
+    medicationAdvice: 'Strictly follow insulin or oral medication regimens. Test blood glucose frequently.',
+    dietaryGuidelines: ['Maintain a balanced, consistent carbohydrate-intake schedule.', 'Incorporate vegetables, legumes, and whole grains.', 'Drink plenty of water; avoid sugary juices.'],
+    activityLevel: 'Stay physically active with regular structured exercise, monitoring blood sugar before/after workouts.',
+    warningSigns: ['Ketones in urine or signs of diabetic ketoacidosis (fruity breath, rapid breathing, confusion).', 'Extreme drowsiness or difficulty staying awake.', 'Frequent infections or slow-healing wounds.'],
+  },
+  'asthma': {
+    medicationAdvice: 'Keep rescue inhalers close at all times. Take controller medications daily as prescribed.',
+    dietaryGuidelines: ['Maintain a healthy weight to reduce pressure on lungs.', 'Consume foods rich in vitamins C and E.', 'Avoid sulfites in dried fruits and processed food if sensitive.'],
+    activityLevel: 'Avoid outdoor exercise in cold, dry air or high pollen. Warm up before exercising.',
+    warningSigns: ['Severe breathlessness, unable to speak full sentences in one breath.', 'Rescue inhaler does not provide relief.', 'Bluish lips or fingernails.'],
+  },
+  'anxiety': {
+    medicationAdvice: 'Consult a healthcare provider for any prescription anxiolytics. Avoid self-medicating with alcohol or recreational substances.',
+    dietaryGuidelines: ['Limit caffeine, sugar, and alcohol, which can trigger or mimic anxiety.', 'Eat balanced meals to keep blood sugar stable.', 'Drink calming chamomile or green tea.'],
+    activityLevel: 'Incorporate daily stress-relief exercises (yoga, walking, meditation, deep breathing). Aim for 7-8 hours of sleep.',
+    warningSigns: ['Panic symptoms accompanied by chest pain or shortness of breath.', 'Inability to perform basic daily functions.', 'Thoughts of self-harm.'],
+  },
+  'arthritis': {
+    medicationAdvice: 'Over-the-counter anti-inflammatories or prescription pain relievers. Apply warm compresses to soothe stiff joints.',
+    dietaryGuidelines: ['Follow an anti-inflammatory diet high in omega-3 fatty acids (flaxseeds, walnuts).', 'Eat antioxidant-rich fruits and vegetables.', 'Limit processed foods.'],
+    activityLevel: 'Engage in low-impact exercises (swimming, cycling, stretching) to maintain range of motion.',
+    warningSigns: ['Joint is hot, red, and swollen (indicative of potential infection).', 'Sudden, severe joint pain accompanied by high fever.', 'Inability to bear weight on the joint.'],
+  },
+  'dengue fever': {
+    medicationAdvice: 'Take paracetamol for pain and fever. Absolutely avoid NSAIDs like ibuprofen, aspirin, or naproxen, as they increase bleeding risks.',
+    dietaryGuidelines: ['Drink plenty of oral rehydration fluids, coconut water, and fresh fruit juices.', 'Eat soft, easily digestible food.', 'Papaya leaf extract can be discussed with a doctor.'],
+    activityLevel: 'Absolute bed rest. Prevent mosquito bites using nets and repellents to stop further spread.',
+    warningSigns: ['Severe abdominal pain or persistent vomiting.', 'Bleeding gums, nosebleeds, or blood in vomit/stool.', 'Lethargy, restlessness, or sudden cold/clammy skin.'],
+  },
+  'malaria': {
+    medicationAdvice: 'Take the complete course of antimalarials prescribed by your physician. Do not stop early even if feeling better.',
+    dietaryGuidelines: ['Eat high-calorie, nutritious meals once nausea subsides.', 'Hydrate with clean water and electrolyte drinks.', 'Avoid greasy, heavy foods.'],
+    activityLevel: 'Ample bed rest until fever drops and strength returns. Use insecticide-treated bed nets.',
+    warningSigns: ['Yellowing of skin or eyes (jaundice).', 'Severe breathing difficulties or convulsions.', 'Decreased consciousness or confusion.'],
+  },
+  'typhoid fever': {
+    medicationAdvice: 'Strictly complete the full course of prescribed antibiotics. Do not miss doses.',
+    dietaryGuidelines: ['Maintain a high-calorie, bland, soft diet (porridge, custard, bananas).', 'Drink boiled or bottled water only.', 'Ensure high fluid intake to prevent dehydration.'],
+    activityLevel: 'Restrict all physical activities. Maintain strict handwashing to prevent spreading the bacteria to others.',
+    warningSigns: ['Severe abdominal pain or distension.', 'Persistent high fever that does not drop.', 'Blood in stools or severe confusion.'],
+  },
+  'pneumonia': {
+    medicationAdvice: 'Take prescribed antibiotics, antivirals, or cough suppressants exactly as directed.',
+    dietaryGuidelines: ['Drink warm liquids to help loosen chest congestion.', 'Eat nutritious, soft foods in small portions.', 'Avoid cold or carbonated beverages.'],
+    activityLevel: 'Strict rest. Sleep with head elevated using extra pillows to ease breathing. Avoid smoke and cold air.',
+    warningSigns: ['Shortness of breath even while resting.', 'Bluish color in fingers or lips.', 'Coughing up blood or high fever with confusion.'],
+  },
+  'gerd': {
+    medicationAdvice: 'Antacids, H2 blockers, or PPIs can relieve heartburn. Take them 30-60 minutes before meals if prescribed.',
+    dietaryGuidelines: ['Avoid citrus, tomatoes, garlic, chocolate, mint, and high-fat foods.', 'Eat smaller meals and avoid drinking large volumes with food.', 'Avoid lying down for 3 hours post-meal.'],
+    activityLevel: 'Elevate the head of your bed by 6 inches. Stay upright after meals. Avoid tight-fitting clothes.',
+    warningSigns: ['Difficulty swallowing or painful swallowing.', 'Unexplained weight loss or chest pain radiating to the arm/jaw.', 'Vomiting blood or black stools.'],
+  },
+  'sprain': {
+    medicationAdvice: 'Analgesics like ibuprofen or acetaminophen to manage swelling and pain.',
+    dietaryGuidelines: ['Maintain hydration and consume protein-rich foods to aid tissue repair.', 'Increase intake of vitamin C-rich foods.'],
+    activityLevel: 'Strictly follow R.I.C.E. (Rest, Ice, Compression, Elevation). Avoid putting weight on the injured limb.',
+    warningSigns: ['Complete inability to bear weight on the joint.', 'Numbness or tingling below the sprain.', 'Severe deformity or joint instability.'],
+  },
+  'fracture': {
+    medicationAdvice: 'Seek immediate emergency clinical care. Pain management should be overseen by emergency physicians.',
+    dietaryGuidelines: ['Ensure adequate calcium and vitamin D intake to support bone healing.', 'Drink plenty of water.'],
+    activityLevel: 'Immobilize the limb immediately. Keep elevated. Avoid any movement or weight-bearing.',
+    warningSigns: ['Extreme pain, visible deformity, or bone piercing the skin.', 'Limb becomes cold, pale, or blue.', 'Loss of sensation in fingers or toes.'],
+  }
+};
+
+export const defaultPrescribedPlan = {
+  medicationAdvice: 'Seek medical evaluation for accurate diagnosis and prescription options. Avoid self-medicating.',
+  dietaryGuidelines: ['Eat light, warm, and freshly cooked meals.', 'Drink adequate clean drinking water throughout the day.', 'Avoid oily, spicy, or carbonated items.'],
+  activityLevel: 'Restrict physically demanding activities. Focus on sound rest and recovery.',
+  warningSigns: ['Fever that does not respond to standard antipyretics.', 'Difficulty breathing or sudden chest distress.', 'Inability to keep liquids down due to constant vomiting.'],
+};
+

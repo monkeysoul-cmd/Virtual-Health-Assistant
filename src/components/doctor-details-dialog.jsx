@@ -35,35 +35,35 @@ export function DoctorDetailsDialog({ doctor, onClose, }) {
         }
     };
     return (<Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] glass-card border border-white/10 shadow-2xl animate-fade-in-up">
         <DialogHeader>
-          <DialogTitle className="font-headline text-2xl">
-            Book Appointment with {doctor.name}
+          <DialogTitle className="font-headline text-2xl text-gradient">
+            Book Appointment
           </DialogTitle>
-          <DialogDescription>{doctor.specialty}</DialogDescription>
+          <DialogDescription className="font-medium text-foreground">{doctor.name} - {doctor.specialty}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="flex justify-center">
-            <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-md border" disabled={{ before: new Date() }}/>
+          <div className="flex justify-center bg-slate-950/40 backdrop-blur-md p-3 rounded-2xl border border-white/10 shadow-inner">
+            <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-md bg-transparent text-foreground" disabled={{ before: new Date() }}/>
           </div>
           <div>
             <Select onValueChange={setSelectedTime} value={selectedTime}>
-              <SelectTrigger>
+              <SelectTrigger className="bg-white/5 border-white/10 focus:ring-emerald-500">
                 <SelectValue placeholder="Select a time"/>
               </SelectTrigger>
-              <SelectContent>
-                {availableTimes.map(time => (<SelectItem key={time} value={time}>
+              <SelectContent className="bg-slate-900 border-white/10 text-foreground">
+                {availableTimes.map(time => (<SelectItem key={time} value={time} className="focus:bg-emerald-500/20 focus:text-foreground">
                     {time}
                   </SelectItem>))}
               </SelectContent>
             </Select>
           </div>
         </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={onClose}>
+        <DialogFooter className="gap-2">
+          <Button variant="outline" onClick={onClose} className="border-white/10 hover:bg-white/10 text-foreground">
             Cancel
           </Button>
-          <Button onClick={handleBooking}>Confirm Appointment</Button>
+          <Button onClick={handleBooking} className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold">Confirm Appointment</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>);
