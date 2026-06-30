@@ -159,7 +159,7 @@ export function DoctorDirectory() {
             <p className="text-muted-foreground">Querying clinical directories near "{searchQuery}"...</p>
           </div>
         ) : (
-          doctorsToDisplay.map(doctor => (<Card key={doctor.id} className="glass-card bg-card/40 border border-white/10 hover:border-emerald-500/30 transform hover:scale-[1.03] transition-all duration-300 shadow-xl cursor-pointer" onClick={() => setSelectedDoctor(doctor)}>
+          doctorsToDisplay.map(doctor => (<Card key={doctor.id} className="glass-card bg-card/40 border border-white/10 hover:border-emerald-500/30 transform hover:scale-[1.03] transition-all duration-200 will-change-transform shadow-xl cursor-pointer" onClick={() => setSelectedDoctor(doctor)}>
               <CardHeader className="flex flex-row items-center gap-4">
                 <div className="bg-primary/20 p-3 rounded-full">
                   {doctor.icon ? (

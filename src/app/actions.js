@@ -1,6 +1,6 @@
 'use server';
 import { symptomCheckerAssessment } from '@/ai/flows/symptom-checker-assessment';
-import { z } from 'zod';
+import { z } from 'genkit';
 const symptomSchema = z
     .string()
     .min(3, { message: 'Please describe your symptoms in more detail.' });
@@ -28,6 +28,7 @@ export async function getHealthAssessment(prevState, formData) {
 }
 
 import { getGenkitInstance } from '@/ai/genkit.js';
+import { doctors } from '@/lib/data';
 
 const doctorSchema = z.object({
     name: z.string(),
@@ -39,6 +40,40 @@ const doctorSchema = z.object({
 const doctorListSchema = z.object({
     doctors: z.array(doctorSchema),
 });
+
+function localFallbackDoctors(area) {
+    console.warn("AI Doctor Search failed or rate-limited. Falling back to local doctor directory matching.");
+    const searchTerms = area.toLowerCase().split(/[\s,]+/).filter(Boolean);
+    if (searchTerms.length === 0) {
+        return doctors.slice(0, 4).map(({ id, name, specialty, area, contact }) => ({ id, name, specialty, area, contact }));
+    }
+    
+    // Score doctors based on how many terms match their area, specialty, or name
+    const scoredDoctors = doctors.map(doctor => {
+        let score = 0;
+        const doctorText = `${doctor.name} ${doctor.specialty} ${doctor.area}`.toLowerCase();
+        
+        searchTerms.forEach(term => {
+            if (doctorText.includes(term)) {
+                score += 1;
+                // Extra weight if matches specific fields
+                if (doctor.area.toLowerCase().includes(term)) score += 2;
+                if (doctor.specialty.toLowerCase().includes(term)) score += 1.5;
+            }
+        });
+        
+        return { doctor, score };
+    });
+    
+    // Filter out doctors with 0 score, sort by score descending
+    const matches = scoredDoctors
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(item => item.doctor);
+        
+    const results = matches.length > 0 ? matches : doctors;
+    return results.slice(0, 4).map(({ id, name, specialty, area, contact }) => ({ id, name, specialty, area, contact }));
+}
 
 export async function getDoctorsInArea(area, apiKey) {
     if (!area || area.trim().length < 3) {
@@ -62,11 +97,11 @@ export async function getDoctorsInArea(area, apiKey) {
         if (response && response.output && response.output.doctors) {
             return { doctors: response.output.doctors };
         }
-        return { doctors: [] };
+        return { doctors: localFallbackDoctors(area) };
     }
     catch (e) {
         console.error("AI Doctor Search error:", e);
-        return { error: 'An unexpected error occurred during AI search. Please try again.' };
+        return { doctors: localFallbackDoctors(area) };
     }
 }
 

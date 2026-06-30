@@ -18,6 +18,8 @@ export function DoctorDetailsDialog({ doctor, onClose, }) {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState();
     const { toast } = useToast();
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
     const handleBooking = () => {
         if (selectedDate && selectedTime) {
             toast({
@@ -35,7 +37,7 @@ export function DoctorDetailsDialog({ doctor, onClose, }) {
         }
     };
     return (<Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] glass-card border border-white/10 shadow-2xl animate-fade-in-up">
+      <DialogContent className="sm:max-w-[425px] glass-dialog border border-white/10 shadow-2xl animate-fade-in-up">
         <DialogHeader>
           <DialogTitle className="font-headline text-2xl text-gradient">
             Book Appointment
@@ -44,7 +46,7 @@ export function DoctorDetailsDialog({ doctor, onClose, }) {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="flex justify-center bg-slate-950/40 backdrop-blur-md p-3 rounded-2xl border border-white/10 shadow-inner">
-            <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-md bg-transparent text-foreground" disabled={{ before: new Date() }}/>
+            <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-md bg-transparent text-foreground" disabled={{ before: startOfToday }}/>
           </div>
           <div>
             <Select onValueChange={setSelectedTime} value={selectedTime}>
