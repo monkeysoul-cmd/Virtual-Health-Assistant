@@ -56,7 +56,7 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
   const tests = testsData ? testsData.tests : [];
 
   return (
-    <div className="relative glass-card border border-white/10 rounded-3xl p-6 md:p-8 bg-slate-900/40 backdrop-blur-xl shadow-2xl overflow-hidden mt-6 animate-fade-in-up">
+    <div className="relative glass-card border border-white/10 rounded-3xl p-6 md:p-8 bg-slate-900/40 backdrop-blur-xl shadow-2xl overflow-hidden mt-6 animate-card-reveal">
       
       {/* Visual Watermark "Rx" in Background */}
       <div className="absolute right-6 bottom-16 text-[150px] font-extrabold text-white/5 select-none pointer-events-none font-serif leading-none">
@@ -98,19 +98,19 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
         
         {/* Medication & Self-Care Section */}
-        <div className="bg-white/5 border border-white/5 p-5 rounded-2xl flex flex-col justify-between hover:border-white/15 transition-all duration-200 shadow-sm">
+        <div className="bg-white/5 border border-white/5 p-5 rounded-2xl flex flex-col justify-between hover:border-white/15 transition-all duration-150 shadow-sm">
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400">
                 <Pill className="w-5 h-5" />
               </div>
-              <h5 className="font-bold text-slate-200 text-sm tracking-tight">I. Medication & Self-Care Advice</h5>
+              <h5 className="font-bold text-slate-200 text-sm tracking-tight">I. Medication &amp; Self-Care Advice</h5>
             </div>
             <ul className="space-y-3 pl-1">
               {medicationSentences.map((sentence, idx) => {
                 const Icon = getItemIcon(sentence, Pill);
                 return (
-                  <li key={idx} className="flex items-start gap-3 bg-white/5 border border-white/5 hover:border-white/10 p-3 rounded-xl transition-all duration-150">
+                  <li key={idx} style={{ animationDelay: `${idx * 50}ms` }} className="flex items-start gap-3 bg-white/5 border border-white/5 hover:border-white/10 p-3 rounded-xl transition-all duration-150 animate-slide-in-right">
                     <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0 mt-0.5">
                       <Icon className="w-4 h-4" />
                     </div>
@@ -123,12 +123,12 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
             </ul>
           </div>
           <span className="text-[9px] text-muted-foreground font-semibold mt-4 block border-t border-white/5 pt-2 uppercase tracking-wider">
-            Dosage & Administration directives
+            Dosage &amp; Administration directives
           </span>
         </div>
 
         {/* Dietary Guidelines Section */}
-        <div className="bg-white/5 border border-white/5 p-5 rounded-2xl flex flex-col justify-between hover:border-white/15 transition-all duration-200 shadow-sm">
+        <div className="bg-white/5 border border-white/5 p-5 rounded-2xl flex flex-col justify-between hover:border-white/15 transition-all duration-150 shadow-sm">
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400">
@@ -140,7 +140,7 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
               {plan.dietaryGuidelines && plan.dietaryGuidelines.map((item, idx) => {
                 const Icon = getItemIcon(item, Apple);
                 return (
-                  <li key={idx} className="flex items-start gap-3 bg-white/5 border border-white/5 hover:border-white/10 p-3 rounded-xl transition-all duration-150">
+                  <li key={idx} style={{ animationDelay: `${idx * 50}ms` }} className="flex items-start gap-3 bg-white/5 border border-white/5 hover:border-white/10 p-3 rounded-xl transition-all duration-150 animate-fade-in-up">
                     <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0 mt-0.5">
                       <Icon className="w-4 h-4" />
                     </div>
@@ -158,19 +158,19 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
         </div>
 
         {/* Activity & Rest Section */}
-        <div className="bg-white/5 border border-white/5 p-5 rounded-2xl flex flex-col justify-between hover:border-white/15 transition-all duration-200 shadow-sm">
+        <div className="bg-white/5 border border-white/5 p-5 rounded-2xl flex flex-col justify-between hover:border-white/15 transition-all duration-150 shadow-sm">
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400">
                 <Activity className="w-5 h-5" />
               </div>
-              <h5 className="font-bold text-slate-200 text-sm tracking-tight">III. Physical Activity & Rest</h5>
+              <h5 className="font-bold text-slate-200 text-sm tracking-tight">III. Physical Activity &amp; Rest</h5>
             </div>
             <ul className="space-y-3 pl-1">
               {activitySentences.map((sentence, idx) => {
                 const Icon = getItemIcon(sentence, Activity);
                 return (
-                  <li key={idx} className="flex items-start gap-3 bg-white/5 border border-white/5 hover:border-white/10 p-3 rounded-xl transition-all duration-150">
+                  <li key={idx} style={{ animationDelay: `${idx * 50}ms` }} className="flex items-start gap-3 bg-white/5 border border-white/5 hover:border-white/10 p-3 rounded-xl transition-all duration-150 animate-slide-in-left">
                     <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0 mt-0.5">
                       <Icon className="w-4 h-4" />
                     </div>
@@ -183,16 +183,16 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
             </ul>
           </div>
           <span className="text-[9px] text-muted-foreground font-semibold mt-4 block border-t border-white/5 pt-2 uppercase tracking-wider">
-            Physical limits & recuperation schedules
+            Physical limits &amp; recuperation schedules
           </span>
         </div>
 
         {/* Critical Warnings Section */}
-        <div className="bg-rose-500/5 border border-rose-500/20 p-5 rounded-2xl flex flex-col justify-between hover:border-rose-500/35 transition-all duration-200 shadow-sm">
+        <div className="bg-rose-500/5 border border-rose-500/20 p-5 rounded-2xl flex flex-col justify-between hover:border-rose-500/40 transition-all duration-150 shadow-sm">
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <div className="p-1.5 bg-rose-500/10 rounded-lg text-rose-400">
-                <AlertTriangle className="w-5 h-5" />
+                <AlertTriangle className="w-5 h-5 animate-pulse" />
               </div>
               <h5 className="font-bold text-rose-400 text-sm tracking-tight">IV. Warning Signs (Seek Emergency Care)</h5>
             </div>
@@ -200,9 +200,9 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
               {plan.warningSigns && plan.warningSigns.map((item, idx) => {
                 const Icon = getItemIcon(item, AlertTriangle);
                 return (
-                  <li key={idx} className="flex items-start gap-3 bg-rose-500/5 border border-rose-500/10 hover:border-rose-500/25 p-3 rounded-xl transition-all duration-150">
+                  <li key={idx} style={{ animationDelay: `${idx * 60}ms` }} className="flex items-start gap-3 bg-rose-500/5 border border-rose-500/10 hover:border-rose-500/30 p-3 rounded-xl transition-all duration-150 animate-fade-in-up">
                     <div className="p-1.5 bg-rose-500/10 rounded-lg text-rose-400 shrink-0 mt-0.5">
-                      <Icon className="w-4 h-4 animate-pulse" />
+                      <Icon className="w-4 h-4" />
                     </div>
                     <span className="text-[13px] text-slate-200 leading-relaxed font-medium">
                       {item}
