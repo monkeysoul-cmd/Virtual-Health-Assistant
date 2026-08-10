@@ -134,7 +134,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
     setBubbleText(text);
   }, [state, details]);
 
-  // Typewriter effect for dialog
+  // Typewriter effect for dialog — faster at 10ms per char
   useEffect(() => {
     let currentText = '';
     let index = 0;
@@ -147,7 +147,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       } else {
         clearInterval(interval);
       }
-    }, 15);
+    }, 10);
     return () => clearInterval(interval);
   }, [bubbleText]);
 
@@ -211,7 +211,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
     <>
       {/* Dim backdrop behind card while analyzing */}
       {isThinking && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none transition-opacity duration-300" />
+        <div className="thinking-backdrop" />
       )}
       <div
         onMouseDown={!isScrolled && !isThinking ? handleMouseDown : undefined}
