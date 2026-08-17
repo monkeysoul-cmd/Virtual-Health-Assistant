@@ -289,20 +289,20 @@ export function SymptomCheckerForm() {
                     </div>
                   </div>
 
-                  {/* Condition name */}
-                  <div className="relative z-10 mb-4">
-                    <span className="condition-badge text-base">
-                      {mostProbableCondition.condition}
-                    </span>
-                  </div>
-
-                  {/* Likelihood bar */}
-                  <div className="relative z-10 mb-5">
-                    <div className="flex justify-between text-xs text-slate-400 mb-1">
-                      <span>Match confidence</span>
-                      <span className="font-bold text-emerald-400">{mostProbableCondition.likelihood}%</span>
+                  {/* Condition name — highlighted and prominent */}
+                  <div className="relative z-10 mb-5 p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-emerald-400/40 shadow-[0_4px_24px_rgba(16,185,129,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-400/90 block mb-1">
+                        Identified Condition / Disease
+                      </span>
+                      <h4 className="text-2xl sm:text-3xl font-extrabold tracking-tight capitalize bg-gradient-to-r from-emerald-200 via-teal-100 to-white bg-clip-text text-transparent drop-shadow-sm">
+                        {mostProbableCondition.condition}
+                      </h4>
                     </div>
-                    <LikelihoodBar value={mostProbableCondition.likelihood} color="emerald" />
+                    <div className="inline-flex items-center gap-1.5 self-start sm:self-center px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0 shadow-inner">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-0.5" />
+                      Primary Assessment
+                    </div>
                   </div>
 
                   <div className="relative z-10">
@@ -341,18 +341,20 @@ export function SymptomCheckerForm() {
                         className="rounded-2xl border border-white/8 bg-white/3 backdrop-blur-md p-5 transition-all duration-200 hover:border-white/15 animate-slide-in-right"
                       >
                         <div className="flex items-center justify-between gap-4">
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 flex-1 min-w-0">
-                            <span className="text-sm font-bold px-4 py-1.5 capitalize rounded-full bg-white/5 border border-white/10 text-indigo-300">
-                              {item.condition}
-                            </span>
-                            <span className="text-xs font-semibold text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/5 shrink-0">
-                              {item.likelihood}% Match
-                            </span>
-                            {item.likelihood < 50 ? (
-                              <span className="text-[10px] bg-rose-500/10 text-rose-400 border border-rose-500/20 font-bold px-2.5 py-0.5 rounded-full shrink-0">Low</span>
-                            ) : (
-                              <span className="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold px-2.5 py-0.5 rounded-full shrink-0">Medium</span>
-                            )}
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1 min-w-0">
+                            <div className="flex items-center gap-2.5 flex-wrap">
+                              <span className="text-base sm:text-lg font-extrabold px-3.5 py-1.5 capitalize rounded-xl bg-indigo-500/15 border border-indigo-400/30 text-indigo-100 shadow-[0_0_14px_rgba(99,102,241,0.18)] tracking-wide">
+                                {item.condition}
+                              </span>
+                              <span className="text-xs font-bold text-slate-300 bg-white/8 px-3 py-1 rounded-lg border border-white/10 shrink-0">
+                                {item.likelihood}% Match
+                              </span>
+                              {item.likelihood < 50 ? (
+                                <span className="text-[11px] bg-rose-500/15 text-rose-300 border border-rose-500/30 font-bold px-2.5 py-0.5 rounded-md shrink-0">Low Likelihood</span>
+                              ) : (
+                                <span className="text-[11px] bg-amber-500/15 text-amber-300 border border-amber-500/30 font-bold px-2.5 py-0.5 rounded-md shrink-0">Moderate Likelihood</span>
+                              )}
+                            </div>
                           </div>
                           <button
                             type="button"

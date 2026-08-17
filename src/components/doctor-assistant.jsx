@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Activity, MessageSquare, Heart, ChevronDown, ChevronUp, X } from 'lucide-react';
+import { Activity, MessageSquare, Heart, ChevronDown, ChevronUp, X, Stethoscope } from 'lucide-react';
 
 const INDIAN_DOCTOR_NAMES = [
   'Dr. Aarav Mehta', 'Dr. Priya Sharma', 'Dr. Amit Patel', 'Dr. Sneha Reddy',
@@ -123,8 +123,11 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       position: 'fixed',
       top: '50%',
       left: '50%',
+      right: 'auto',
+      bottom: 'auto',
       transform: 'translate(-50%, -50%)',
       cursor: 'default',
+      zIndex: 50,
       transition: 'top 0.4s cubic-bezier(0.16, 1, 0.3, 1), left 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
     };
   } else if (isScrolled) {
@@ -135,6 +138,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       right: `${GAP}px`,
       top: 'auto',
       transform: 'none',
+      zIndex: 50,
       cursor: isDragging ? 'grabbing' : 'grab',
       transition: isDragging ? 'none' : 'bottom 0.05s linear',
     };
@@ -144,6 +148,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       top: `${72 + position.y}px`,
       right: `${GAP}px`,
       transform: 'none',
+      zIndex: 50,
       cursor: isDragging ? 'grabbing' : 'grab',
       transition: isDragging ? 'none' : 'top 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
     };
@@ -154,7 +159,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
   return createPortal(
     <>
       {/* Dim backdrop while thinking */}
-      {isThinking && <div className="thinking-backdrop" />}
+      {isThinking && <div className="thinking-backdrop" style={{ zIndex: 49 }} />}
 
       <div
         onMouseDown={!isScrolled && !isThinking ? handleMouseDown : undefined}
@@ -223,170 +228,70 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
                       <div className="absolute left-3 right-3 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_8px_rgba(16,185,129,1)] animate-scan-line pointer-events-none z-30" />
                     )}
 
-                    {/* ── Premium Doctor SVG ── */}
-                    <svg viewBox="0 0 80 96" className="w-[72px] h-[86px] relative z-20 select-none" xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                        {/* Skin gradient — warm 3D sphere shading */}
-                        <radialGradient id="d-skin" cx="38%" cy="32%" r="58%">
-                          <stop offset="0%"   stopColor="#ffe8d6" />
-                          <stop offset="55%"  stopColor="#f4c5a8" />
-                          <stop offset="100%" stopColor="#d4956a" />
-                        </radialGradient>
-                        {/* Hair gradient */}
-                        <linearGradient id="d-hair" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0%"   stopColor="#2d1b0e" />
-                          <stop offset="60%"  stopColor="#1a0f07" />
-                          <stop offset="100%" stopColor="#0d0703" />
-                        </linearGradient>
-                        {/* White coat */}
-                        <linearGradient id="d-coat" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0%"   stopColor="#f8fafc" />
-                          <stop offset="50%"  stopColor="#e2e8f0" />
-                          <stop offset="100%" stopColor="#cbd5e1" />
-                        </linearGradient>
-                        {/* Teal scrub shirt */}
-                        <linearGradient id="d-scrub" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%"   stopColor="#0d9488" />
-                          <stop offset="100%" stopColor="#0f766e" />
-                        </linearGradient>
-                        {/* Chrome stethoscope tube */}
-                        <linearGradient id="d-stet" x1="0" y1="0" x2="1" y2="0">
-                          <stop offset="0%"   stopColor="#475569" />
-                          <stop offset="45%"  stopColor="#94a3b8" />
-                          <stop offset="100%" stopColor="#334155" />
-                        </linearGradient>
-                        {/* Head mirror disc */}
-                        <radialGradient id="d-mirror" cx="30%" cy="28%" r="70%">
-                          <stop offset="0%"   stopColor="#ffffff" />
-                          <stop offset="35%"  stopColor="#e2e8f0" />
-                          <stop offset="100%" stopColor="#64748b" />
-                        </radialGradient>
-                        {/* Cheek blush */}
-                        <radialGradient id="d-blush" cx="50%" cy="50%" r="50%">
-                          <stop offset="0%"   stopColor="#f9a8b4" stopOpacity="0.35" />
-                          <stop offset="100%" stopColor="#f9a8b4" stopOpacity="0" />
-                        </radialGradient>
-                        <filter id="d-shadow" x="-15%" y="-15%" width="130%" height="130%">
-                          <feDropShadow dx="0" dy="1.5" stdDeviation="1.8" floodColor="#000" floodOpacity="0.28" />
-                        </filter>
-                        <filter id="d-glow" x="-20%" y="-20%" width="140%" height="140%">
-                          <feGaussianBlur stdDeviation="1" result="blur" />
-                          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
-                      </defs>
-
-                      {/* ── Body / White coat base ── */}
-                      <path d="M8 96 C8 76, 18 70, 26 68 L38 65 L54 68 C62 70, 72 76, 72 96 Z"
-                        fill="url(#d-coat)" filter="url(#d-shadow)" />
-
-                      {/* Coat lapels */}
-                      <path d="M38 65 L28 74 L24 96" fill="white" stroke="#cbd5e1" strokeWidth="0.5" />
-                      <path d="M38 65 L48 74 L52 96" fill="white" stroke="#cbd5e1" strokeWidth="0.5" />
-
-                      {/* Teal scrub visible under coat */}
-                      <path d="M28 74 L38 70 L48 74 L52 96 L24 96 Z" fill="url(#d-scrub)" />
-
-                      {/* Coat shadow fold lines */}
-                      <path d="M24 75 C22 82, 20 90, 18 96" stroke="#94a3b8" strokeWidth="0.6" fill="none" opacity="0.6" />
-                      <path d="M52 75 C54 82, 56 90, 58 96" stroke="#94a3b8" strokeWidth="0.6" fill="none" opacity="0.6" />
-
-                      {/* ── Neck ── */}
-                      <path d="M33 56 C33 56, 32 61, 30 65 L38 67 L46 65 C44 61, 43 56, 43 56 Z"
-                        fill="#ebbfa0" />
-
-                      {/* Collar/shirt */}
-                      <path d="M30 65 C32 63, 38 62, 46 65 L48 68 L28 68 Z" fill="#0d9488" />
-
-                      {/* ── Head ── */}
-                      <ellipse cx="39" cy="34" rx="15" ry="17" fill="url(#d-skin)" filter="url(#d-shadow)" />
-                      {/* Ear left */}
-                      <ellipse cx="24.5" cy="34" rx="2.2" ry="3.2" fill="#e8b491" />
-                      <ellipse cx="24.8" cy="34" rx="1.1" ry="2" fill="#d4956a" />
-                      {/* Ear right */}
-                      <ellipse cx="53.5" cy="34" rx="2.2" ry="3.2" fill="#e8b491" />
-                      <ellipse cx="53.2" cy="34" rx="1.1" ry="2" fill="#d4956a" />
-
-                      {/* Cheek blush */}
-                      <ellipse cx="28" cy="37" rx="4.5" ry="3" fill="url(#d-blush)" />
-                      <ellipse cx="50" cy="37" rx="4.5" ry="3" fill="url(#d-blush)" />
-
-                      {/* ── Hair ── */}
-                      {/* Hair cap base */}
-                      <path d="M24.5 29 C24 20, 28 14, 39 14 C50 14, 54 20, 53.5 29 C50 22, 44 20, 39 20 C34 20, 28 22, 24.5 29 Z"
-                        fill="url(#d-hair)" filter="url(#d-shadow)" />
-                      {/* Side burn lines */}
-                      <path d="M24.5 29 C24 32, 24 35, 24.5 37" stroke="#2d1b0e" strokeWidth="1.2" fill="none" opacity="0.5" />
-                      <path d="M53.5 29 C54 32, 54 35, 53.5 37" stroke="#2d1b0e" strokeWidth="1.2" fill="none" opacity="0.5" />
-                      {/* Hair highlight */}
-                      <path d="M32 16 C35 14.5, 41 14, 44 16" stroke="#5c3317" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.6" />
-
-                      {/* ── Head mirror ── */}
-                      <circle cx="40" cy="21" r="4.5" fill="url(#d-mirror)" stroke="#94a3b8" strokeWidth="0.7" filter="url(#d-glow)" />
-                      {/* Mirror hole */}
-                      <circle cx="40" cy="21" r="1.1" fill="#0f172a" opacity="0.6" />
-                      {/* Mirror highlight */}
-                      <circle cx="38.5" cy="19.5" r="1" fill="white" opacity="0.85" />
-
-                      {/* ── Eyebrows ── */}
-                      <path d="M29.5 29 C30.5 28, 33 27.5, 34.5 28.5" stroke="#2d1b0e" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                      <path d="M43.5 28.5 C45 27.5, 47.5 28, 48.5 29" stroke="#2d1b0e" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-
-                      {/* ── Eyes ── */}
-                      {/* Eye whites */}
-                      <ellipse cx="32" cy="33" rx="4" ry="2.8" fill="white" stroke="#64748b" strokeWidth="0.5" />
-                      <ellipse cx="46" cy="33" rx="4" ry="2.8" fill="white" stroke="#64748b" strokeWidth="0.5" />
-                      {/* Irises */}
-                      <circle cx="32" cy="33.3" r="2.1" fill="#1e3a5f" />
-                      <circle cx="46" cy="33.3" r="2.1" fill="#1e3a5f" />
-                      {/* Pupils */}
-                      <circle cx="32" cy="33.3" r="1.1" fill="#0a0a12" />
-                      <circle cx="46" cy="33.3" r="1.1" fill="#0a0a12" />
-                      {/* Eye highlights */}
-                      <circle cx="31.2" cy="32.5" r="0.55" fill="white" opacity="0.95" />
-                      <circle cx="45.2" cy="32.5" r="0.55" fill="white" opacity="0.95" />
-                      {/* Upper eyelid line */}
-                      <path d="M28 31.5 C29 30, 32 29.8, 36 31.5" stroke="#334155" strokeWidth="0.7" fill="none" />
-                      <path d="M42 31.5 C43 30, 46 29.8, 50 31.5" stroke="#334155" strokeWidth="0.7" fill="none" />
-                      {/* Lower lash hint */}
-                      <path d="M28.2 34.8 C30 35.5, 34 35.5, 35.8 34.8" stroke="#94a3b8" strokeWidth="0.5" fill="none" opacity="0.5" />
-                      <path d="M42.2 34.8 C44 35.5, 48 35.5, 49.8 34.8" stroke="#94a3b8" strokeWidth="0.5" fill="none" opacity="0.5" />
-
-                      {/* ── Nose ── */}
-                      <path d="M39 34 L37.5 40 C37.5 40, 38.5 41.5, 39 41.5 C39.5 41.5, 40.5 40, 40.5 40 Z"
-                        stroke="#c8856a" strokeWidth="0.8" fill="none" strokeLinecap="round" />
-                      <ellipse cx="37" cy="40.5" rx="1.5" ry="1" fill="#c8856a" opacity="0.4" />
-                      <ellipse cx="41" cy="40.5" rx="1.5" ry="1" fill="#c8856a" opacity="0.4" />
-
-                      {/* ── Mouth ── */}
-                      {state === 'thinking'
-                        ? <path d="M35 45 L43 45" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" />
-                        : <>
-                            {/* Upper lip */}
-                            <path d="M35 44 C36.5 43, 38 43.5, 39 44 C40 43.5, 41.5 43, 43 44"
-                              stroke="#b06060" strokeWidth="0.8" fill="none" />
-                            {/* Smile */}
-                            <path d="M35 44 C36.5 47, 41.5 47, 43 44"
-                              fill="#fbb6b6" stroke="#b06060" strokeWidth="0.7" />
-                            {/* Teeth hint */}
-                            <path d="M36.5 44.5 L41.5 44.5" stroke="white" strokeWidth="0.9" strokeLinecap="round" opacity="0.6" />
-                          </>
+                    {/* ── Male Doctor SVG ── */}
+                    <svg viewBox="0 0 80 90" className="w-full h-full relative z-20 select-none" xmlns="http://www.w3.org/2000/svg">
+                      {/* White coat — wider masculine shoulders */}
+                      <path d="M8 90 C8 67 20 60 29 58 L40 55 L51 58 C60 60 72 67 72 90 Z" fill="#e2e8f0"/>
+                      {/* Left lapel */}
+                      <path d="M40 55 L27 64 L21 90" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="0.8"/>
+                      {/* Right lapel */}
+                      <path d="M40 55 L53 64 L59 90" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="0.8"/>
+                      {/* Scrub / shirt */}
+                      <path d="M27 64 L40 59 L53 64 L59 90 L21 90 Z" fill={isThinking ? '#d97706' : '#0d9488'}/>
+                      {/* Neck — wider/thicker for male */}
+                      <rect x="33" y="49" width="14" height="9" rx="3" fill="#c8855a"/>
+                      {/* Head — square-ish jaw using a path */}
+                      <path d="M24 32 C24 18 30 10 40 10 C50 10 56 18 56 32 C56 39 55 44 51 48 C47 52 43 53 40 53 C37 53 33 52 29 48 C25 44 24 39 24 32 Z" fill="#c8855a"/>
+                      {/* Jaw shadow — defines the square jawline */}
+                      <path d="M29 48 C32 52 40 54 51 48" stroke="#a06840" strokeWidth="1" fill="none" opacity="0.4"/>
+                      {/* Short side-parted hair */}
+                      {/* Main hair cap */}
+                      <path d="M24.5 29 C24 17 30 9 40 9 C50 9 56 17 55.5 29 C53 21 48 17 40 17 C32 17 27 21 24.5 29 Z" fill="#1a0f07"/>
+                      {/* Left side short crop line */}
+                      <path d="M24.5 29 C24 33 24 37 25 41" stroke="#1a0f07" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+                      {/* Right side short crop line */}
+                      <path d="M55.5 29 C56 33 56 37 55 41" stroke="#1a0f07" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+                      {/* Hair parting line (left side part) */}
+                      <path d="M31 13 C34 11 38 10 40 9" stroke="#3a2010" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.6"/>
+                      {/* Ears */}
+                      <ellipse cx="23.8" cy="34" rx="2.2" ry="3.2" fill="#b87448"/>
+                      <ellipse cx="56.2" cy="34" rx="2.2" ry="3.2" fill="#b87448"/>
+                      {/* Eyebrows — straight & thick (key male cue) */}
+                      <path d="M28.5 27 L36.5 26.5" stroke="#1a0f07" strokeWidth="2.2" strokeLinecap="square" fill="none"/>
+                      <path d="M43.5 26.5 L51.5 27" stroke="#1a0f07" strokeWidth="2.2" strokeLinecap="square" fill="none"/>
+                      {/* Eyes — slightly narrower/harder */}
+                      <ellipse cx="32.5" cy="32" rx="3.8" ry="2.6" fill="white"/>
+                      <ellipse cx="47.5" cy="32" rx="3.8" ry="2.6" fill="white"/>
+                      <circle cx="32.5" cy="32.3" r="2.1" fill="#1e3a5f"/>
+                      <circle cx="47.5" cy="32.3" r="2.1" fill="#1e3a5f"/>
+                      <circle cx="31.7" cy="31.5" r="0.72" fill="white" opacity="0.88"/>
+                      <circle cx="46.7" cy="31.5" r="0.72" fill="white" opacity="0.88"/>
+                      {/* Nose — wider/more defined for male */}
+                      <path d="M40 33 L38.5 39" stroke="#9a6040" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+                      <path d="M40 33 L41.5 39" stroke="#9a6040" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+                      <path d="M36.5 39.5 C38 40.5 42 40.5 43.5 39.5" stroke="#9a6040" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+                      <ellipse cx="37.5" cy="39.5" rx="1.5" ry="1" fill="#9a6040" opacity="0.35"/>
+                      <ellipse cx="42.5" cy="39.5" rx="1.5" ry="1" fill="#9a6040" opacity="0.35"/>
+                      {/* Mouth — thinner, more neutral (male) */}
+                      {isThinking
+                        ? <path d="M36 44 L44 44" stroke="#f59e0b" strokeWidth="1.7" strokeLinecap="round"/>
+                        : <path d="M36 44 C38 45.8 42 45.8 44 44" stroke="#8a5540" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
                       }
-
-                      {/* ── Stethoscope ── */}
-                      {/* Ear tubes arcing over shoulders */}
-                      <path d="M29 56 C26 52, 24 48, 23 44" stroke="url(#d-stet)" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-                      <path d="M49 56 C52 52, 54 48, 55 44" stroke="url(#d-stet)" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-                      {/* Ear tips */}
-                      <circle cx="23" cy="43.5" r="2" fill="#64748b" stroke="#94a3b8" strokeWidth="0.6" />
-                      <circle cx="55" cy="43.5" r="2" fill="#64748b" stroke="#94a3b8" strokeWidth="0.6" />
-                      {/* Chest tube going to diaphragm */}
-                      <path d="M29 56 C30 61, 34 65, 38 67" stroke="url(#d-stet)" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-                      <path d="M49 56 C48 61, 44 65, 38 67" stroke="url(#d-stet)" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-                      <path d="M38 67 L38 72" stroke="url(#d-stet)" strokeWidth="2" fill="none" />
-                      {/* Diaphragm (chest piece) */}
-                      <circle cx="38" cy="73.5" r="3.8" fill="url(#d-mirror)" stroke="#64748b" strokeWidth="0.8" filter="url(#d-glow)" />
-                      <circle cx="38" cy="73.5" r="2" fill="#94a3b8" />
-                      <circle cx="37" cy="72.5" r="0.8" fill="white" opacity="0.7" />
+                      {/* Stubble dots on jaw (subtle) */}
+                      <circle cx="32" cy="46" r="0.6" fill="#7a4a30" opacity="0.45"/>
+                      <circle cx="36" cy="47.5" r="0.6" fill="#7a4a30" opacity="0.45"/>
+                      <circle cx="40" cy="48" r="0.6" fill="#7a4a30" opacity="0.45"/>
+                      <circle cx="44" cy="47.5" r="0.6" fill="#7a4a30" opacity="0.45"/>
+                      <circle cx="48" cy="46" r="0.6" fill="#7a4a30" opacity="0.45"/>
+                      {/* Stethoscope */}
+                      <path d="M28 53 C25 48 24 44 25 41" stroke="#64748b" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                      <path d="M52 53 C55 48 56 44 55 41" stroke="#64748b" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                      <circle cx="25" cy="40.5" r="2" fill="#475569"/>
+                      <circle cx="55" cy="40.5" r="2" fill="#475569"/>
+                      <path d="M28 53 C30 58 35 61 40 62" stroke="#64748b" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                      <path d="M52 53 C50 58 45 61 40 62" stroke="#64748b" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                      <circle cx="40" cy="63.5" r="3.5" fill="#94a3b8" stroke="#64748b" strokeWidth="0.8"/>
+                      <circle cx="40" cy="63.5" r="1.5" fill="#cbd5e1"/>
                     </svg>
                   </div>
 
@@ -407,65 +312,55 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
           >
             {/* Mini avatar */}
             <div className="relative flex-shrink-0 w-10 h-10 rounded-full bg-slate-900 border border-white/10 overflow-hidden flex items-center justify-center">
-            {/* ── Premium Mini Doctor SVG ── */}
-            <svg viewBox="0 0 80 96" className="absolute inset-0 w-full h-full z-10 select-none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <radialGradient id="m-skin" cx="38%" cy="32%" r="58%">
-                  <stop offset="0%"   stopColor="#ffe8d6" />
-                  <stop offset="55%"  stopColor="#f4c5a8" />
-                  <stop offset="100%" stopColor="#d4956a" />
-                </radialGradient>
-                <linearGradient id="m-hair" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%"   stopColor="#2d1b0e" />
-                  <stop offset="100%" stopColor="#0d0703" />
-                </linearGradient>
-                <linearGradient id="m-coat" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%"   stopColor="#f8fafc" />
-                  <stop offset="100%" stopColor="#cbd5e1" />
-                </linearGradient>
-                <linearGradient id="m-scrub" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%"   stopColor="#0d9488" />
-                  <stop offset="100%" stopColor="#0f766e" />
-                </linearGradient>
-                <radialGradient id="m-mirror" cx="30%" cy="28%" r="70%">
-                  <stop offset="0%"   stopColor="#ffffff" />
-                  <stop offset="100%" stopColor="#64748b" />
-                </radialGradient>
-              </defs>
-              {/* Body */}
-              <path d="M10 96 C10 76, 20 70, 28 68 L38 65 L52 68 C60 70, 70 76, 70 96 Z" fill="url(#m-coat)" />
-              <path d="M38 65 L29 74 L25 96" fill="white" />
-              <path d="M38 65 L47 74 L51 96" fill="white" />
-              <path d="M29 74 L38 70 L47 74 L51 96 L25 96 Z" fill="url(#m-scrub)" />
+            {/* ── Male Mini Doctor SVG ── */}
+            <svg viewBox="0 0 80 90" className="absolute inset-0 w-full h-full select-none" xmlns="http://www.w3.org/2000/svg">
+              {/* Coat — wider masculine shoulders */}
+              <path d="M8 90 C8 67 20 60 29 58 L40 55 L51 58 C60 60 72 67 72 90 Z" fill="#e2e8f0"/>
+              <path d="M40 55 L27 64 L21 90" fill="#f1f5f9"/>
+              <path d="M40 55 L53 64 L59 90" fill="#f1f5f9"/>
+              <path d="M27 64 L40 59 L53 64 L59 90 L21 90 Z" fill="#0d9488"/>
               {/* Neck */}
-              <path d="M34 56 C34 60, 32 64, 30 67 L38 69 L46 67 C44 64, 42 60, 42 56 Z" fill="#ebbfa0" />
-              {/* Head */}
-              <ellipse cx="39" cy="33" rx="15" ry="17" fill="url(#m-skin)" />
+              <rect x="33" y="49" width="14" height="9" rx="3" fill="#c8855a"/>
+              {/* Head — square jaw path */}
+              <path d="M24 32 C24 18 30 10 40 10 C50 10 56 18 56 32 C56 39 55 44 51 48 C47 52 43 53 40 53 C37 53 33 52 29 48 C25 44 24 39 24 32 Z" fill="#c8855a"/>
+              {/* Short side-parted hair */}
+              <path d="M24.5 29 C24 17 30 9 40 9 C50 9 56 17 55.5 29 C53 21 48 17 40 17 C32 17 27 21 24.5 29 Z" fill="#1a0f07"/>
+              <path d="M24.5 29 C24 33 24 37 25 41" stroke="#1a0f07" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+              <path d="M55.5 29 C56 33 56 37 55 41" stroke="#1a0f07" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
               {/* Ears */}
-              <ellipse cx="24.5" cy="33" rx="2" ry="3" fill="#e8b491" />
-              <ellipse cx="53.5" cy="33" rx="2" ry="3" fill="#e8b491" />
-              {/* Hair */}
-              <path d="M24.5 28 C24 19, 28 13, 39 13 C50 13, 54 19, 53.5 28 C50 21, 44 19, 39 19 C34 19, 28 21, 24.5 28 Z" fill="url(#m-hair)" />
-              {/* Head mirror */}
-              <circle cx="40" cy="20" r="4" fill="url(#m-mirror)" stroke="#94a3b8" strokeWidth="0.6" />
-              <circle cx="40" cy="20" r="1" fill="#0f172a" opacity="0.5" />
-              <circle cx="38.5" cy="18.5" r="0.8" fill="white" opacity="0.9" />
-              {/* Eyebrows */}
-              <path d="M29.5 27.5 C31 26.5, 33 26, 34.5 27" stroke="#2d1b0e" strokeWidth="1.3" strokeLinecap="round" fill="none" />
-              <path d="M43.5 27 C45 26, 47 26.5, 48.5 27.5" stroke="#2d1b0e" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+              <ellipse cx="23.8" cy="34" rx="2.2" ry="3.2" fill="#b87448"/>
+              <ellipse cx="56.2" cy="34" rx="2.2" ry="3.2" fill="#b87448"/>
+              {/* Eyebrows — straight & thick */}
+              <path d="M28.5 27 L36.5 26.5" stroke="#1a0f07" strokeWidth="2.2" strokeLinecap="square" fill="none"/>
+              <path d="M43.5 26.5 L51.5 27" stroke="#1a0f07" strokeWidth="2.2" strokeLinecap="square" fill="none"/>
               {/* Eyes */}
-              <ellipse cx="32" cy="32" rx="3.8" ry="2.6" fill="white" />
-              <ellipse cx="46" cy="32" rx="3.8" ry="2.6" fill="white" />
-              <circle cx="32" cy="32.2" r="1.9" fill="#1e3a5f" />
-              <circle cx="46" cy="32.2" r="1.9" fill="#1e3a5f" />
-              <circle cx="32" cy="32.2" r="1" fill="#070d18" />
-              <circle cx="46" cy="32.2" r="1" fill="#070d18" />
-              <circle cx="31.2" cy="31.3" r="0.5" fill="white" opacity="0.95" />
-              <circle cx="45.2" cy="31.3" r="0.5" fill="white" opacity="0.95" />
+              <ellipse cx="32.5" cy="32" rx="3.8" ry="2.6" fill="white"/>
+              <ellipse cx="47.5" cy="32" rx="3.8" ry="2.6" fill="white"/>
+              <circle cx="32.5" cy="32.3" r="2.1" fill="#1e3a5f"/>
+              <circle cx="47.5" cy="32.3" r="2.1" fill="#1e3a5f"/>
+              <circle cx="31.7" cy="31.5" r="0.72" fill="white" opacity="0.88"/>
+              <circle cx="46.7" cy="31.5" r="0.72" fill="white" opacity="0.88"/>
               {/* Nose */}
-              <path d="M39 33 L37.8 38.5 C38.5 40, 39.5 40, 40.2 38.5 Z" stroke="#c8856a" strokeWidth="0.7" fill="none" strokeLinecap="round" />
-              {/* Smile */}
-              <path d="M34.5 43 C36 46.5, 42 46.5, 43.5 43" stroke="#b06060" strokeWidth="1" fill="none" strokeLinecap="round" />
+              <path d="M40 33 L38.5 39" stroke="#9a6040" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+              <path d="M40 33 L41.5 39" stroke="#9a6040" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+              <path d="M36.5 39.5 C38 40.5 42 40.5 43.5 39.5" stroke="#9a6040" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+              {/* Mouth — thin/neutral */}
+              <path d="M36 44 C38 45.8 42 45.8 44 44" stroke="#8a5540" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
+              {/* Stubble dots */}
+              <circle cx="32" cy="46" r="0.6" fill="#7a4a30" opacity="0.45"/>
+              <circle cx="36" cy="47.5" r="0.6" fill="#7a4a30" opacity="0.45"/>
+              <circle cx="40" cy="48" r="0.6" fill="#7a4a30" opacity="0.45"/>
+              <circle cx="44" cy="47.5" r="0.6" fill="#7a4a30" opacity="0.45"/>
+              <circle cx="48" cy="46" r="0.6" fill="#7a4a30" opacity="0.45"/>
+              {/* Stethoscope */}
+              <path d="M28 53 C25 48 24 44 25 41" stroke="#64748b" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+              <path d="M52 53 C55 48 56 44 55 41" stroke="#64748b" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+              <circle cx="25" cy="40.5" r="2" fill="#475569"/>
+              <circle cx="55" cy="40.5" r="2" fill="#475569"/>
+              <path d="M28 53 C30 58 35 61 40 62" stroke="#64748b" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+              <path d="M52 53 C50 58 45 61 40 62" stroke="#64748b" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+              <circle cx="40" cy="63.5" r="3.5" fill="#94a3b8" stroke="#64748b" strokeWidth="0.8"/>
+              <circle cx="40" cy="63.5" r="1.5" fill="#cbd5e1"/>
             </svg>
               {/* Online dot */}
               <div className="absolute top-0.5 right-0.5 h-2.5 w-2.5 bg-emerald-500 rounded-full border-2 border-slate-900 animate-pulse" />
