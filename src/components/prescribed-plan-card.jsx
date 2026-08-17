@@ -120,7 +120,7 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
             <h3 className="text-lg font-bold font-headline text-emerald-400 tracking-tight">Prescribed Recovery Plan</h3>
           </div>
           {conditionName && (
-            <span className="condition-badge text-xs capitalize">
+            <span className="inline-flex items-center px-3.5 py-1.5 rounded-xl text-sm font-bold bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 shadow-[0_0_12px_rgba(16,185,129,0.2)] capitalize tracking-wide">
               {conditionName}
             </span>
           )}
