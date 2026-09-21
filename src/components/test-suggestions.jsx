@@ -3,7 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from '@/co
 import { FlaskConical, Star } from 'lucide-react';
 import { Badge } from './ui/badge';
 export function TestSuggestions({ conditions }) {
-    const relevantTests = testSuggestions.filter(t => conditions.includes(t.condition));
+    if (!conditions || !Array.isArray(conditions) || conditions.length === 0)
+        return null;
+
+    const normalizedConditions = conditions.map(c => (typeof c === 'string' ? c.toLowerCase().trim() : ''));
+    const relevantTests = testSuggestions.filter(t => {
+        const testCond = t.condition.toLowerCase().trim();
+        return normalizedConditions.some(c => c && (c === testCond || c.includes(testCond) || testCond.includes(c)));
+    });
     if (relevantTests.length === 0)
         return null;
     return (<div className="w-full space-y-4">

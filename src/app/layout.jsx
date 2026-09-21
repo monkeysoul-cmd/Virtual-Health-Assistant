@@ -1,12 +1,28 @@
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-headline',
+  display: 'swap',
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
+
+export const viewport = {
+  themeColor: '#10b981',
+};
 
 export const metadata = {
   title: 'Virtual Health Assistant — AI Symptom Checker & Doctor Finder',
   description: 'AI-powered symptom analysis, personalised recovery plans, and an intelligent doctor directory. Get instant health insights powered by Gemini AI.',
   manifest: '/manifest.json',
   keywords: ['health assistant', 'symptom checker', 'AI diagnosis', 'doctor finder', 'virtual health', 'Gemini AI'],
-  themeColor: '#10b981',
   openGraph: {
     title: 'Virtual Health Assistant',
     description: 'AI-powered symptom analysis & doctor directory',
@@ -16,16 +32,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
-      <head>
-        <meta name="theme-color" content="#10b981" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`dark ${outfit.variable} ${plusJakartaSans.variable}`}>
       <body className="font-body antialiased">
         {children}
         <Toaster />
