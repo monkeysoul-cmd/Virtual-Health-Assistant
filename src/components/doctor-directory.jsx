@@ -27,7 +27,11 @@ function StarRating({ rating = 4 }) {
 
 /* ── Doctor Card ── */
 function DoctorCard({ doctor, index, onClick }) {
-  const rating = 4 + (doctor.id % 2 === 0 ? 0 : 1); // alternates between 4 and 5 stars
+  const numericId = typeof doctor.id === 'number'
+    ? doctor.id
+    : parseInt(String(doctor.id).replace(/\D/g, ''), 10);
+  const safeId = Number.isFinite(numericId) ? numericId : index;
+  const rating = 4 + (safeId % 2 === 0 ? 0 : 1); // alternates between 4 and 5 stars
   return (
     <div
       onClick={onClick}

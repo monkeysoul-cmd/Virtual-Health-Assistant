@@ -1,13 +1,7 @@
 'use client';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Activity, MessageSquare, Heart, ChevronDown, ChevronUp, X, Stethoscope } from 'lucide-react';
-
-const INDIAN_DOCTOR_NAMES = [
-  'Dr. Aarav Mehta', 'Dr. Priya Sharma', 'Dr. Amit Patel', 'Dr. Sneha Reddy',
-  'Dr. Sanjay Sen', 'Dr. Neha Gupta', 'Dr. Vikram Malhotra', 'Dr. Kavita Joshi',
-  'Dr. Anil Verma', 'Dr. Divya Iyer',
-];
+import { Activity, MessageSquare, Heart, ChevronDown } from 'lucide-react';
 
 export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr. Amit Patel' }) {
   const [bubbleText, setBubbleText]         = useState('');
@@ -21,7 +15,6 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
   const [scrollY, setScrollY]               = useState(0);
   const [viewport, setViewport]             = useState({ width: 1440, height: 900 });
   const [portalTarget, setPortalTarget]     = useState(null);
-  const [prevState, setPrevState]           = useState(state);
 
   useEffect(() => { setPortalTarget(document.body); }, []);
 
@@ -32,25 +25,21 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
     setIsDragging(true);
     setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
   };
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    setPosition({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
-  };
-  const handleMouseUp = () => setIsDragging(false);
 
   useEffect(() => {
-    if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-    } else {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    }
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+    if (!isDragging) return;
+    const onMouseMove = (e) => {
+      setPosition({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
     };
-  }, [isDragging, dragStart, position]);
+    const onMouseUp = () => setIsDragging(false);
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+  }, [isDragging, dragStart]);
 
   /* ── Scroll tracking ── */
   useEffect(() => {

@@ -137,9 +137,24 @@ export function SymptomCheckerForm() {
 
   const mostProbableCondition = assessmentResult.potentialConditions?.[0];
   const otherConditions        = assessmentResult.potentialConditions?.slice(1);
-  const recommendedDoctor      = mostProbableCondition
-    ? doctors.find(d => d.specialty === conditionToSpecialty[mostProbableCondition.condition])
-    : null;
+  const getRecommendedDoctor = (conditionObj) => {
+    if (!conditionObj?.condition) return null;
+    const condKey = conditionObj.condition.toLowerCase().trim();
+    let specialty = conditionToSpecialty[condKey];
+    if (!specialty) {
+      const match = Object.entries(conditionToSpecialty).find(([c]) =>
+        condKey.includes(c) || c.includes(condKey)
+      );
+      if (match) specialty = match[1];
+    }
+    if (specialty) {
+      const matchedDoctor = doctors.find(d => d.specialty?.toLowerCase() === specialty.toLowerCase());
+      if (matchedDoctor) return matchedDoctor;
+    }
+    return doctors.find(d => d.specialty === 'General Practitioner') || doctors[0];
+  };
+
+  const recommendedDoctor = mostProbableCondition ? getRecommendedDoctor(mostProbableCondition) : null;
 
   return (
     <div className="w-full mx-auto space-y-8">

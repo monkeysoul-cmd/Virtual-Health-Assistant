@@ -82,7 +82,11 @@ export function PrescribedPlanCard({ plan, doctorName = 'Dr. Amit Patel', condit
     ? plan.activityLevel.split(/\.(?=\s|$)/).map(s => s.trim()).filter(Boolean)
     : [];
 
-  const testsData = testSuggestions.find(t => t.condition.toLowerCase() === conditionName?.toLowerCase());
+  const normCondName = conditionName ? conditionName.toLowerCase().trim() : '';
+  const testsData = testSuggestions.find(t => {
+    const testCond = t.condition.toLowerCase().trim();
+    return normCondName && (testCond === normCondName || normCondName.includes(testCond) || testCond.includes(normCondName));
+  });
   const tests     = testsData ? testsData.tests : [];
 
   return (
