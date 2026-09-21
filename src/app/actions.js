@@ -5,8 +5,8 @@ const symptomSchema = z
     .string()
     .min(3, { message: 'Please describe your symptoms in more detail.' });
 export async function getHealthAssessment(prevState, formData) {
-    const symptoms = formData.get('symptoms');
-    const apiKey = formData.get('apiKey');
+    const symptoms = formData instanceof FormData ? formData.get('symptoms') : formData?.symptoms;
+    const apiKey = formData instanceof FormData ? formData.get('apiKey') : formData?.apiKey;
     const validatedSymptoms = symptomSchema.safeParse(symptoms);
     if (!validatedSymptoms.success) {
         return {

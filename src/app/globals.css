@@ -4,9 +4,6 @@
 
 @layer base {
   :root {
-    --font-headline: 'Outfit', sans-serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
-
     --background: 220 33% 98%;
     --foreground: 224 71% 4%;
     --card: 0 0% 100%;
@@ -29,9 +26,6 @@
     --radius: 1rem;
   }
   .dark {
-    --font-headline: 'Outfit', sans-serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
-
     --background: 222 47% 6%;
     --foreground: 210 20% 98%;
     --card: 222 47% 9%;

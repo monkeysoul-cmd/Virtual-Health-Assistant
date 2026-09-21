@@ -67,10 +67,11 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
 
   /* ── Bubble text by state ── */
   useEffect(() => {
+    const truncatedDetails = details && details.length > 55 ? `${details.slice(0, 52)}…` : details;
     const messages = {
       typing:   'I am listening closely. Please describe your symptoms in detail, including how long they have persisted.',
-      adding:   details ? `"${details}" has been added to your symptom checklist. Any other symptoms to include?` : 'Symptom recorded. Please continue describing any other discomfort.',
-      thinking: details ? `Analysing: "${details}". Cross-referencing our clinical database to build your recovery plan…` : 'Analysing your symptoms against our medical database. Just a moment.',
+      adding:   truncatedDetails ? `"${truncatedDetails}" has been added to your symptom checklist. Any other symptoms to include?` : 'Symptom recorded. Please continue describing any other discomfort.',
+      thinking: truncatedDetails ? `Analysing: "${truncatedDetails}". Cross-referencing our clinical database to build your recovery plan…` : 'Analysing your symptoms against our medical database. Just a moment.',
       success:  'Assessment complete. I have highlighted the most probable conditions and recommended next steps below.',
       cleared:  'Your symptom checklist has been cleared. How are you feeling today?',
       booking:  'Connecting you with a specialist. Please select a convenient appointment date and time.',
@@ -127,7 +128,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       right: `${GAP}px`,
       top: 'auto',
       transform: 'none',
-      zIndex: 50,
+      zIndex: 40,
       cursor: isDragging ? 'grabbing' : 'grab',
       transition: isDragging ? 'none' : 'bottom 0.05s linear',
     };
@@ -137,7 +138,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       top: `${72 + position.y}px`,
       right: `${GAP}px`,
       transform: 'none',
-      zIndex: 50,
+      zIndex: 40,
       cursor: isDragging ? 'grabbing' : 'grab',
       transition: isDragging ? 'none' : 'top 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
     };
@@ -153,7 +154,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       <div
         onMouseDown={!isScrolled && !isThinking ? handleMouseDown : undefined}
         style={containerStyle}
-        className={`z-50 flex flex-col items-end gap-3 select-none ${isOpen ? 'w-[290px]' : 'w-auto'}`}
+        className={`z-40 flex flex-col items-end gap-3 select-none ${isOpen ? 'w-[290px]' : 'w-auto'}`}
       >
         {isOpen ? (
           /* ── Expanded Card ── */

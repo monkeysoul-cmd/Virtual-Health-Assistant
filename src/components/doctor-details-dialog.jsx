@@ -14,14 +14,18 @@ const availableTimes = [
     '02:00 PM',
     '03:00 PM',
 ];
-export function DoctorDetailsDialog({ doctor, onClose, }) {
+export function DoctorDetailsDialog({ doctor, onClose }) {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState();
     const { toast } = useToast();
     const startOfToday = new Date();
     startOfToday.setHours(0, 0, 0, 0);
+
+    if (!doctor) return null;
+
     const handleBooking = () => {
-        if (selectedDate && selectedTime) {
+        const isDateValid = selectedDate instanceof Date && !isNaN(selectedDate.getTime());
+        if (isDateValid && selectedTime) {
             toast({
                 title: 'Appointment Confirmed!',
                 description: `Your appointment with ${doctor.name} is set for ${format(selectedDate, 'PPP')} at ${selectedTime}.`,
@@ -36,7 +40,8 @@ export function DoctorDetailsDialog({ doctor, onClose, }) {
             });
         }
     };
-    return (<Dialog open={true} onOpenChange={onClose}>
+
+    return (<Dialog open={Boolean(doctor)} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent className="sm:max-w-[425px] glass-dialog border border-white/10 shadow-2xl animate-fade-in-up">
         <DialogHeader>
           <DialogTitle className="font-headline text-2xl text-gradient">
@@ -62,7 +67,7 @@ export function DoctorDetailsDialog({ doctor, onClose, }) {
           </div>
         </div>
         <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={onClose} className="border-white/10 hover:bg-white/10 text-foreground">
+          <Button variant="outline" onClick={() => onClose()} className="border-white/10 hover:bg-white/10 text-foreground">
             Cancel
           </Button>
           <Button onClick={handleBooking} className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold">Confirm Appointment</Button>
