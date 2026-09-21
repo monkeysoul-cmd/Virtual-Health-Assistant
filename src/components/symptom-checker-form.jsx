@@ -91,6 +91,12 @@ export function SymptomCheckerForm() {
     if (typeof window !== 'undefined') {
       const savedKey = localStorage.getItem('vha_gemini_key');
       if (savedKey) setApiKey(savedKey);
+      const handleStorageUpdate = () => {
+        const updatedKey = localStorage.getItem('vha_gemini_key');
+        if (updatedKey !== null) setApiKey(updatedKey);
+      };
+      window.addEventListener('vha_storage_update', handleStorageUpdate);
+      return () => window.removeEventListener('vha_storage_update', handleStorageUpdate);
     }
     setDoctorName(INDIAN_DOCTOR_NAMES[Math.floor(Math.random() * INDIAN_DOCTOR_NAMES.length)]);
   }, []);

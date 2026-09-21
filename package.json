@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development next dev --turbopack -p 9002",
+    "dev": "cross-env NODE_ENV=development next dev -p 9002",
     "genkit:dev": "genkit start -- node src/ai/dev.js",
     "genkit:watch": "genkit start -- node --watch src/ai/dev.js",
     "build": "cross-env NODE_ENV=production next build",
