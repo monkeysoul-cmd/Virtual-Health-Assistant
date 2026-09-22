@@ -1,6 +1,7 @@
 'use client';
-import { useFormState, useFormStatus } from 'react-dom';
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useFormStatus } from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import { getHealthAssessment } from '@/app/actions';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -23,6 +24,8 @@ import {
   precautions, fallbackPrescribedPlans, defaultPrescribedPlan,
 } from '@/lib/data';
 import { DoctorDetailsDialog } from './doctor-details-dialog';
+
+const useActionStateHook = React.useActionState || ReactDOM.useFormState;
 import { DoctorAssistant } from './doctor-assistant';
 import { PrescribedPlanCard } from './prescribed-plan-card';
 
@@ -75,7 +78,7 @@ function SubmitButton() {
 const initialState = { potentialConditions: [], error: null };
 
 export function SymptomCheckerForm() {
-  const [state, formAction]                           = useFormState(getHealthAssessment, initialState);
+  const [state, formAction]                           = useActionStateHook(getHealthAssessment, initialState);
   const [symptoms, setSymptoms]                       = useState('');
   const [selectedDoctorForBooking, setSelectedDoctorForBooking] = useState(null);
   const [doctorState, setDoctorState]                 = useState('idle');
@@ -218,7 +221,7 @@ export function SymptomCheckerForm() {
                   key={condition}
                   type="button"
                   style={{ animationDelay: `${i * 25}ms` }}
-                  className="rounded-full px-3.5 py-1.5 text-xs font-semibold bg-white/5 border border-white/10 text-slate-300 hover:bg-indigo-500 hover:text-indigo-950 hover:border-indigo-400 hover:shadow-[0_0_14px_rgba(99,102,241,0.4)] transition-all duration-150 tag-pop animate-fade-in-up flex items-center gap-1.5"
+                  className="rounded-full px-3.5 py-1.5 text-xs font-semibold bg-white/5 border border-white/10 text-slate-300 hover:bg-indigo-500 hover:text-indigo-950 hover:border-indigo-400 hover:shadow-[0_0_14px_rgba(99,102,241,0.4)] transition-all duration-150 tag-pop animate-fade-in-up flex items-center gap-1.5 capitalize"
                   onClick={() => addConditionSymptoms(condition)}
                 >
                   <PlusCircle className="w-3 h-3" />
@@ -427,48 +430,51 @@ export function SymptomCheckerForm() {
                     : 'This AI assessment is a helpful first step. Please consult a qualified healthcare provider.'}
                 </p>
 
-                {recommendedDoctor && (
-                  <div
-                    className="doctor-card mb-4 cursor-pointer"
-                    onClick={() => { setSelectedDoctorForBooking(recommendedDoctor); setDoctorState('booking'); }}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="avatar-ring">
-                        <div className="avatar-inner">
-                          <recommendedDoctor.icon className="w-5 h-5 text-emerald-400" />
+                {recommendedDoctor && (() => {
+                  const RecommendedDoctorIcon = recommendedDoctor.icon || Stethoscope;
+                  return (
+                    <div
+                      className="doctor-card mb-4 cursor-pointer"
+                      onClick={() => { setSelectedDoctorForBooking(recommendedDoctor); setDoctorState('booking'); }}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="avatar-ring">
+                          <div className="avatar-inner">
+                            <RecommendedDoctorIcon className="w-5 h-5 text-emerald-400" />
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-headline font-bold text-base text-white">{recommendedDoctor.name}</div>
+                          <div className="flex items-center gap-1 mt-1">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className={`w-3 h-3 ${i < 4 ? 'text-amber-400 fill-amber-400' : 'text-slate-600'}`} />
+                            ))}
+                            <span className="text-xs text-slate-500 ml-1">4.0</span>
+                          </div>
+                        </div>
+                        <span className="avail-dot shrink-0" />
+                      </div>
+                      <div className="mt-4 space-y-2">
+                        <div className="flex items-center gap-2 text-sm text-slate-400">
+                          <Stethoscope className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                          <span>{recommendedDoctor.specialty}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-400">
+                          <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                          <span>{recommendedDoctor.area}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-400">
+                          <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                          <span>{recommendedDoctor.contact}</span>
                         </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-headline font-bold text-base text-white">{recommendedDoctor.name}</div>
-                        <div className="flex items-center gap-1 mt-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} className={`w-3 h-3 ${i < 4 ? 'text-amber-400 fill-amber-400' : 'text-slate-600'}`} />
-                          ))}
-                          <span className="text-xs text-slate-500 ml-1">4.0</span>
-                        </div>
-                      </div>
-                      <span className="avail-dot shrink-0" />
-                    </div>
-                    <div className="mt-4 space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-slate-400">
-                        <Stethoscope className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                        <span>{recommendedDoctor.specialty}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-slate-400">
-                        <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                        <span>{recommendedDoctor.area}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-slate-400">
-                        <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                        <span>{recommendedDoctor.contact}</span>
+                      <div className="mt-4 flex items-center justify-end gap-2 text-sm font-semibold text-emerald-400">
+                        <Calendar className="w-4 h-4" />
+                        Book an Appointment →
                       </div>
                     </div>
-                    <div className="mt-4 flex items-center justify-end gap-2 text-sm font-semibold text-emerald-400">
-                      <Calendar className="w-4 h-4" />
-                      Book an Appointment →
-                    </div>
-                  </div>
-                )}
+                  );
+                })()}
 
                 <button
                   onClick={handleConsultClick}

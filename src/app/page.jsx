@@ -25,7 +25,7 @@ export default function Home() {
       </div>
 
       {/* ── Floating health icons & medical equipment — side gutters ── */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-60">
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-60 hidden xl:block">
         {/* Right column — medical equipment floating cards */}
         <div className="absolute top-[8%] right-[1.5%] lg:right-[2%] xl:right-[3%] p-2 sm:p-2.5 rounded-2xl bg-slate-900/35 border border-teal-500/15 shadow-[0_0_15px_rgba(20,184,166,0.1)] backdrop-blur-xs animate-float will-change-transform" style={{ animationDelay: '0s' }}>
           <Stethoscope className="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8 text-teal-300/60 drop-shadow-[0_0_6px_rgba(45,212,191,0.3)]" />

@@ -13,31 +13,38 @@ export function TestSuggestions({ conditions }) {
     });
     if (relevantTests.length === 0)
         return null;
-    return (<div className="w-full space-y-4">
-      <h3 className="text-2xl font-bold tracking-tight font-headline flex items-center gap-2">
-        <FlaskConical className="w-6 h-6 text-primary"/>
+    return (<div className="w-full space-y-3">
+      <h3 className="text-xl font-bold tracking-tight font-headline flex items-center gap-2 text-emerald-300">
+        <FlaskConical className="w-5 h-5 text-emerald-400"/>
         Health Test Suggestions
       </h3>
-      <div className="grid gap-4 md:grid-cols-2">
-        {relevantTests.map((suggestion, index) => suggestion.tests.map((test, testIndex) => (<Card key={`${index}-${testIndex}`} className="glass-card bg-white/5 border border-white/10 hover:border-emerald-500/20 shadow-md">
-              <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2">
-                <div className="bg-primary/20 p-3 rounded-lg">
-                  <test.icon className="w-6 h-6 text-primary"/>
+      <div className="grid gap-3.5 sm:grid-cols-2">
+        {relevantTests.map((suggestion, index) => suggestion.tests.map((test, testIndex) => {
+          const TestIcon = test.icon || FlaskConical;
+          return (
+            <Card key={`${index}-${testIndex}`} className="glass-card bg-slate-950/60 border border-emerald-500/20 hover:border-emerald-500/40 shadow-lg rounded-2xl overflow-hidden transition-all duration-200">
+              <CardHeader className="flex flex-row items-center gap-3.5 space-y-0 p-4 pb-2">
+                <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
+                  <TestIcon className="w-5 h-5 text-emerald-400"/>
                 </div>
-                <div className="flex-1">
-                  <CardTitle className="text-lg font-semibold flex items-center justify-between">
-                    <span>{test.name}</span>
-                    {test.recommended && (<Badge variant="default" className="flex items-center gap-1 text-xs">
-                        <Star className="w-3 h-3"/>
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-sm font-bold flex items-center justify-between gap-2 text-white">
+                    <span className="truncate">{test.name}</span>
+                    {test.recommended && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-emerald-950 shrink-0 shadow-sm">
+                        <Star className="w-2.5 h-2.5 fill-emerald-950"/>
                         Recommended
-                      </Badge>)}
+                      </span>
+                    )}
                   </CardTitle>
                 </div>
               </CardHeader>
-              <CardContent>
-                <CardDescription>{test.description}</CardDescription>
+              <CardContent className="p-4 pt-1">
+                <CardDescription className="text-xs text-slate-300 leading-relaxed">{test.description}</CardDescription>
               </CardContent>
-            </Card>)))}
+            </Card>
+          );
+        }))}
       </div>
     </div>);
 }

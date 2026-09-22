@@ -54,9 +54,29 @@ export function DoctorDetailsDialog({ doctor, onClose }) {
             <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-md bg-transparent text-foreground" disabled={{ before: startOfToday }}/>
           </div>
           <div>
+            <label className="text-xs font-semibold text-slate-400 mb-2 block">Select Time Slot</label>
+            <div className="grid grid-cols-3 gap-2 mb-2.5">
+              {availableTimes.map(time => {
+                const isSelected = selectedTime === time;
+                return (
+                  <button
+                    key={time}
+                    type="button"
+                    onClick={() => setSelectedTime(time)}
+                    className={`py-1.5 px-2 text-xs font-semibold rounded-xl border transition-all duration-150 ${
+                      isSelected
+                        ? 'bg-emerald-500 text-emerald-950 border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.4)]'
+                        : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    {time}
+                  </button>
+                );
+              })}
+            </div>
             <Select onValueChange={setSelectedTime} value={selectedTime}>
-              <SelectTrigger className="bg-white/5 border-white/10 focus:ring-emerald-500">
-                <SelectValue placeholder="Select a time"/>
+              <SelectTrigger className="bg-white/5 border-white/10 focus:ring-emerald-500 text-xs">
+                <SelectValue placeholder="Or choose time from dropdown..."/>
               </SelectTrigger>
               <SelectContent className="bg-slate-900 border-white/10 text-foreground">
                 {availableTimes.map(time => (<SelectItem key={time} value={time} className="focus:bg-emerald-500/20 focus:text-foreground">
