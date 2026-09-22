@@ -16,7 +16,12 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
   const [viewport, setViewport]             = useState({ width: 1440, height: 900 });
   const [portalTarget, setPortalTarget]     = useState(null);
 
-  useEffect(() => { setPortalTarget(document.body); }, []);
+  useEffect(() => {
+    setPortalTarget(document.body);
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setIsOpen(false);
+    }
+  }, []);
 
   /* ── Drag handlers ── */
   const handleMouseDown = (e) => {
@@ -29,7 +34,10 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
   useEffect(() => {
     if (!isDragging) return;
     const onMouseMove = (e) => {
-      setPosition({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
+      const maxLeft = -(viewport.width - (viewport.width < 640 ? 290 : 320));
+      const minX = Math.min(20, Math.max(maxLeft, e.clientX - dragStart.x));
+      const minY = Math.min(viewport.height - 200, Math.max(-50, e.clientY - dragStart.y));
+      setPosition({ x: minX, y: minY });
     };
     const onMouseUp = () => setIsDragging(false);
 
@@ -39,7 +47,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
     };
-  }, [isDragging, dragStart]);
+  }, [isDragging, dragStart, viewport]);
 
   /* ── Scroll tracking ── */
   useEffect(() => {
@@ -137,7 +145,7 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       position: 'fixed',
       top: `${72 + position.y}px`,
       right: `${GAP}px`,
-      transform: 'none',
+      transform: position.x ? `translateX(${position.x}px)` : 'none',
       zIndex: 40,
       cursor: isDragging ? 'grabbing' : 'grab',
       transition: isDragging ? 'none' : 'top 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
