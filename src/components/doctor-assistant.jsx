@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Activity, MessageSquare, Heart, ChevronDown } from 'lucide-react';
 
@@ -152,14 +152,43 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
     };
   }
 
+  const containerRef = useRef(null);
+  const [rectInfo, setRectInfo] = useState({});
+
+  useEffect(() => {
+    const update = () => {
+      if (containerRef.current) {
+        const r = containerRef.current.getBoundingClientRect();
+        const cs = window.getComputedStyle(containerRef.current);
+        setRectInfo({
+          rect: { top: Math.round(r.top), bottom: Math.round(r.bottom), height: Math.round(r.height) },
+          computed: { top: cs.top, bottom: cs.bottom, height: cs.height, position: cs.position },
+          windowH: window.innerHeight,
+        });
+      }
+    };
+    update();
+    const t = setTimeout(update, 100);
+    return () => clearTimeout(t);
+  }, [isOpen, isScrolled, scrollY]);
+
   if (!portalTarget) return null;
 
   return createPortal(
     <>
+      {/* On-screen visual debug badge */}
+      <div id="vha-debug-overlay" style={{ position: 'fixed', top: '10px', left: '10px', zIndex: 999999, background: 'rgba(0,0,0,0.85)', color: '#00ff88', padding: '8px 12px', fontSize: '11px', borderRadius: '8px', border: '1px solid #00ff88', fontFamily: 'monospace', pointerEvents: 'none' }}>
+        scrolled: {String(isScrolled)} | open: {String(isOpen)} | Y: {Math.round(scrollY)}<br/>
+        style: {JSON.stringify(containerStyle)}<br/>
+        measure: {JSON.stringify(rectInfo)}
+      </div>
+
       {/* Dim backdrop while thinking */}
       {isThinking && <div className="thinking-backdrop" style={{ zIndex: 49 }} />}
 
       <div
+        ref={containerRef}
+        id="doctor-assistant-container"
         onMouseDown={!isScrolled && !isThinking ? handleMouseDown : undefined}
         style={containerStyle}
         className={`z-40 flex flex-col items-end gap-3 select-none ${isOpen ? 'w-[290px]' : 'w-auto'}`}
