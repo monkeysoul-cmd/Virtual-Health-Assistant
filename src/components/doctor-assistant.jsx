@@ -16,12 +16,43 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
   const [viewport, setViewport]             = useState({ width: 1440, height: 900 });
   const [portalTarget, setPortalTarget]     = useState(null);
 
+  const isMobile = viewport.width < 1024;
+  const GAP      = isMobile ? 16 : 20;
+
   useEffect(() => {
     setPortalTarget(document.body);
     if (typeof window !== 'undefined' && window.innerWidth < 1024) {
       setIsOpen(false);
     }
   }, []);
+
+  const containerRef = useRef(null);
+
+  /* ── Auto-clamp position when viewport, open state, or scroll state changes ── */
+  useEffect(() => {
+    const elHeight = containerRef.current?.offsetHeight || (isOpen ? 340 : 52);
+    const elWidth  = containerRef.current?.offsetWidth  || (isOpen ? 290 : 170);
+
+    if (isScrolled) {
+      // Scrolled mode: anchored to bottom-right
+      const minOffsetY = -(viewport.height - GAP * 2 - elHeight);
+      const minOffsetX = -(viewport.width  - GAP * 2 - elWidth);
+      setPosition(prev => ({
+        x: Math.max(minOffsetX, Math.min(0, prev.x)),
+        y: Math.max(minOffsetY, Math.min(0, prev.y)),
+      }));
+    } else {
+      // Top mode: anchored to top-right (baseTop = 72)
+      const baseTop = 72;
+      const minY = -(baseTop - GAP);
+      const maxY = Math.max(minY, viewport.height - GAP - baseTop - elHeight);
+      const maxLeft = -(viewport.width - elWidth - GAP * 2);
+      setPosition(prev => ({
+        x: Math.max(maxLeft, Math.min(0, prev.x)),
+        y: Math.max(minY, Math.min(maxY, prev.y)),
+      }));
+    }
+  }, [isOpen, isScrolled, viewport, GAP]);
 
   /* ── Drag handlers ── */
   const handleMouseDown = (e) => {
@@ -34,10 +65,30 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
   useEffect(() => {
     if (!isDragging) return;
     const onMouseMove = (e) => {
-      const maxLeft = -(viewport.width - (viewport.width < 640 ? 290 : 320));
-      const minX = Math.min(20, Math.max(maxLeft, e.clientX - dragStart.x));
-      const minY = Math.min(viewport.height - 200, Math.max(-50, e.clientY - dragStart.y));
-      setPosition({ x: minX, y: minY });
+      const elHeight = containerRef.current?.offsetHeight || (isOpen ? 340 : 52);
+      const elWidth  = containerRef.current?.offsetWidth  || (isOpen ? 290 : 170);
+
+      if (isScrolled) {
+        // Scrolled mode: anchored bottom-right
+        // bottom = GAP - position.y >= GAP => position.y <= 0 (never off bottom)
+        // top = viewport.height - (GAP - position.y) - elHeight >= GAP
+        // => position.y >= -(viewport.height - GAP * 2 - elHeight) (never off top)
+        const minOffsetY = -(viewport.height - GAP * 2 - elHeight);
+        const minOffsetX = -(viewport.width  - GAP * 2 - elWidth);
+        const clampedX = Math.max(minOffsetX, Math.min(0, e.clientX - dragStart.x));
+        const clampedY = Math.max(minOffsetY, Math.min(0, e.clientY - dragStart.y));
+        setPosition({ x: clampedX, y: clampedY });
+      } else {
+        // Top mode: anchored top-right
+        const baseTop = 72;
+        const minY = -(baseTop - GAP);
+        const maxY = Math.max(minY, viewport.height - GAP - baseTop - elHeight);
+        const maxLeft = -(viewport.width - elWidth - GAP * 2);
+
+        const clampedX = Math.min(0, Math.max(maxLeft, e.clientX - dragStart.x));
+        const clampedY = Math.min(maxY, Math.max(minY, e.clientY - dragStart.y));
+        setPosition({ x: clampedX, y: clampedY });
+      }
     };
     const onMouseUp = () => setIsDragging(false);
 
@@ -47,15 +98,22 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
     };
-  }, [isDragging, dragStart, viewport]);
+  }, [isDragging, dragStart, viewport, isOpen, isScrolled, GAP]);
 
   /* ── Scroll tracking ── */
   useEffect(() => {
     const handleScroll = () => {
+      const scrolled = window.scrollY > 40;
       setScrollY(window.scrollY);
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(prev => {
+        if (prev !== scrolled) {
+          // Reset drag offset when transitioning between docked modes for smooth placement
+          setPosition({ x: 0, y: 0 });
+        }
+        return scrolled;
+      });
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -111,8 +169,6 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
   }, [state]);
 
   const isThinking = state === 'thinking';
-  const isMobile   = viewport.width < 1024;
-  const GAP        = isMobile ? 12 : 20;
 
   /* ── Container position style ── */
   let containerStyle;
@@ -129,16 +185,15 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       transition: 'top 0.4s cubic-bezier(0.16, 1, 0.3, 1), left 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
     };
   } else if (isScrolled) {
-    const floatOffset = Math.sin(scrollY * 0.015) * 5;
     containerStyle = {
       position: 'fixed',
-      bottom: `${GAP + floatOffset}px`,
-      right: `${GAP}px`,
+      bottom: `${GAP - position.y}px`,
+      right: `${GAP - position.x}px`,
       top: 'auto',
       transform: 'none',
       zIndex: 40,
       cursor: isDragging ? 'grabbing' : 'grab',
-      transition: isDragging ? 'none' : 'bottom 0.05s linear',
+      transition: isDragging ? 'none' : 'bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1), right 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
     };
   } else {
     containerStyle = {
@@ -148,59 +203,32 @@ export function DoctorAssistant({ state = 'idle', details = '', doctorName = 'Dr
       transform: position.x ? `translateX(${position.x}px)` : 'none',
       zIndex: 40,
       cursor: isDragging ? 'grabbing' : 'grab',
-      transition: isDragging ? 'none' : 'top 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+      transition: isDragging ? 'none' : 'top 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
     };
   }
-
-  const containerRef = useRef(null);
-  const [rectInfo, setRectInfo] = useState({});
-
-  useEffect(() => {
-    const update = () => {
-      if (containerRef.current) {
-        const r = containerRef.current.getBoundingClientRect();
-        const cs = window.getComputedStyle(containerRef.current);
-        setRectInfo({
-          rect: { top: Math.round(r.top), bottom: Math.round(r.bottom), height: Math.round(r.height) },
-          computed: { top: cs.top, bottom: cs.bottom, height: cs.height, position: cs.position },
-          windowH: window.innerHeight,
-        });
-      }
-    };
-    update();
-    const t = setTimeout(update, 100);
-    return () => clearTimeout(t);
-  }, [isOpen, isScrolled, scrollY]);
 
   if (!portalTarget) return null;
 
   return createPortal(
     <>
-      {/* On-screen visual debug badge */}
-      <div id="vha-debug-overlay" style={{ position: 'fixed', top: '10px', left: '10px', zIndex: 999999, background: 'rgba(0,0,0,0.85)', color: '#00ff88', padding: '8px 12px', fontSize: '11px', borderRadius: '8px', border: '1px solid #00ff88', fontFamily: 'monospace', pointerEvents: 'none' }}>
-        scrolled: {String(isScrolled)} | open: {String(isOpen)} | Y: {Math.round(scrollY)}<br/>
-        style: {JSON.stringify(containerStyle)}<br/>
-        measure: {JSON.stringify(rectInfo)}
-      </div>
-
       {/* Dim backdrop while thinking */}
       {isThinking && <div className="thinking-backdrop" style={{ zIndex: 49 }} />}
 
       <div
         ref={containerRef}
         id="doctor-assistant-container"
-        onMouseDown={!isScrolled && !isThinking ? handleMouseDown : undefined}
+        onMouseDown={!isThinking ? handleMouseDown : undefined}
         style={containerStyle}
         className={`z-40 flex flex-col items-end gap-3 select-none ${isOpen ? 'w-[290px]' : 'w-auto'}`}
       >
         {isOpen ? (
           /* ── Expanded Card ── */
-          <div className="w-full rounded-3xl border border-white/12 overflow-hidden bg-slate-950/90 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.6),0_0_0_1px_rgba(16,185,129,0.08)] transition-all duration-300 animate-fade-in-up">
+          <div className="w-full max-h-[calc(100vh-32px)] flex flex-col rounded-3xl border border-white/12 overflow-hidden bg-slate-950/90 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.6),0_0_0_1px_rgba(16,185,129,0.08)] transition-all duration-300 animate-fade-in-up">
 
             {/* Top accent strip */}
-            <div className={`h-[2px] ${isThinking ? 'bg-gradient-to-r from-amber-500 via-orange-400 to-amber-500' : 'bg-gradient-to-r from-emerald-500 via-teal-400 to-indigo-500'}`} />
+            <div className={`h-[2px] shrink-0 ${isThinking ? 'bg-gradient-to-r from-amber-500 via-orange-400 to-amber-500' : 'bg-gradient-to-r from-emerald-500 via-teal-400 to-indigo-500'}`} />
 
-            <div className="p-4">
+            <div className="p-4 overflow-y-auto">
               {/* Header */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
