@@ -43,6 +43,9 @@ next-env.d.ts
 
 # Ignore local environment variables and API keys
 .env*
+!.env.example
+!*.env.example
+!backend/.env.example
 
 # firebase debug logs
 firebase-debug.log

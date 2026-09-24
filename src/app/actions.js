@@ -105,3 +105,13 @@ export async function getDoctorsInArea(area, apiKey) {
     }
 }
 
+export async function bookAppointmentAction(data) {
+    try {
+        const appointmentService = require('../../backend/services/appointmentService');
+        const booking = appointmentService.bookAppointment(data);
+        return { success: true, booking };
+    } catch (err) {
+        return { success: false, error: err.message || 'Could not schedule appointment.' };
+    }
+}
+
