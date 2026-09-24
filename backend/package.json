@@ -1,0 +1,26 @@
+{
+  "name": "virtual-health-assistant-backend",
+  "version": "1.0.0",
+  "description": "Backend API service for Virtual Health Assistant: AI symptom assessment, doctor directory, appointment scheduling, and doctor chat.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test/api.test.js"
+  },
+  "keywords": [
+    "healthcare",
+    "virtual-health-assistant",
+    "symptom-checker",
+    "gemini-ai",
+    "express",
+    "appointment-booking"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2"
+  }
+}
