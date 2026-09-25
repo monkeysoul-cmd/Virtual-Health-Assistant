@@ -1,6 +1,6 @@
 # 🩺 Virtual Health Assistant
 
-An intelligent, AI-powered healthcare companion built with **Next.js 15**, **React 18**, **Express.js**, and **Google Gemini 2.5 Flash**. It empowers users to analyze symptoms through natural language, review potential medical conditions, receive tailored clinical recovery plans, schedule conflict-free appointments with certified local specialists, and consult an interactive virtual doctor assistant.
+An intelligent, enterprise-grade AI-powered healthcare companion built with **Next.js 15 (App Router)**, **React 18**, **Express.js**, and **Google Gemini 2.5 Flash**. It empowers users to analyze symptoms through natural language, review potential medical conditions, receive tailored clinical recovery plans, schedule conflict-free appointments with certified local specialists, and consult an interactive virtual doctor assistant.
 
 ---
 
@@ -15,10 +15,12 @@ An intelligent, AI-powered healthcare companion built with **Next.js 15**, **Rea
 | Layer | Technologies Used |
 | :--- | :--- |
 | **Frontend Framework** | ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=nextdotjs) ![React](https://img.shields.io/badge/React-18-blue?style=flat-square&logo=react) |
+| **Architecture Pattern** | ![Architecture](https://img.shields.io/badge/Pattern-Domain--Driven_Feature--Sliced-emerald?style=flat-square) ![Validation](https://img.shields.io/badge/Schema-Zod_3.24-blue?style=flat-square) |
 | **Backend API & Server** | ![Express.js](https://img.shields.io/badge/Express.js-4.21-black?style=flat-square&logo=express) ![Node.js](https://img.shields.io/badge/Node.js-20+-green?style=flat-square&logo=nodedotjs) ![REST API](https://img.shields.io/badge/REST-API-orange?style=flat-square) |
 | **Styling & Design System** | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=flat-square&logo=tailwindcss) ![Shadcn UI](https://img.shields.io/badge/Shadcn_UI-Components-black?style=flat-square&logo=shadcnui) ![Glassmorphism](https://img.shields.io/badge/UI-Glassmorphism-emerald?style=flat-square) |
 | **AI Engine & Workflow** | ![Gemini 2.5 Flash](https://img.shields.io/badge/Gemini_2.5_Flash-AI-ea4335?style=flat-square&logo=google-gemini) ![Google Genkit](https://img.shields.io/badge/Google_Genkit-1.20-4285F4?style=flat-square&logo=google) |
 | **Data Persistence** | ![JSON Store](https://img.shields.io/badge/Storage-Persistent_JSON_Store-blue?style=flat-square) ![Atomic IO](https://img.shields.io/badge/I%2FO-Atomic_File_IO-brightgreen?style=flat-square) |
+| **CI / CD Pipeline** | ![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088FF?style=flat-square&logo=githubactions) ![Integration Tests](https://img.shields.io/badge/Tests-17_Passing-brightgreen?style=flat-square) |
 | **PWA & Offline Support** | ![PWA](https://img.shields.io/badge/PWA-Workbox-purple?style=flat-square&logo=pwa) ![Service Worker](https://img.shields.io/badge/Service_Worker-Offline_Cache-success?style=flat-square) |
 | **Icons & Media** | ![Lucide Icons](https://img.shields.io/badge/Lucide_Icons-Graphics-indigo?style=flat-square) |
 | **Deployment Platform** | ![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel) |
@@ -62,62 +64,143 @@ An intelligent, AI-powered healthcare companion built with **Next.js 15**, **Rea
 
 ---
 
-## 🏗️ Project Architecture
+## 🏗️ Production-Grade Files & Folder Schema
+
+The project follows a **domain-driven, feature-sliced architecture** ensuring clean separation of concerns, testability, and strict input validation:
 
 ```
 Virtual-Health-Assistant/
-├── backend/                       # Dedicated Express Backend API
-│   ├── config/                    # Environment & database drivers
-│   │   ├── db.js                  # Persistent JSON storage with atomic writes
-│   │   └── index.js               # Central config loader (port, CORS, Gemini key)
-│   ├── controllers/               # Request handling & controller logic
+├── .github/
+│   └── workflows/
+│       └── ci.yml                 # Automated CI/CD pipeline (Lint, Test, Build)
+├── .editorconfig                  # Team formatting standards (indentation, charset)
+├── ARCHITECTURE.md                # In-depth architectural decision records (ADR)
+├── jsconfig.json                  # Path aliases (@/features, @/services, @/schemas, etc.)
+│
+├── backend/                       # REST API Backend Service (Express.js)
+│   ├── config/                    # Configuration & Database
+│   │   ├── db.js                  # Persistent JSON Database Driver (atomic IO)
+│   │   └── index.js               # Environment configuration loader
+│   ├── constants/                 # Core Constants & Dictionaries
+│   │   ├── httpCodes.js           # Standardized HTTP status codes
+│   │   └── messages.js            # Clinical & system message constants
+│   ├── controllers/               # Request Controllers
 │   │   ├── appointmentController.js
 │   │   ├── chatController.js
 │   │   ├── doctorController.js
 │   │   ├── healthController.js
 │   │   └── symptomController.js
-│   ├── data/                      # Medical catalogs & persistent storage
-│   │   ├── doctorData.js          # Verified specialist database
-│   │   ├── medicalCatalog.js      # 37+ conditions, symptoms, tests & care plans
-│   │   └── storage/               # JSON storage directory (appointments.json)
-│   ├── middleware/                # Express middleware pipeline
-│   │   ├── errorHandler.js        # Standardized JSON error response contract
-│   │   ├── logger.js              # HTTP request & response time logger
+│   ├── data/                      # Medical Knowledge Base & Storage
+│   │   ├── doctorData.js          # Seed dataset of verified medical practitioners
+│   │   ├── medicalCatalog.js      # Curated clinical conditions, symptoms & care plans
+│   │   └── storage/
+│   │       └── appointments.json  # Persistent JSON appointment records
+│   ├── middleware/                # Express Middlewares
+│   │   ├── errorHandler.js        # Global error interceptor & 404 router
+│   │   ├── logger.js              # HTTP request timing & IP logger
 │   │   ├── rateLimiter.js         # Sliding-window rate limiter
-│   │   └── validate.js            # Input validation & schema checks
-│   ├── routes/                    # REST API routes mounted at /api
-│   │   ├── appointmentRoutes.js   # /api/appointments/*
-│   │   ├── chatRoutes.js          # /api/chat/*
-│   │   ├── doctorRoutes.js        # /api/doctors/*
-│   │   ├── healthRoutes.js        # /api/health/*
-│   │   ├── index.js               # Master API router
-│   │   └── symptomRoutes.js       # /api/symptoms/*
-│   ├── services/                  # Business logic & AI orchestration
-│   │   ├── aiService.js           # Gemini 2.5 Flash API client
-│   │   ├── appointmentService.js  # Booking & conflict prevention engine
-│   │   ├── chatService.js         # Conversational clinical doctor service
-│   │   ├── doctorService.js       # Doctor search & availability engine
-│   │   └── symptomService.js      # Dual-engine triage & enrichment
-│   ├── test/                      # Automated test suite
-│   │   └── api.test.js            # 17-point integration test runner
-│   ├── server.js                  # Main server entrypoint & graceful shutdown
-│   ├── package.json               # Backend dependencies & scripts
-│   └── README.md                  # Comprehensive backend API documentation
+│   │   └── validate.js            # Request schema validator
+│   ├── routes/                    # API Route Handlers
+│   │   ├── appointmentRoutes.js
+│   │   ├── chatRoutes.js
+│   │   ├── doctorRoutes.js
+│   │   ├── healthRoutes.js
+│   │   ├── index.js               # Master router mounting /api/*
+│   │   └── symptomRoutes.js
+│   ├── services/                  # Business Logic Layer
+│   │   ├── aiService.js           # Google Gemini AI communication & fallback
+│   │   ├── appointmentService.js  # Booking conflict detection & scheduling
+│   │   ├── chatService.js         # Dr. Amit Patel conversational assistant
+│   │   ├── doctorService.js       # Directory search, filtering & availability
+│   │   └── symptomService.js      # Symptom analysis & clinical triage
+│   ├── test/                      # Automated Integration & Unit Tests
+│   │   └── api.test.js            # End-to-end API test suite (17 test cases)
+│   ├── utils/                     # Backend Utilities
+│   │   └── apiResponse.js         # Standardized JSend API response builder
+│   ├── package.json               # Backend dependencies
+│   └── server.js                  # Express HTTP server entry point
 │
-├── public/                        # Static assets, PWA icons, manifest & service worker
-├── src/                           # Next.js Frontend (React 18 + Tailwind)
-│   ├── ai/                        # Genkit AI workflows & Gemini prompts
-│   ├── app/                       # Next.js App Router (Layout, Actions, Global CSS)
-│   ├── components/                # Reusable UI & application components
-│   │   ├── doctor-assistant.jsx   # Floating companion with boundary clamping
-│   │   ├── doctor-details-dialog.jsx # Appointment booking modal with backend integration
-│   │   ├── doctor-directory.jsx   # Searchable specialist directory
-│   │   ├── prescribed-plan-card.jsx  # Structured care plan & checklist card
-│   │   ├── symptom-checker-form.jsx  # Primary symptom input & triage flow
-│   │   ├── test-suggestions.jsx   # Recommended diagnostic tests
-│   │   └── ui/                    # Shadcn/Radix UI base primitives
-│   └── lib/                       # Static data catalogs & utility helpers
-└── package.json                   # Root manifest & unified scripts
+├── src/                           # Modern Next.js 15 App Directory
+│   ├── ai/                        # Genkit & LLM Flows
+│   │   ├── flows/
+│   │   │   └── symptom-checker-assessment.js
+│   │   ├── dev.js
+│   │   └── genkit.js
+│   │
+│   ├── app/                       # Next.js App Router
+│   │   ├── actions.js             # Server actions bridging UI to service layer
+│   │   ├── globals.css            # Tailwind design tokens, keyframes & animations
+│   │   ├── layout.jsx             # Root layout with fonts, metadata, providers
+│   │   └── page.jsx               # Composed landing & clinical interface
+│   │
+│   ├── components/                # Modular Component Architecture
+│   │   ├── common/                # Shared Cross-Feature Components
+│   │   │   ├── LikelihoodBar.jsx  # Animated diagnostic percentage meter
+│   │   │   ├── StarRating.jsx     # Star rating display
+│   │   │   └── index.js
+│   │   ├── features/              # Domain Feature Modules
+│   │   │   ├── appointments/      # Specialist Booking & Scheduling
+│   │   │   │   ├── DoctorDetailsDialog.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── care-plan/         # Prescribed Plans, Precautions & Tests
+│   │   │   │   ├── PrecautionaryAdvice.jsx
+│   │   │   │   ├── PrescribedPlanCard.jsx
+│   │   │   │   ├── TestSuggestions.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── doctor-assistant/  # Floating AI Doctor (Dr. Amit Patel)
+│   │   │   │   ├── DoctorAssistant.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── doctor-directory/  # Specialist Directory & Search
+│   │   │   │   ├── DoctorCard.jsx
+│   │   │   │   ├── DoctorDirectory.jsx
+│   │   │   │   └── index.js
+│   │   │   └── symptom-checker/   # Natural Language Clinical Triage
+│   │   │       ├── SymptomCheckerForm.jsx
+│   │   │       └── index.js
+│   │   ├── layout/                # Page Layout Structural Components
+│   │   │   ├── BackgroundMesh.jsx # Ambient radial glow & mesh background
+│   │   │   ├── FloatingSideGutter.jsx # Floating equipment animated cards
+│   │   │   ├── HeroSection.jsx    # Hero headline, badges & pulse icon
+│   │   │   ├── Footer.jsx         # Clinical disclaimer & footer
+│   │   │   └── index.js
+│   │   ├── ui/                    # Primitive Atomic UI Components (Radix/Shadcn)
+│   │   └── index.js               # Master Components Barrel Export
+│   │
+│   ├── config/                    # Configuration & Environment Validation
+│   │   ├── env.js                 # Environment variable validation & fallback defaults
+│   │   ├── site.js                # App brand metadata, SEO, and navigation links
+│   │   └── index.js
+│   │
+│   ├── data/                      # Modular Domain Data & Catalogs
+│   │   ├── carePlans.js           # Treatment blueprints, dietary, activity, precautions
+│   │   ├── conditions.js          # Clinical conditions & specialty mappings
+│   │   ├── doctors.js             # Certified specialists directory
+│   │   ├── symptoms.js            # Symptoms taxonomy & quick-add chips
+│   │   └── index.js               # Unified data barrel
+│   │
+│   ├── hooks/                     # Custom React Hooks
+│   │   ├── use-mobile.jsx         # Responsive viewport detection
+│   │   ├── use-toast.js           # Toast notification dispatch hook
+│   │   └── index.js
+│   │
+│   ├── schemas/                   # Zod Validation Schemas
+│   │   ├── appointmentSchema.js   # Booking payload validation
+│   │   ├── doctorSchema.js        # Doctor query and profile schema
+│   │   ├── symptomSchema.js       # Symptom query & assessment schema
+│   │   └── index.js
+│   │
+│   ├── services/                  # Business Logic & Transport Client Layer
+│   │   ├── api/
+│   │   │   └── apiClient.js       # Universal fetch client with timeouts & error wrapping
+│   │   ├── appointmentService.js  # Isomorphic appointment scheduler
+│   │   ├── doctorService.js       # Doctor search & directory matching
+│   │   ├── symptomService.js      # Symptom assessment orchestrator
+│   │   └── index.js
+│   │
+│   └── utils/                     # Pure Reusable Utility Functions
+│       ├── cn.js                  # Tailwind class merge utility
+│       ├── formatters.js          # Phone, date, and reference code formatters
+│       └── index.js
 ```
 
 ---
@@ -196,8 +279,6 @@ Backend API will be accessible at: `http://localhost:5000`
 
 Run the built-in 17-point backend integration test suite:
 ```bash
-npm test --prefix backend
-# or
 node backend/test/api.test.js
 ```
 
