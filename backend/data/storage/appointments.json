@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "id": "VHA-2UHW9Q",
+    "createdAt": "2026-09-25T10:48:07.466Z",
+    "updatedAt": "2026-09-25T10:48:07.474Z",
+    "doctorId": "1",
+    "doctorName": "Dr. Priya Sharma",
+    "doctorSpecialty": "Cardiologist",
+    "doctorArea": "Indirapuram",
+    "consultationFee": 800,
+    "patientName": "Test Patient",
+    "patientPhone": "+91 99999 88888",
+    "patientEmail": "test@example.com",
+    "date": "2026-09-26",
+    "timeSlot": "10:00 AM",
+    "symptoms": "Mild chest discomfort after walking",
+    "notes": "",
+    "status": "cancelled",
+    "bookedAt": "2026-09-25T10:48:07.466Z",
+    "cancellationReason": "Patient recovered",
+    "cancelledAt": "2026-09-25T10:48:07.474Z"
+  },
+  {
+    "id": "VHA-BFPKHB",
+    "createdAt": "2026-09-25T10:59:26.960Z",
+    "updatedAt": "2026-09-25T10:59:26.969Z",
+    "doctorId": "1",
+    "doctorName": "Dr. Priya Sharma",
+    "doctorSpecialty": "Cardiologist",
+    "doctorArea": "Indirapuram",
+    "consultationFee": 800,
+    "patientName": "Test Patient",
+    "patientPhone": "+91 99999 88888",
+    "patientEmail": "test@example.com",
+    "date": "2026-09-26",
+    "timeSlot": "10:00 AM",
+    "symptoms": "Mild chest discomfort after walking",
+    "notes": "",
+    "status": "cancelled",
+    "bookedAt": "2026-09-25T10:59:26.960Z",
+    "cancellationReason": "Patient recovered",
+    "cancelledAt": "2026-09-25T10:59:26.969Z"
+  }
+]
