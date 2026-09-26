@@ -158,4 +158,4 @@ Virtual-Health-Assistant/
 2. **Domain-Driven Feature Slicing**: Related components (e.g. `DoctorCard`, `DoctorDirectory`) live together in `src/components/features/` rather than in a flat root folder.
 3. **Strict Validation**: All external input (symptoms, booking dates, phone numbers) is validated against Zod schemas in `src/schemas/`.
 4. **Resilient Isomorphic Execution**: Services communicate with the Express backend REST API, but have automatic fallbacks for local dev or static preview environments.
-5. **Zero Breaking Changes**: Legacy import paths (such as `@/lib/data` and root `@/components/*`) continue to function through backward-compatible forwarding barrels.
+5. **Clean & Consolidated Modules**: All imports reference centralized feature barrels (`@/components/features/*`, `@/components`, `@/data`, `@/services`), eliminating redundant duplicate shims and obsolete boilerplate.

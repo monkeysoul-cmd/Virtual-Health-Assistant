@@ -7,7 +7,7 @@
 
 import { getGenkitInstance } from '@/ai/genkit.js';
 import { z } from 'genkit';
-import { commonConditions, precautions, fallbackPrescribedPlans, defaultPrescribedPlan } from '@/lib/data.js';
+import { commonConditions, precautions, fallbackPrescribedPlans, defaultPrescribedPlan } from '@/data';
 
 const PrescribedPlanSchema = z.object({
   medicationAdvice: z.string().describe('General over-the-counter medication advice or treatment directives.'),
